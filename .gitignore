@@ -1,0 +1,12 @@
+# Created by https://www.gitignore.io/api/django
+
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+media/
+venv/
+migrations/
+.vscode/
