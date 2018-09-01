@@ -1,0 +1,27 @@
+{% extends 'accounts/main.html' %}
+{% block body %}
+    <div class="container">
+        <center>
+
+            {% if case == "expire" %}
+                <h3> Opps! Your Link expired! </h3> <br />
+            {% elif case == "first_time" %}    
+                <h3> Email Sent successfully! </h3>
+                Didn't recieve our mail?
+            {% else %}
+                <h3>
+                    Email re-send successfull <br />
+                    Please Varify you email within half-an-hour, else link will expire, again! <br />
+                </h3>
+                Didn't recieve our mail?
+            {% endif %}
+            <form method="POST" action="{% url 'resend' %}">
+                {% csrf_token %}
+                <input type="hidden" name="token" value="{{ token }}" /> 
+                shall we <button style="padding-top:0; padding-left:0; padding-right:0; margin:0" class="btn btn-link" type="submit">resend </button> the email? <br />
+            </form>
+            {{ cute_image | safe }}
+
+        </center>
+    </div>
+{% endblock %}

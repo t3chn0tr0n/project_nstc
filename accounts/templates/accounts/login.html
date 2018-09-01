@@ -1,0 +1,35 @@
+{% extends 'accounts/main.html' %}
+{% block body %}
+    <div class="container">
+        <center>
+            
+            <img src="https://image.flaticon.com/icons/svg/1053/1053364.svg" height="100px" weight="100px" alt="LOGIN"/>
+            <br />
+            <br />
+
+            {% if error %}
+                <div class="alert alert-danger" style="width: 500px; padding:1.5px;">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            <form method="POST" class="post-form" action="{% url 'login' %}">
+                {% csrf_token %}
+                <p>
+                <input class="form-control" style="width: 300px;" type="text" name="username"  placeholder="Username" required />
+                </p>
+
+                <p>
+                <input class="form-control" style="width: 300px;" type="password" name="password" placeholder="Password" required />
+                </p>
+
+                <input class="btn btn-primary"  type="submit" value="Login" />
+            </form>
+            <br />
+            <h5>
+                Not hooked up with us yet? <a href="{% url 'signup' %}">Sign up</a>
+            </h5>
+        </center>
+    </div> 
+{% endblock %} 
+

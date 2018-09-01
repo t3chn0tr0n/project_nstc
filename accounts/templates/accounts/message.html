@@ -1,0 +1,11 @@
+{% extends 'accounts/main.html' %}
+{% block body %}
+    <div class="container">
+        <center>
+            {% for line in messages %}
+            <h3> {{ line | safe }} </h3>
+            <br />
+        {% endfor %}
+        </center>
+    </div>
+{% endblock %}
