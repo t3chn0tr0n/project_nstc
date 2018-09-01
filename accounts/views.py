@@ -1,11 +1,14 @@
-from django.utils import timezone
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 from django.contrib import auth
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.utils import timezone
+
 from . import pyfunctions
 from .models import Temp_user
-from django.urls import reverse
+from students.models import Student
+from teachers.models import Teacher
 
 
 def login(request):
@@ -40,24 +43,55 @@ def signup(request):
         if request.method == "POST":
             
             #-1. form validation
-            #-2. save data in local table (if not already there, in both user tables)
+            #-2. check if the gven user is a student or a teacher and has the valid email else STOP here.
+            #-3. save data in local table (if not already there, in both user tables)
                 #i. generate token
                 #ii. send email
                 #iii. show Email sent page
-            #-3. if username exists, show an error page
+            #-4. if username exists, show an error page
 
             # validations:
             # =============
-            # if not form.is_valid():
-            #     error = "Invalid Form details!"
+
             error = ""
+            try:
+                that_stud = Student.objects.get(id=request.POST['username'])
+                flag_stud = True
+                saved_email = that_stud.email
+            except:
+                flag_stud = False
+
+            if not flag_stud:
+                try:
+                    that_teach = Teacher.object.get(id=request.POST['username'])
+                    flag_teach = True
+                    saved_email = that_teach.email
+                except:
+                    flag_teach = False
+                    error = "Unknown Id! Who are you exactly?? Go away..."
+                    return render(request, 'accounts/signup.html', {'title':'signup error', 'error':error})
             
+            # validate their email and if anything falls outs of place, DO NOT PROCEED further!!! 
+            if flag_stud or flag_teach:
+                if saved == request.POST['email']:
+                    no_error = True
+                else:
+                    error = "Please give the Email that we know! This is critical to varify that its you!"
+                    return render(request, 'accounts/signup.html', {'title':'signup error', 'error':error})
+                    
             if request.POST["password1"] != request.POST["password2"]:
                 error = "Passwords must match!"
             elif Temp_user.objects.filter(uname = request.POST["username"]).exists() or User.objects.filter(username = request.POST["username"]).exists():
-                error = "Username already taken. Try Loging in!"
-            elif Temp_user.objects.filter(email=request.POST["email"]).exists() or User.objects.filter(email=request.POST["email"]).exists():
-                error = "An account already exists with that email!"
+                error = "You are already varified. Try Loging in!"
+            elif Temp_user.objects.filter(email=request.POST["email"]).exists():
+                message = ["""
+                The account is already signed in! Varify your email.
+                <br /> Sometimes emails can take upto an hour to reach the destination.
+                <br /> Please be patient! If this method fails repeatedly contact your mentor!!
+                """]
+                img = pyfunctions.get_cute_image()
+                responce.append('<img src="' + img + '" height="200px" width="200px" alt="a cute animal image">')
+                return render(request, 'accounts/message.html', {'title': 'signup error', 'messages':message})
             
             # main show starts from here:
             # ===========================
@@ -136,5 +170,3 @@ def resend(request):
         message = ["Well, you have came a long way, to vain!"]
     message.append('<img src="' + pyfunctions.get_cute_image() + '" height="200px" width="200px" alt="a cute animal image">')
     return render(request, 'accounts/message.html', {'title':"404", 'messages':message})
-
-
