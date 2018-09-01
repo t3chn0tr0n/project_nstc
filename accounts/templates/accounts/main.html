@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>snapshow | {{ title }}</title>
+        <title>{{ title }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
         {% load static %}
@@ -16,7 +16,6 @@
         <!-- navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark container-fluid">
             <div class="container">
-                <a class="navbar-brand" href="{% url 'index' %}"><b>snapshare</b> </a>
                 <emp class="navbar-brand text-success">{{ title }}</emp>
             </div>
         </nav>
