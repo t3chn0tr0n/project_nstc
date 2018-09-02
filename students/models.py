@@ -2,17 +2,17 @@ from django.utils import timezone
 from django.db import models
 from teachers.models import Teacher
 from subject_and_marks.models import SemMarks
-
+  
 
 class Student(models.Model):
     id = models.CharField(default=" ", max_length=15, primary_key=True)
     name = models.CharField(default=" ", max_length=50)
     mentor = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    class_roll_no = models.IntegerField(default=000)
+    roll_no = models.IntegerField(default=000)
     registration_no = models.IntegerField(default=0000)
     admision_no = models.IntegerField(default=0000)
     stream = models.CharField(default=" ", max_length=20) # stores as cse, ece
-    batch = models.IntegerField(default=0000) # stores the year the course started
+    batch = models.CharField(default="", max_length=12) # stores BAT20152019
     is_registered = models.BooleanField(default=False) 
     is_varified = models.BooleanField(default=False)
     email = models.EmailField(max_length=70)
@@ -38,6 +38,7 @@ class Details(models.Model):
     mobile_no = models.IntegerField(default="000")
     is_lateral = models.BooleanField(default=False)
     diploma_score = models.FloatField(max_length="50", null=True)
+
     # returns a dictionary object of student, ready to be serialised
     def student_details_data(self):
         pass
