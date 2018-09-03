@@ -1,8 +1,7 @@
 from django.utils import timezone
 from django.db import models
-from teachers.models import Teacher
 from subject_and_marks.models import SemMarks
-  
+from teachers.models import Teacher
 
 class Student(models.Model):
     id = models.CharField(default=" ", max_length=15, primary_key=True)
@@ -31,7 +30,7 @@ class Details(models.Model):
     dob = models.DateField(default=timezone.now)
     blood_grp = models.CharField(default="", max_length=3)
     guardian = models.CharField(default="", max_length=50)
-    perm_add = models.CharField(default="", max_length=50)
+    perm_add = models.CharField(default="", max_length=50) # permanent address
     loc_guardian = models.CharField(default="", max_length=50)
     loc_add = models.CharField(default="", max_length=50)
     land_phone = models.IntegerField(null=True)
