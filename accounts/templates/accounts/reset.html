@@ -3,7 +3,7 @@
     <div class="container">
         <center>
 
-            <img src="https://image.flaticon.com/icons/svg/1053/1053353.svg" height="100px" weight="100px" alt="SIGNUP!"/>
+            <img src="https://image.flaticon.com/icons/svg/954/954000.svg" height="100px" weight="100px" alt="SIGNUP!"/>
             <br />
             <br />
 
@@ -13,18 +13,18 @@
                 </div>
             {% endif %}
             
-            <form method="POST" action="{% url 'signup' %}">
+            <form method="POST" action="{% url 'reset' %}">
                 {% csrf_token %}
                 <p>
                 <input type="text"  class="form-control" style="width: 300px;"name="username" placeholder="ID Card number" required />
                 </p>
 
                 <p>
-                <input type="email"  class="form-control" style="width: 300px;"name="email" placeholder="Email" required />
+                <input type="email"  class="form-control" style="width: 300px;"name="email" placeholder="Registered email" required />
                 </p>
                 
                 <p>
-                <input type="password" class="form-control" style="width: 300px;" name="password1" placeholder="Password" required />
+                <input type="password" class="form-control" style="width: 300px;" name="password1" placeholder="New Password" required />
                 </p>
 
                 <p>
@@ -32,13 +32,10 @@
                 </p>
                 
                 <p>
-                <input class="btn btn-primary" type="submit" value="Sign Up!" />
+                <input class="btn btn-primary" type="submit" value="Reset Password" />
                 </p>
             </form>
             <br />
-            <h5>
-                Already hooked up with us? <a href="{% url 'login' %}">log in</a>
-            </h5>
         </center>
     </div>
 {% endblock %}

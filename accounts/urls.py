@@ -1,5 +1,5 @@
 from django.urls import path, include, re_path
-from . import views, pyfunctions
+from . import views
 
 urlpatterns = [
     path('', views.login),
@@ -8,4 +8,5 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     re_path(r'validate/*', views.activate, name='activate'),
     path('resend/', views.resend, name='resend'),
+    path('reset/', views.reset, name='reset'),
 ]

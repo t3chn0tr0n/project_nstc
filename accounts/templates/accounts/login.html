@@ -16,7 +16,7 @@
             <form method="POST" class="post-form" action="{% url 'login' %}">
                 {% csrf_token %}
                 <p>
-                <input class="form-control" style="width: 300px;" type="text" name="username"  placeholder="Username" required />
+                <input class="form-control" style="width: 300px;" type="text" name="username"  placeholder="ID Card number" required />
                 </p>
 
                 <p>
@@ -27,8 +27,13 @@
             </form>
             <br />
             <h5>
-                Not hooked up with us yet? <a href="{% url 'signup' %}">Sign up</a>
+                Not yet Registered? <a href="{% url 'signup' %}">Sign up</a>
             </h5>
+            <h6>
+                <a href="{% url 'reset' %}">
+                    Forgotten you password?
+                </a>
+            </h6>
         </center>
     </div> 
 {% endblock %} 

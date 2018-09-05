@@ -1,7 +1,9 @@
-from django.utils import timezone
 from django.db import models
+from django.utils import timezone
+
 from subject_and_marks.models import SemMarks
 from teachers.models import Teacher
+
 
 class Student(models.Model):
     id = models.CharField(default=" ", max_length=15, primary_key=True)
@@ -10,20 +12,18 @@ class Student(models.Model):
     roll_no = models.IntegerField(default=000)
     registration_no = models.IntegerField(default=0000)
     admision_no = models.IntegerField(default=0000)
-    stream = models.CharField(default=" ", max_length=20) # stores as cse, ece
+    stream = models.CharField(default=" ", max_length=20) # stores as CSE, ECE
     batch = models.CharField(default="", max_length=12) # stores BAT20152019
     is_registered = models.BooleanField(default=False) 
     is_varified = models.BooleanField(default=False)
     email = models.EmailField(max_length=70)
 
-    # claculates the current sem, based on current year and batch
-    def current_sem(self):
-        pass
-    
-    # returns a dictionary object of student, ready to be serialised
-    def student_data(self):
-        pass
+    def get_student_data(self):
+        return Details.objects.get(card_no=self.id)
 
+    def get_marks_of_sem(self, sem):
+        return SemMarks.objects.get(student_id=self.id, sem_no=sem)
+        
 
 class Details(models.Model):
     card_no = models.ForeignKey(Student, on_delete=models.CASCADE)
