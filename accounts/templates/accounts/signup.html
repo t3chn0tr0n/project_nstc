@@ -2,7 +2,6 @@
 {% block body %}
     <div class="container">
         <center>
-
             <img src="https://image.flaticon.com/icons/svg/1053/1053353.svg" height="100px" weight="100px" alt="SIGNUP!"/>
             <br />
             <br />
@@ -39,6 +38,11 @@
             <h5>
                 Already Registered? <a href="{% url 'login' %}">log in</a>
             </h5>
+            <h6>
+                <a href="{% url 'reset' %}">
+                    Forgotten you password?
+                </a>
+            </h6>
         </center>
     </div>
 {% endblock %}

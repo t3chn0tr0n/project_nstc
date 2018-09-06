@@ -10,8 +10,8 @@ class Student(models.Model):
     name = models.CharField(default=" ", max_length=50)
     mentor = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     roll_no = models.IntegerField(default=000)
-    registration_no = models.IntegerField(default=0000)
-    admision_no = models.IntegerField(default=0000)
+    registration_no = models.IntegerField(null=True, blank=True)
+    admision_no = models.IntegerField(null=True, blank=True)
     stream = models.CharField(default=" ", max_length=20) # stores as CSE, ECE
     batch = models.CharField(default="", max_length=12) # stores BAT20152019
     is_registered = models.BooleanField(default=False) 

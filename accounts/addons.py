@@ -1,18 +1,8 @@
 from random import randint
 from secrets import randbelow, token_urlsafe
+
 from django.conf import settings
 from django.core.mail import send_mail
-# from django.contrib.auth.tokens import PasswordResetTokenGenerator
-# from django.utils import six
-
-
-# class TokenGenerator(PasswordResetTokenGenerator):
-#     def _make_hash_value(self, user, timestamp):
-#         return (
-#             six.text_type(user.pk) + six.text_type(timestamp) +
-#             six.text_type(user.is_active)
-#         )
-# account_activation_token = TokenGenerator()
 
 
 def generate_url():

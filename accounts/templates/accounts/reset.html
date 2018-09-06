@@ -16,11 +16,11 @@
             <form method="POST" action="{% url 'reset' %}">
                 {% csrf_token %}
                 <p>
-                <input type="text"  class="form-control" style="width: 300px;"name="username" placeholder="ID Card number" required />
+                <input type="text" class="form-control" style="width: 300px;" name="id" placeholder="ID Card number" required />
                 </p>
 
                 <p>
-                <input type="email"  class="form-control" style="width: 300px;"name="email" placeholder="Registered email" required />
+                <input type="email" class="form-control" style="width: 300px;" name="email" placeholder="Registered email" required />
                 </p>
                 
                 <p>
@@ -28,7 +28,7 @@
                 </p>
 
                 <p>
-                <input type="password"  class="form-control" style="width: 300px;"name="password2" placeholder="Confirm Password" required />
+                <input type="password" class="form-control" style="width: 300px;" name="password2" placeholder="Confirm Password" required />
                 </p>
                 
                 <p>

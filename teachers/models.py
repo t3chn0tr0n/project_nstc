@@ -13,6 +13,6 @@ class Teacher(models.Model):
     is_registered = models.BooleanField(default=False) 
     is_varified = models.BooleanField(default=False)
     email = models.EmailField(max_length=70)
-    phone_no_1 = models.IntegerField()
-    phone_no_2 = models.IntegerField(null=True, blank=True)
+    phone_no_1 = models.CharField(default=0, max_length=12)
+    phone_no_2 = models.CharField(null=True, blank=True, max_length=12)
     is_hod = models.BooleanField(default=False)
