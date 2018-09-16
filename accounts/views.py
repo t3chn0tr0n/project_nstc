@@ -199,12 +199,16 @@ def reset(request):
     if request.method == "POST":
         error = ""  
         msg = ""    # error fails loudly
-        flag = 0    #flag is used to fail silently
-        id = request.POST['id']
-        email = request.POST['email']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-        if Student.objects.filter(id=id).exists() or Teacher.objects.filter(id=id).exists():
+        flag = 0    # flag is used to fail silently
+        id = request.POST['id'].strip()
+        email = request.POST['email'].strip()
+        password1 = request.POST['password1'].strip()
+        password2 = request.POST['password2'].strip()
+
+        if id is '' or email is '' or password1 is '' or password2 is '':
+            error = "No fields can be kept blank here!"
+
+        if not error and Student.objects.filter(id=id).exists() or Teacher.objects.filter(id=id).exists():
             if Student.objects.filter(id=id).exists():
                 obj = Student.objects.get(id=id)
             else:
@@ -216,13 +220,14 @@ def reset(request):
                 '<h5> <a href="'+str(signup_url)+'">Sign up </h5>']
             elif not obj.is_varified:
                 msg = "Frist varify your account"
-    
             elif password1 != password2:
                 error = 'Password must match'
+            elif len(password1) < 2:
+                error = "Passwords must be atleast 8 charecters!"
             elif password1.isalpha():
                 error = "mix in some numbers with the password"
             elif not obj.email == email:
-                flag = 1
+                flag = 1  
         else:
             error = "Well, we don't know you!"
 
@@ -239,13 +244,20 @@ def reset(request):
                 ]
             else:
                 msg = ["Error sending mail... Try again.", "If problem persists, contact your HOD!"]
+        else:
+            msg = ["If you entered correct Name, Id and your registered email id", 
+                "expect to receive an email to reset password!",
+                ]
 
         if msg:
+            print(1)
             return message("reset_message", msg, request)
         elif error:
+            print(2)
             return render(request, 'accounts/reset.html', {'title':'reset-error', 'error':error})
 
     else:
+        print(3)
         return render(request, 'accounts/reset.html', {"title":"reset password"})
 
 
