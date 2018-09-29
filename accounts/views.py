@@ -6,29 +6,29 @@ from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 
-from students.models import Student
-from teachers.models import Teacher
-
 from . import addons
 from .models import Temp_user
+from students.models import FormFills, Student
+from teachers.models import Teacher
 
 
 # TODO:
 # 1. strip all spaces from all form fields
+# 2. No spaces in password fields
 
 def login(request):
     if request.user.is_authenticated:
         return redirect('index')
     else:
         if request.method == 'POST':
-            user = auth.authenticate(username=request.POST['username'],password=request.POST['password'])
+            user = auth.authenticate(username=request.POST['username'].strip(),password=request.POST['password'].strip())
             if user is not None:
                 auth.login(request, user)
                 return redirect('index')
             else:
                 error = "username or password invalid! Try signing up if not already!"
                 if Temp_user.objects.filter(uname=request.POST['username']).exists():
-                    error = "Please Varify your email before logging in!"
+                    error = "Please Verify your email before logging in!"
                 
                 return render(request, 'accounts/login.html',{"title":"login_error", 'error':error})
         else:
@@ -46,6 +46,11 @@ def signup(request):
         return redirect('index')
     else:
         if request.method == "POST":
+
+            uid = request.POST['username'].strip()
+            email = request.POST['email'].strip()
+            password1 = request.POST['password1'].strip()
+            password2 = request.POST['password2'].strip()
             
             #-1. form validation
             #-2. check if the given user is a student or a teacher and has the valid email else STOP here.
@@ -60,7 +65,7 @@ def signup(request):
 
             error = ""
             try:
-                that_stud = Student.objects.get(id=request.POST['username'])
+                that_stud = Student.objects.get(id=uid)
                 flag_stud = True
                 saved_email = that_stud.email
             except:
@@ -68,7 +73,7 @@ def signup(request):
 
             if not flag_stud:
                 try:
-                    that_teach = Teacher.object.get(id=request.POST['username'])
+                    that_teach = Teacher.object.get(id=uid)
                     flag_teach = True
                     saved_email = that_teach.email
                 except:
@@ -78,33 +83,33 @@ def signup(request):
             
             # validate their email and if anything falls outs of place, DO NOT PROCEED further!!! 
             if flag_stud or flag_teach:
-                if saved_email == request.POST['email']:
+                if saved_email == email:
                     no_error = True
                 else:
-                    error = "Please give the Email that we know! This is critical to varify that its you!"
+                    error = "Please give the Email that we know! This is critical to verify that its you!"
                     return render(request, 'accounts/signup.html', {'title':'signup error', 'error':error})
+            # else : Unknown user is already handled above!
                     
-            if request.POST["password1"] != request.POST["password2"]:
+            if password1 != password2:
                 error = "Passwords must match!"
 
-            elif request.POST["password1"].isalpha():
+            elif password1.isalpha():
                 error = "mix in some numbers with the password"
 
-            elif Temp_user.objects.filter(email=request.POST["email"]).exists():
+            elif Temp_user.objects.filter(email=email).exists():
                 msg = ["""
-                The account is already registered! Varify your email.
+                The account is already registered! Verify your email.
                 <br /> Sometimes emails can take some to reach the destination.
                 <br /> Please be patient! If this method fails repeatedly contact your mentor!!
                 """]
-            
                 return message('signup error', msg, request)
             
             # main show starts from here:
             # ===========================
             else:
                 token = addons.generate_url()
-                tuser = Temp_user.objects.create(uname=request.POST['username'], password=make_password(request.POST['password1']), email=request.POST['email'], token=token)
-                reciever = [request.POST["email"]]
+                tuser = Temp_user.objects.create(uname=uid, password=make_password(password1), email=email, token=token)
+                receiver = [request.POST["email"]]
                 
                 # changing things in student/teacher table
                 if Student.objects.filter(id=tuser.uname).exists():
@@ -112,9 +117,9 @@ def signup(request):
                 else:
                     user = Teacher.objects.update(is_registered=True)
                 
-                if addons.varification_mailto(reciever, token):                   
+                if addons.verification_mailto(receiver, token):                   
                     img = '<img src="' + addons.get_cute_image() + '" height="200px" width="200px" alt="a cute animal image">'
-                    return render(request, 'accounts/resend.html', {'title':'email varifiaction','case':'first_time', 'token':token, 'cute_image': img})
+                    return render(request, 'accounts/resend.html', {'title':'email verification','case':'first_time', 'token':token, 'cute_image': img})
                 else:
                     responce = ["ERROR! mail not sent"] 
                 return message('signed up', responce, request)
@@ -126,7 +131,7 @@ def signup(request):
 
 
 def activate(request):
-    title = "email_varifiaction" # used to display as page title, nothing special!
+    title = "email_verification" # used to display as page title, nothing special!
     path = str(request.path)
     key = path.split("validate/", 1)[1]
     error = ""
@@ -135,7 +140,6 @@ def activate(request):
         tuser = Temp_user.objects.get(token=key)
         
         if tuser.varify_time(timezone.now()): # checking whether the link is valid!
-            
             # check if token is a reset token and do reset if yes
             # reset token starts with "reset"
             login = '"' + reverse('login') + '"'
@@ -145,14 +149,22 @@ def activate(request):
                 user.password = tuser.password # Using this since django will re-hash the hashed password => Thus explicitely, re mentioning it!
                 user.is_active = True
                 user.save()
+                
                 # changing things in student/teacher table
                 if Student.objects.filter(id=tuser.uname).exists():
-                    user = Student.objects.update(is_varified=True)
+                    user = Student.objects.get(id=tuser.uname)
+                    user.is_verified=True
+                    # creating FormFills
+                    forms = FormFills.objects.create(student=tuser.uname)
+
                 else:
-                    user = Teacher.objects.update(is_varified=True)
+                    user = Teacher.objects.get(id=tuser.uname)
+                    user.is_verified=True
+                user.save()
+                
                 msg = [
                 "Welcome at NiT Student-Teacher Portal", 
-                """Thanks for varifying your email! try <a href=""" + login + """>logging in! </a>"""
+                """Thanks for verifying your email! try <a href=""" + login + """>logging in! </a>"""
                 ]
             
             else:
@@ -218,12 +230,12 @@ def reset(request):
                 signup_url = reverse_lazy('signup')
                 msg = ["Well, register first, even before you forget your account password!!",
                 '<h5> <a href="'+str(signup_url)+'">Sign up </h5>']
-            elif not obj.is_varified:
-                msg = "Frist varify your account"
+            elif not obj.is_verified:
+                msg = "First verify your account"
             elif password1 != password2:
                 error = 'Password must match'
             elif len(password1) < 2:
-                error = "Passwords must be atleast 8 charecters!"
+                error = "Passwords must be atleast 8 characters!"
             elif password1.isalpha():
                 error = "mix in some numbers with the password"
             elif not obj.email == email:
@@ -238,7 +250,7 @@ def reset(request):
             else:
                 Temp_user.objects.create(uname=obj.id, password=password1, email=obj.email, token=reset_token, time=timezone.now())
             receiver = [obj.email]
-            if addons.varification_mailto(receiver, reset_token):
+            if addons.verification_mailto(receiver, reset_token):
                 msg = ["If you entered correct Name, Id and your registered email id", 
                 "expect to receive an email to reset password!",
                 ]
