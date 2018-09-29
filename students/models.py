@@ -86,7 +86,7 @@ class Class10(models.Model):
     passing_year = models.CharField(default="0000", max_length=4)
     school_address = models.CharField(default="", max_length=100)
     score = models.FloatField(default=0.0)
-    achivements = models.CharField(default="", max_length=1000)
+    achievements = models.CharField(default="", max_length=1000)
 
 
 class Class12(models.Model):
@@ -96,7 +96,7 @@ class Class12(models.Model):
     passing_year = models.CharField(default="0000", max_length=4)
     school_address = models.CharField(default="", max_length=100)
     score = models.FloatField(default=0.0)
-    achivements = models.CharField(default="", max_length=1000)
+    achievements = models.CharField(default="", max_length=1000)
 
 
 class FormFills(models.Model):

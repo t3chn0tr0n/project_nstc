@@ -7,8 +7,6 @@ from django.urls import reverse_lazy
 
 from . import addons
 from .models import FormFills, Student
-from collections import UserDict
-from macpath import pathsep
 from students.models import Class10, FormFills
 
 
@@ -28,33 +26,33 @@ def general_details(request):
             error = "Can't Overwrite existing data!"
         else:
             stud = Students.objects.get(id=request.user.username)
-            dob = request.POST['dob'].split()
-            blood_type = request.POST['blood_type'].split()
+            dob = request.POST['dob'].strip()
+            blood_type = request.POST['blood_type'].strip()
             # HOUSE DETAILS
-            guard = request.POST['guard'].split()
-            perm_add = request.POST['perm_add'].split()
-            loc_guard = request.POST['loc_guard'].split()
-            loc_add = request.POST['loc_add'].split()
+            guard = request.POST['guard'].strip()
+            perm_add = request.POST['perm_add'].strip()
+            loc_guard = request.POST['loc_guard'].strip()
+            loc_add = request.POST['loc_add'].strip()
             # CONTACT NOs
-            land_phone = request.POST['land_phone'].split()
-            g_mob_no = request.POST['g_mob_no'].split()
-            mob_no = request.POST['mob_no'].split()
+            land_phone = request.POST['land_phone'].strip()
+            g_mob_no = request.POST['g_mob_no'].strip()
+            mob_no = request.POST['mob_no'].strip()
             # SCHOOL DETAILS
             # Class 10
-            sc10_name = request.POST['sc10_name'].split()
-            sc10_med = request.POST['sc10_med'].split()
-            sc10_marks = request.POST['sc10_marks'].split()
-            sc10_year = request.POST['sc10_year'].split()
-            sc10_add = request.POST['sc10_add'].split()
+            sc10_name = request.POST['sc10_name'].strip()
+            sc10_med = request.POST['sc10_med'].strip()
+            sc10_marks = request.POST['sc10_marks'].strip()
+            sc10_year = request.POST['sc10_year'].strip()
+            sc10_add = request.POST['sc10_add'].strip()
             # Class 12
-            sc12_name = request.POST['sc12_name'].split()
-            sc12_med = request.POST['sc12_med'].split()
-            sc12_marks = request.POST['sc12_marks'].split()
-            sc12_year = request.POST['sc12_year'].split()
-            sc12_add = request.POST['sc12_add'].split()
+            sc12_name = request.POST['sc12_name'].strip()
+            sc12_med = request.POST['sc12_med'].strip()
+            sc12_marks = request.POST['sc12_marks'].strip()
+            sc12_year = request.POST['sc12_year'].strip()
+            sc12_add = request.POST['sc12_add'].strip()
             # DIPLOMA SCORE
             if stud.is_lateral:
-                dip_score = request.POST['dip_score'].split()
+                dip_score = request.POST['dip_score'].strip()
             else:
                 dip_score = -1
 
