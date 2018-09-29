@@ -19,9 +19,23 @@ class Student(models.Model):
     email = models.EmailField(max_length=70)
     is_lateral = models.BooleanField(default=False)
     
+    # returns a dictionary object of student, ready to be serialized
     def get_student_data(self):
-        return Details.objects.get(card_no=self.id)
-
+        details = {
+            'id' : self.id, 
+            'name' : self.name, 
+            'mentor' : self.mentor, 
+            'roll_no' : self.roll_no, 
+            'registration_no' : self.registration_no, 
+            'admission_no' : self.admission_no, 
+            'stream' : self.stream, 
+            'batch' : self.batch, 
+            'is_registered' : self.is_registered, 
+            'is_verified' : self.is_verified, 
+            'email' : self.email, 
+            'is_lateral' : self.is_lateral
+        }
+        return details
     def get_marks_of_sem(self, sem):
         return SemMarks.objects.get(student_id=self.id, sem_no=sem)
         

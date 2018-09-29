@@ -1,17 +1,14 @@
-from builtins import ValueError, object
-
+from builtins import ValueError
 from django.contrib.auth.decorators import login_required
 from django.forms import ValidationError
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
+import decimal
 from . import addons
 from .models import FormFills, Student
 from students.models import Class10, FormFills
 
-
-# TODO:
-# 1. school 10 and 12
 
 def demo(request):
     return render(request, 'students/details.html/')
@@ -19,9 +16,13 @@ def demo(request):
 
 @login_required(login_url=reverse_lazy('login'))
 def general_details(request):
+    details = addons.get_idcard_details(request.user)
+    if  not details:
+        error = "Error getting student details"
+        
     if request.method == "POST":
         error = ""
-        filled_forms = FormFills.get(id=request.user.username)
+        filled_forms = FormFills.get(id=request.user.username.username)
         if filled_forms.is_gen_details_filled:
             error = "Can't Overwrite existing data!"
         else:
@@ -91,6 +92,8 @@ def general_details(request):
                 error = "Well, your board marks are fishy! contact Mentor or reCheck!"
             
             if not error:
+                if blood_type == "H/H or OH":
+                    blood_type = "OH"
                 stud = Student.object.get(id=request.user.username)
                 details = Details.object.create(card_no=request.user.username, dob=dob, blood_grp=blood_type, guardian=guard, perm_add=perm_add, loc_guardian=loc_guard, loc_add=loc_add, land_phone=land_phone, guardian_mobile_no=g_mob_no, mobile_no=mob_no)
                 if stud.is_lateral:
@@ -109,12 +112,10 @@ def general_details(request):
         details = addons.get_idcard_details(request.user.username)
         details['title'] = 'Student Details'
         details['is_lateral'] = stud.is_lateral
-
         if filled_forms.is_gen_details_filled:
             details['filled'] = True
         else:
             details['filled'] = False
-
         return render(request, 'students/details.html/', details)
 
 
@@ -160,4 +161,3 @@ def univ_details(request):
             'cute_img': '<img src="http://www.404notfound.fr/assets/images/pages/img/androiddev101.jpg" />'
         }
         return render(request, 'accounts/message.html', d) 
-

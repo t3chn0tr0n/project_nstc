@@ -11,7 +11,7 @@ class Temp_user(models.Model):
     def __str__(self):
             return self.uname
 
-    def varify_time(self, now):
+    def verify_time(self, now):
         result = True
         time_delta = now - self.time
         if time_delta.days > 0:

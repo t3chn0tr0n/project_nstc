@@ -1,0 +1,14 @@
+<nav class="navbar border border-info" style="margin: 0; padding: 0;">
+    <div class="container">
+        <span class="navbar text-info text-monospace" style="font-size: 18px;" >
+            {% load static %}
+            <img src="{% static 'img/favicon.ico/' %}" class="d-inline-block align-top" alt="" width="50" height="50" />
+            ONLINE STUDENT-TEACHER PORTAL
+        </span>
+
+        <span class="navbar"> 
+            <span class="text-success"> Welcome,&nbsp;</span>
+            {{request.user.first_name}}
+        </span>
+    </div>
+</nav>

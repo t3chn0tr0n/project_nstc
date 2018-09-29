@@ -8,13 +8,10 @@ from django.utils import timezone
 
 from . import addons
 from .models import Temp_user
+from csv import excel
 from students.models import FormFills, Student
 from teachers.models import Teacher
 
-
-# TODO:
-# 1. strip all spaces from all form fields
-# 2. No spaces in password fields
 
 def login(request):
     if request.user.is_authenticated:
@@ -139,14 +136,24 @@ def activate(request):
     if Temp_user.objects.filter(token=key).exists():
         tuser = Temp_user.objects.get(token=key)
         
-        if tuser.varify_time(timezone.now()): # checking whether the link is valid!
+        if tuser.verify_time(timezone.now()): # checking whether the link is valid!
             # check if token is a reset token and do reset if yes
             # reset token starts with "reset"
             login = '"' + reverse('login') + '"'
             if 'reset' not in tuser.token:
                 # Adding to user
-                user = User.objects.create_user(username=tuser.uname, password=tuser.password, email=tuser.email)
-                user.password = tuser.password # Using this since django will re-hash the hashed password => Thus explicitely, re mentioning it!
+                # getting the user's name and desig
+                try:
+                    stud = Student.objects.get(id=tuser.uname)
+                    name = stud.name
+                    desig = "s" # s for student
+                except:
+                    teach = Teacher.objects.get(id=tuser.uname)
+                    name = teach.name
+                    desig = "t" # t for teacher
+
+                user = User.objects.create_user(username=tuser.uname, first_name=name, last_name=desig, password=tuser.password, email=tuser.email)
+                user.password = tuser.password # Using this since django will re-hash the hashed password => Thus explicitly, re mentioning it!
                 user.is_active = True
                 user.save()
                 
