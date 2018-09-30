@@ -100,8 +100,6 @@ def general_details(request):
                     "Well, your board marks are fishy! contact Mentor or reCheck!"]
 
             if not error:
-                if blood_type == "H/H or OH":
-                    blood_type = "OH"
                 stud = Student.object.get(id=request.user.username)
                 details = Details.object.create(card_no=request.user.username, dob=dob, blood_grp=blood_type, guardian=guard, perm_add=perm_add,
                                                 loc_guardian=loc_guard, loc_add=loc_add, land_phone=land_phone, guardian_mobile_no=g_mob_no, mobile_no=mob_no)
