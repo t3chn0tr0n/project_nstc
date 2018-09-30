@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US" {% if close %} onload="setTimeout (window.close, 1);" {% endif %}> 
+<html lang="en-US" {% if not error %} onload="setTimeout (window.close, 1);" {% endif %}> 
     <!-- this onload=close() only works in Chrome!-->
 
 <head>
@@ -16,9 +16,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 
-<!-- a minified css to fit things in the middle, vertically! -->
+<!-- a minified css: fits things in the middle, vertically! -->
 <style> 
-    .outer{display:table;position:absolute;height:100%;width:100%}.middle{display:table-cell;vertical-align:middle}.inner{margin-left:auto;margin-right:auto;width:auto}
+    .outer{display:table;position:absolute;height:79%;width:100%}.middle{display:table-cell;vertical-align:middle}.inner{margin-left:auto;margin-right:auto;width:auto}
 </style>
 
 <body>
@@ -27,8 +27,17 @@
         <div class="middle">
             <div class="inner">
                 <center> 
-                    {% if error and not close %}
-                        {% for line in error %}
+                    {% if error %}
+                        <h2 class="text-danger"><b>ERROR</b></h2>
+                    {% elif success %}
+                        <h2 class="text-success"><b>Saved Successfully!</b></h2>
+                    {% elif fof %}
+                        {% load static %}
+                        <img src="{% static 'img/404.jpg' %}" style="width: 60%; height: auto;" alt="...and 404 occurred!"/>
+                    {% endif %}
+
+                    {% if messages %}
+                        {% for line in messages %}
                             <h3> {{ line | safe }} </h3>
                             <br />
                         {% endfor %}
@@ -38,5 +47,12 @@
         </div>
     </div> 
 </body>
+
+<footer class=" bg-primary text-light container-fluid" style="position: absolute; bottom: 0; padding: 15px;">
+    <center>
+            © Narula Institute of Technology, {% now "Y" %}. <br />
+            Created with ❤ by ASA for <i>Narula Institute Of Technology</i> 
+    </center>
+</footer>
 
 </html>
