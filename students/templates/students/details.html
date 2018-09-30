@@ -223,8 +223,7 @@
             </div>
             <label class="col-sm-2 col-form-label">Year of Passing</label>
             <div class="col-sm">
-                <input required name="sc10_year" type="number" min="2000" max="{{curr_year|add:'-2'}}" step="1" class="form-control" {% if
-                    sc10_year %} value="{{sc10_year}}" readonly {% endif %} />
+                <input required name="sc10_year" type="number" min="2000" max="{{curr_year|add:'-2'}}" step="1" class="form-control" {% if sc10_year %} value="{{sc10_year}}" readonly {% endif %} />
             </div>
         </div>
 
@@ -244,8 +243,7 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> School Name-XII </label>
             <div class="col-sm-4">
-                <input required type="text" name="sc12_name" class="form-control" {% if sc12_name %} value="{{sc12_name}}" readonly {% endif
-                    %} />
+                <input required type="text" name="sc12_name" class="form-control" {% if sc12_name %} value="{{sc12_name}}" readonly {% endif %} />
             </div>
 
             <label class="col-sm-2 col-form-label"> Medium of Education </label>
