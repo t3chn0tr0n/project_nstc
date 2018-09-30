@@ -12,40 +12,41 @@ class Student(models.Model):
     roll_no = models.IntegerField(default=000)
     registration_no = models.IntegerField(null=True, blank=True)
     admission_no = models.IntegerField(null=True, blank=True)
-    stream = models.CharField(default=" ", max_length=20) # stores as CSE, ECE
-    batch = models.CharField(default="", max_length=12) # stores BAT20152019
-    is_registered = models.BooleanField(default=False) 
+    stream = models.CharField(default=" ", max_length=20)  # stores as CSE, ECE
+    batch = models.CharField(default="", max_length=12)  # stores BAT20152019
+    is_registered = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     email = models.EmailField(max_length=70)
     is_lateral = models.BooleanField(default=False)
-    
+
     # returns a dictionary object of student, ready to be serialized
     def get_student_data(self):
         details = {
-            'id' : self.id, 
-            'name' : self.name, 
-            'mentor' : self.mentor, 
-            'roll_no' : self.roll_no, 
-            'registration_no' : self.registration_no, 
-            'admission_no' : self.admission_no, 
-            'stream' : self.stream, 
-            'batch' : self.batch, 
-            'is_registered' : self.is_registered, 
-            'is_verified' : self.is_verified, 
-            'email' : self.email, 
-            'is_lateral' : self.is_lateral
+            'id': self.id,
+            'name': self.name,
+            'mentor': self.mentor,
+            'roll_no': self.roll_no,
+            'registration_no': self.registration_no,
+            'admission_no': self.admission_no,
+            'stream': self.stream,
+            'batch': self.batch,
+            'is_registered': self.is_registered,
+            'is_verified': self.is_verified,
+            'email': self.email,
+            'is_lateral': self.is_lateral
         }
         return details
+
     def get_marks_of_sem(self, sem):
         return SemMarks.objects.get(student_id=self.id, sem_no=sem)
-        
+
 
 class Details(models.Model):
     card_no = models.CharField(default=" ", max_length=15, primary_key=True)
     dob = models.DateField(default=timezone.now)
     blood_grp = models.CharField(default="", max_length=3)
     guardian = models.CharField(default="", max_length=50)
-    perm_add = models.CharField(default="", max_length=50) # permanent address
+    perm_add = models.CharField(default="", max_length=50)  # permanent address
     loc_guardian = models.CharField(default="", max_length=50)
     loc_add = models.CharField(default="", max_length=50)
     land_phone = models.IntegerField(null=True)
@@ -75,10 +76,10 @@ class ExtracurricularActivity(models.Model):
 
 
 class SeminarWorkshop(models.Model):
-   attendee = models.CharField(default=" ", max_length=15, primary_key=True)
-   name = models.CharField(default="", max_length=50)
-   date = models.DateField(default=timezone.now)
-   organiser = models.CharField(default="", max_length=50)
+    attendee = models.CharField(default=" ", max_length=15, primary_key=True)
+    name = models.CharField(default="", max_length=50)
+    date = models.DateField(default=timezone.now)
+    organiser = models.CharField(default="", max_length=50)
 
 
 class Contributions(models.Model):
@@ -88,7 +89,7 @@ class Contributions(models.Model):
     wall_magazine_paper = models.CharField(default="", max_length=1000)
     wall_magazine_event = models.CharField(default="", max_length=1000)
     technical_academic_awards = models.CharField(default="", max_length=1000)
-    paper_publication   = models.CharField(default="", max_length=500)
+    paper_publication = models.CharField(default="", max_length=500)
     oncampus = models.CharField(default="", max_length=1000)
     offcampus = models.CharField(default="", max_length=1000)
 

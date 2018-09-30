@@ -1,12 +1,14 @@
 from builtins import ValueError
+
 from django.contrib.auth.decorators import login_required
+from django.contrib.messages.api import success
 from django.forms import ValidationError
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
-import decimal
 from . import addons
 from .models import FormFills, Student
+from students.addons import get_univ_details
 from students.models import Class10, FormFills
 
 
@@ -17,14 +19,15 @@ def demo(request):
 @login_required(login_url=reverse_lazy('login'))
 def general_details(request):
     details = addons.get_idcard_details(request.user)
-    if  not details:
-        error = "Error getting student details"
-        
+    if not details:
+        error = ["Error getting student details"]
+
     if request.method == "POST":
         error = ""
-        filled_forms = FormFills.get(id=request.user.username.username)
+        filled_forms = FormFills.objects.get(
+            student=request.user.username.username)
         if filled_forms.is_gen_details_filled:
-            error = "Can't Overwrite existing data!"
+            error = ["Can't Overwrite existing data!"]
         else:
             stud = Students.objects.get(id=request.user.username)
             dob = request.POST['dob'].strip()
@@ -58,58 +61,80 @@ def general_details(request):
                 dip_score = -1
 
             if '' in [dob, blood_type, guard, perm_add, g_mob_no, mob_no, sc10_name, sc10_med, sc10_marks, sc10_year, sc10_add, sc12_name, sc12_med, sc12_marks, sc12_year, sc12_add, dip_score]:
-                error = "All Compulsory Fields must be filled!"
-            
+                error = ["All Compulsory Fields must be filled!"]
+
             # land phone no verification
             try:
                 land_phone = int(land_phone)
                 if len(str(land_phone)) > 11:
-                    error = "Land phone number too long!"
+                    error = ["Land phone number too long!"]
                 elif len(str(land_phone)) == 8:
-                    error = ["Please provide STD code for Land phone.", "example: 03322222222"]
+                    error = ["Please provide STD code for Land phone.",
+                             "example: 03322222222"]
                 elif len(str(land_phone)) < 8:
-                    error = "Land phone number too short!"
+                    error = ["Land phone number too short!"]
             except ValueError:
-                error = "land phone number can't contain charecters!"
+                error = ["land phone number can't contain characters!"]
 
             # mobile no verification
             try:
                 g_mob_no = int(g_mob_no)
                 mob_no = int(mob_no)
-                
+
                 if len(str(mob_no)) != 10 or len(str(g_mob_no)) != 10:
-                    error = "Mobile Number must be equal to 10 digits!"
+                    error = ["Mobile Number must be equal to 10 digits!"]
             except ValueError:
-                error = ["Mobile phone number can't contain characters!", "Tip: No need for country code: (eg. +91 in India)"]
+                error = ["Mobile phone number can't contain characters!",
+                         "Tip: No need for country code: (eg. +91 in India)"]
 
             if sc12_year - sc10_year < 2:
-                error = "How did you pass class 10 and 12 in less then 2 years? Magic??"
+                error = [
+                    "How did you pass class 10 and 12 in less then 2 years? Magic??"]
 
             elif sc10_marks > 100 or sc12_marks > 100:
-                error = "How did you get more than 100 in boards? Good handwriting?"
+                error = [
+                    "How did you get more than 100 in boards? Good handwriting?"]
 
             elif sc10_marks < 30 or sc12_marks < 30:
-                error = "Well, your board marks are fishy! contact Mentor or reCheck!"
-            
+                error = [
+                    "Well, your board marks are fishy! contact Mentor or reCheck!"]
+
             if not error:
                 if blood_type == "H/H or OH":
                     blood_type = "OH"
                 stud = Student.object.get(id=request.user.username)
-                details = Details.object.create(card_no=request.user.username, dob=dob, blood_grp=blood_type, guardian=guard, perm_add=perm_add, loc_guardian=loc_guard, loc_add=loc_add, land_phone=land_phone, guardian_mobile_no=g_mob_no, mobile_no=mob_no)
+                details = Details.object.create(card_no=request.user.username, dob=dob, blood_grp=blood_type, guardian=guard, perm_add=perm_add,
+                                                loc_guardian=loc_guard, loc_add=loc_add, land_phone=land_phone, guardian_mobile_no=g_mob_no, mobile_no=mob_no)
                 if stud.is_lateral:
                     details.diploma_score = dip_score
                     details.save()
-                sc10 = Class10.objects.create(student=request.user.username, medium=sc10_med, school_name=sc10_name, passing_year=sc10_year, school_address=sc10_add, score=sc10_marks)
-                sc10 = Class12.objects.create(student=request.user.username, medium=sc12_med, school_name=sc12_name, passing_year=sc12_year, school_address=sc12_add, score=sc12_marks)
+                sc10 = Class10.objects.create(student=request.user.username, medium=sc10_med,
+                                              school_name=sc10_name, passing_year=sc10_year, school_address=sc10_add, score=sc10_marks)
+                sc12 = Class12.objects.create(student=request.user.username, medium=sc12_med,
+                                              school_name=sc12_name, passing_year=sc12_year, school_address=sc12_add, score=sc12_marks)
                 forms = FormFills.objects.get(student=request.user.username)
                 form.is_gen_details_filled = True
                 form.save()
-   
+                sc10.save()
+                sc12.save()
+                d = {
+                    'title': "Form saved!",
+                    'success': True,
+                }
+            else:
+                d = {
+                    'title': "ERROR",
+                    'messages': error,
+                    'error': True
+                }
+            return render(request, 'message.html', d)
+
     # for GET request
     else:
-        filled_forms = FormFills.get(id=request.user.username)
-        stud = Students.objects.get(id=request.user.username)
-        details = addons.get_idcard_details(request.user.username)
+        filled_forms = FormFills.objects.get(student=request.user.username)
+        stud = Student.objects.get(id=request.user.username)
+        details = {**addons.get_idcard_details(
+            request.user.username), **addons.get_univ_details(request.user.username)}
         details['title'] = 'Student Details'
         details['is_lateral'] = stud.is_lateral
         if filled_forms.is_gen_details_filled:
@@ -127,37 +152,34 @@ def univ_details(request):
         reg_no = request.POST['reg_no'].strip()
 
         if admin_no is '' or reg_no is '':
-            error = ["Who has blank admission and/or Registration numbers?", "stop fooling arround"]
+            error = [
+                "Who has blank admission and/or Registration numbers?", "stop fooling arround"]
         try:
             admin_no = int(admin_no)
             reg_no = int(reg_no)
         except ValueError:
-            error = "Enter only Whole Numbers"
-        
+            error = ["Enter only Whole Numbers"]
+
         user = request.user.username
         try:
             stud = Student.objects.get(id=user)
         except:
-            error = "ERROR finding the student"
+            error = ["ERROR finding the student"]
 
         # If already filled, fail loudly!
         if stud.admission_no or stud.registration_no:
-            error = "Can't Overwrite existing data!"
+            error = ["Can't Overwrite existing data!"]
 
         if not error:
             stud.admission_no = admin_no
             stud.registration_no = reg_no
             stud.save()
-            error = "Entry saved successfully!"
+            return render(request, 'message.html', {'title': 'Saved!', 'success': True})
+        return render(request, 'message.html', {'title': 'ERROR', 'error': True,  'messages': error})
 
-        _ = []
-        if type(error) != type(_):
-            error = [error]
-        return render(request, 'accounts/message.html', {'messages': error}) 
-        
     else:
         d = {
             'title': '404 Error',
-            'cute_img': '<img src="http://www.404notfound.fr/assets/images/pages/img/androiddev101.jpg" />'
+            'fof': True
         }
-        return render(request, 'accounts/message.html', d) 
+        return render(request, 'message.html', d)

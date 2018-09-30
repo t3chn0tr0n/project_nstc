@@ -1,60 +1,80 @@
-{% extends 'students/main.html/' %}
-{% block body %}
+{% extends 'students/main.html/' %} {% block body %}
 
 <div class="container">
     <!-- FIXED DETAILS -->
     <div class="container jumbotron" style="padding:1.5rem; padding-bottom: 0.3rem; margin-bottom:0rem;">
         <div class="form-group row">
-            <label class="col-sm-2"> <b> Name: </b> </label>
-            <label class="col-sm-4"> abc{{name}} </label>
+            <label class="col-sm-2">
+                <b> Name: </b>
+            </label>
+            <label class="col-sm-4"> {{name}} </label>
         </div>
         <div class="form-group row">
-            <label class="col-sm-2"> <b> Card No.: </b> </label>
-            <label class="col-sm-4"> abc{{card_no}} </label>
+            <label class="col-sm-2">
+                <b> Card No.: </b>
+            </label>
+            <label class="col-sm-4"> {{card_no}} </label>
 
-            <label class="col-sm-2"> <b> Roll No.: </b></label>
-            <label class="col-sm-2"> abc{{roll}} </label>
+            <label class="col-sm-2">
+                <b> Roll No.: </b>
+            </label>
+            <label class="col-sm-2"> {{roll}} </label>
         </div>
         <div class="form-group row">
-            <label class="col-sm-2"> <b> Department: </b> </label>
-            <label class="col-sm-4"> abc{{dept}} </label>
+            <label class="col-sm-2">
+                <b> Department: </b>
+            </label>
+            <label class="col-sm-4"> {{dept}} </label>
 
-            <label class="col-sm-2"> <b> Mentor: </b> </label>
-            <label class="col-sm-2"> abc{{mentor}} </label>
+            <label class="col-sm-2">
+                <b> Mentor: </b>
+            </label>
+            <label class="col-sm"> {{mentor}} </label>
         </div>
     </div>
 
     {% if not filled %}
-        <div class="text-info">ℹ <i><b>All fields are mandatory</b> unless otherwise mentioned and changes made will be <b>Permanent and Irrevesible!</b></i></div> 
+    <div class="text-info">ℹ
+        <i>
+            <b>All fields are mandatory</b> unless otherwise mentioned and changes made will be
+            <b>Permanent and Irrevesible!</b>
+        </i>
+    </div>
     {% endif %}
-    
-    <br /> <br />
+
+    <br />
+    <br />
+    <!-- University Details -->
     <form method="POST" action="{% url 'univ_details' %}" target="{% url 'univ_details' %}">
         <!-- <form> -->
         {% csrf_token %}
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Admission No.</label>
             <div class="col-sm-4">
-                <input required name="admin_no" class="form-control" {% if admin_no %} value="{{ admin_no }}" {% else %} placeholder="Enter once issued" {% endif %}/>
+                <input required name="admin_no" class="form-control" {% if admin_no %} value="{{ admin_no }}" {% else %} placeholder="Enter once issued"
+                    {% endif %}/>
             </div>
 
             <label class="col-sm-2 col-form-label">Registration No.</label>
             <div class="col-sm-4">
-                <input required name="reg_no" class="form-control" {% if reg_no %} value="{{ reg_no }}" {% else %} placeholder="Enter once issued" {% endif %}/>
+                <input required name="reg_no" class="form-control" {% if reg_no %} value="{{ reg_no }}" {% else %} placeholder="Enter once issued"
+                    {% endif %}/>
             </div>
         </div>
 
         <!-- submit button -->
         {% if not reg_no and not admin_no %}
-            <div align="right">                
-                <button id="submit1" type="submit" class="btn btn-success btn-sm"> Submit changes </button>
-                <br />
-                <span class="font-italic text-danger">[Note: Please RE-CKECK before submitting]</span>               
-            </div>
+        <div align="right">
+            <button id="submit1" type="submit" class="btn btn-success btn-sm"> Submit changes </button>
+            <br />
+            <span class="font-italic text-danger">[Note: Please RE-CKECK before submitting]</span>
+        </div>
         {% endif %}
     </form>
 
-    <br /> <hr > <br />
+    <br />
+    <hr>
+    <br />
 
     <form>
         {% csrf_token %}
@@ -65,60 +85,59 @@
             <div class="col-sm-4">
                 <input required name="dob" type="date" class="form-control" {% if dob %} value="{{ dob }}" readonly {% endif %}/>
             </div>
-            
+
             <label class="col-sm-2 col-form-label"> Blood Group </label>
-            <div class="col-sm"> 
+            <div class="col-sm">
                 {% if blood_type %}
-                    <input type="text" class="form-control" readonly value="{{blood_type}}"/>
-                {% else %}
-                    <select name="blood_type" class="custom-select">
-                        <option disabled selected>Select Blood Group </option>
-                        <option> A+ </option>
-                        <option> B+</option>
-                        <option> AB+ </option>
-                        <option> O+ </option>
-                        <option> A- </option>
-                        <option> B- </option>
-                        <option> AB- </option>
-                        <option> O- </option>
-                        <option> H/H or OH </option>
-                    </select>
+                <input type="text" class="form-control" readonly value="{{blood_type}}" /> {% else %}
+                <select name="blood_type" class="custom-select">
+                    <option disabled selected>Select Blood Group </option>
+                    <option> A+ </option>
+                    <option> B+</option>
+                    <option> AB+ </option>
+                    <option> O+ </option>
+                    <option> A- </option>
+                    <option> B- </option>
+                    <option> AB- </option>
+                    <option> O- </option>
+                    <option> H/H or OH </option>
+                </select>
                 {% endif %}
             </div>
         </div>
-        
-        <br /> <hr > <br />
-        
+
+        <br />
+        <hr>
+        <br />
+
         <!-- HOUSE DETAILS-->
         <!--Permanent-->
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> Guardian Name </label>
-            <div class="col-sm-4"> 
-                <input required name="guard" class="form-control" {% if guard %} value="{{guard}}" readonly {% else %} placeholder="Enter your Guardian Name" {% endif %}/> 
+            <div class="col-sm-4">
+                <input required name="guard" class="form-control" {% if guard %} value="{{guard}}" readonly {% else %} placeholder="Enter your Guardian Name"
+                    {% endif %}/>
             </div>
             <label class="col-sm-2 col-form-label"> Permanent Address </label>
-            <div class="col-sm"> 
-                <textarea required name="perm_add" class="form-control"
-                    {% if perm_add %}
-                    readonly>{{perm_add}}
+            <div class="col-sm">
+                <textarea required name="perm_add" class="form-control" {% if perm_add %} readonly>{{perm_add}}
                     {% else %}
                         >
                     {% endif %} 
                 </textarea>
             </div>
-        </div> 
+        </div>
 
         <!--Local-->
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> Local Guardian (if any) </label>
-            <div class="col-sm-4"> 
-                <input name="loc_guard" class="form-control" {% if loc_guard %} value="{{loc_guard}}" readonly {% else %} placeholder="Enter your Local Guardian Name" {% endif %}/>
+            <div class="col-sm-4">
+                <input name="loc_guard" class="form-control" {% if loc_guard %} value="{{loc_guard}}" readonly {% else %} placeholder="Enter your Local Guardian Name"
+                    {% endif %}/>
             </div>
             <label class="col-sm-2 col-form-label"> Local Address (if any) </label>
-            <div class="col-sm"> 
-                <textarea name="loc_add" class="form-control"
-                {% if loc_add %}
-                    readonly>{{loc_add}}
+            <div class="col-sm">
+                <textarea name="loc_add" class="form-control" {% if loc_add %} readonly>{{loc_add}}
                 {% else %}
                     >
                 {% endif %} 
@@ -129,181 +148,164 @@
         <!-- contact nos -->
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Landline No.(if any)</label>
-            <div class="col-sm-4"> 
-                <input class="form-control" {% if land_phone %} value="{{land_phone}}" readonly{% else %} placeholder="STD code required! (eg. 033 for Kolkata)" {% endif %}/> 
+            <div class="col-sm-4">
+                <input class="form-control" {% if land_phone %} value="{{land_phone}}" readonly{% else %} placeholder="STD code required! (eg. 033 for Kolkata)"
+                    {% endif %}/>
             </div>
 
             <label class="col-sm-2 col-form-label">Guardian Mobile</label>
-            <div class="col-sm"> 
-                <input required class="form-control" {% if g_mob_no %} value="{{ g_mob_no }}" readonly {% else %} placeholder="Your Guardian Contact No." {% endif %}/> 
+            <div class="col-sm">
+                <input required class="form-control" {% if g_mob_no %} value="{{ g_mob_no }}" readonly {% else %} placeholder="Your Guardian Contact No."
+                    {% endif %}/>
             </div>
 
         </div>
 
-        <br /> <hr > <br /> <br />
+        <br />
+        <hr>
+        <br />
+        <br />
         <!-- Student CONTACT DETAILS-->
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Mobile No.</label>
-            <div class="col-sm-4"> 
-                <input required name="mob_no" class="form-control" 
-                    {% if mob_no %} 
-                        value="{{ mob_no }}" readonly/> 
-                        <span class="text-info">ℹ<i> Mobile No. can changed in Profile Settings!</i></span>
-                    {% else %} 
-                        placeholder="Your Mobile No."/>
-                        <span class="text-info">ℹ<i> Mobile No. can later be changed in Profile Settings!</i></span>
-                    {% endif %}
-                
+            <div class="col-sm-4">
+                <input required name="mob_no" class="form-control" {% if mob_no %} value="{{ mob_no }}" readonly/>
+                <span class="text-info">ℹ
+                    <i> Mobile No. can changed in Profile Settings!</i>
+                </span>
+                {% else %} placeholder="Your Mobile No."/>
+                <span class="text-info">ℹ
+                    <i> Mobile No. can later be changed in Profile Settings!</i>
+                </span>
+                {% endif %}
+
             </div>
             <label class="col-sm-1 col-form-label">Email</label>
-            <div class="col-sm"> 
-                <input readonly type="email" class="form-control" value="{{email}}"/>
+            <div class="col-sm">
+                <input readonly type="email" class="form-control" value="{{email}}" />
             </div>
         </div>
 
 
-        <br /> <hr > <br /> <!--SCHOOL DETAILS-->   
-        {% now 'Y'  as curr_year %}     
+        <br />
+        <hr>
+        <br />
+        <!--SCHOOL DETAILS-->
+        {% now 'Y' as curr_year %}
         <!-- Class X -->
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> School Name-X </label>
-            <div class="col-sm-4"> 
-                <input required type="text" name="sc10_name" class="form-control"
-                    {% if sc10_name%}
-                        value="{{sc10_name}}" readonly
-                    {%endif%}
-                /> 
+            <div class="col-sm-4">
+                <input required type="text" name="sc10_name" class="form-control" {% if sc10_name%} value="{{sc10_name}}" readonly {%endif%}
+                />
             </div>
 
             <label class="col-sm-2 col-form-label"> Medium of Education </label>
-            <div class="col-sm"> 
+            <div class="col-sm">
                 {% if sc10_med %}
-                    <input required type="text" class="form-control" readonly value="{{sc10_med}}"/>
-                {% else %}
-                    <select required name="sc10_med" class="custom-select">
-                        <option disabled selected>Select Medium of Education</option>
-                        <option>English</option>
-                        <option>Bengali</option>
-                        <option>Hindi</option>
-                        <option>Others</option>
-                    </select>
+                <input required type="text" class="form-control" readonly value="{{sc10_med}}" /> {% else %}
+                <select required name="sc10_med" class="custom-select">
+                    <option disabled selected>Select Medium of Education</option>
+                    <option>English</option>
+                    <option>Bengali</option>
+                    <option>Hindi</option>
+                    <option>Others</option>
+                </select>
                 {% endif %}
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Marks Attained(%)</label>
-            <div class="col-sm-4"> 
-                <input required name="sc10_marks" class="form-control" type="number" max="100" min="30" step="0.01"
-                    {% if sc10_marks %}
-                        value="{{sc10_marks}}" readonly
-                    {% endif %}
-                /> 
+            <div class="col-sm-4">
+                <input required name="sc10_marks" class="form-control" type="number" max="100" min="30" step="0.01" {% if sc10_marks %} value="{{sc10_marks}}"
+                    readonly {% endif %} />
             </div>
             <label class="col-sm-2 col-form-label">Year of Passing</label>
-            <div class="col-sm"> 
-                <input required name="sc10_year" type="number" min="2000" max="{{curr_year|add:'-2'}}" step="1" class="form-control"
-                    {% if sc10_year %}
-                        value="{{sc10_year}}" readonly
-                    {% endif %}
-                /> 
+            <div class="col-sm">
+                <input required name="sc10_year" type="number" min="2000" max="{{curr_year|add:'-2'}}" step="1" class="form-control" {% if
+                    sc10_year %} value="{{sc10_year}}" readonly {% endif %} />
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> School Address </label>
-            <div class="col-sm"> 
-                <textarea required name="sc10_add" class="form-control"
-                    {% if sc10_add %}
-                    readonly>{{sc10_add}}
+            <div class="col-sm">
+                <textarea required name="sc10_add" class="form-control" {% if sc10_add %} readonly>{{sc10_add}}
                     {% else %}
                         >
                     {% endif %} 
                 </textarea>
             </div>
-        </div><br />
+        </div>
+        <br />
 
         <!--Class XII-->
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> School Name-XII </label>
-            <div class="col-sm-4"> 
-                <input required type="text" name="sc12_name" class="form-control"
-                    {% if sc12_name %}
-                        value="{{sc12_name}}" readonly
-                    {% endif %}
-                /> 
+            <div class="col-sm-4">
+                <input required type="text" name="sc12_name" class="form-control" {% if sc12_name %} value="{{sc12_name}}" readonly {% endif
+                    %} />
             </div>
 
             <label class="col-sm-2 col-form-label"> Medium of Education </label>
-            <div class="col-sm"> 
+            <div class="col-sm">
                 {% if sc12_med %}
-                    <input type="text" class="form-control" readonly value="{{sc12_med}}"/>
-                {% else %}
-                    <select required name="sc12_med" class="custom-select">
-                        <option disabled selected>Select Medium of Education</option>
-                        <option>English</option>
-                        <option>Bengali</option>
-                        <option>Hindi</option>
-                        <option>Others</option>
-                    </select>
+                <input type="text" class="form-control" readonly value="{{sc12_med}}" /> {% else %}
+                <select required name="sc12_med" class="custom-select">
+                    <option disabled selected>Select Medium of Education</option>
+                    <option>English</option>
+                    <option>Bengali</option>
+                    <option>Hindi</option>
+                    <option>Others</option>
+                </select>
                 {% endif %}
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Marks Attained(%)</label>
-            <div class="col-sm-4"> 
-                <input required name="sc12_marks" class="form-control" type="number" max="100" min="30" step="0.01"
-                    {% if sc12_marks %}
-                        value="{{sc12_marks}}" readonly
-                    {% endif %}
-                /> 
+            <div class="col-sm-4">
+                <input required name="sc12_marks" class="form-control" type="number" max="100" min="30" step="0.01" {% if sc12_marks %} value="{{sc12_marks}}"
+                    readonly {% endif %} />
             </div>
             <label class="col-sm-2 col-form-label">Year of Passing</label>
-            <div class="col-sm"> 
-                <input required name="sc12_year" type="number" min="2000" max="{{curr_year}}" step="1" class="form-control"
-                    {% if sc12_year %}
-                        value="{{sc12_year}}" readonly
-                    {% endif %}
-                /> 
+            <div class="col-sm">
+                <input required name="sc12_year" type="number" min="2000" max="{{curr_year}}" step="1" class="form-control" {% if sc12_year
+                    %} value="{{sc12_year}}" readonly {% endif %} />
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> School Address </label>
-            <div class="col-sm-10"> 
-                <textarea required name="sc12_add" class="form-control"
-                    {% if sc12_add %}
-                    readonly>{{sc12_add}}
+            <div class="col-sm-10">
+                <textarea required name="sc12_add" class="form-control" {% if sc12_add %} readonly>{{sc12_add}}
                     {% else %}
                         >
                     {% endif %} 
                 </textarea>
             </div>
-        </div><br />
-
-        {% if is_diploma %}
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label"> Diploma Score </label>
-                <div class="col-sm-4"> 
-                    <input required name="dip_marks" class="form-control" type="number" max="10" min="0" step="0.01"
-                        {% if dip_marks %}
-                            value="{{dip_marks}}" readonly
-                        {% endif %}
-                    /> 
-                </div>
-            </div><br />
-        {% endif %}
-            
-        {% if not filled %}
+        </div>
+        <br /> {% if is_diploma %}
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Diploma Score </label>
+            <div class="col-sm-4">
+                <input required name="dip_marks" class="form-control" type="number" max="10" min="0" step="0.01" {% if dip_marks %} value="{{dip_marks}}"
+                    readonly {% endif %} />
+            </div>
+        </div>
+        <br /> {% endif %} {% if not filled %}
+        <br />
+        <!-- SUBMIT BUTTON-->
+        <center>
+            <input required class="btn btn-primary" type="submit" value="submit" />
             <br />
-            <!-- SUBMIT BUTTON-->                    
-            <center>
-                <input required  class="btn btn-primary" type="submit" value="submit" /> <br />
-                <span class="font-italic text-danger">[Note: Please RE-CKECK before submitting]</span>
-            </center> <br />
-        {% else %}
-            ℹ <em><span class="text-info">You may contact your mentor if you want to update any details!</span></em>
+            <span class="font-italic text-danger">[Note: Please RE-CKECK before submitting]</span>
+        </center>
+        <br /> {% else %} ℹ
+        <em>
+            <span class="text-info">You may contact your mentor if you want to update any details!</span>
+        </em>
         {% endif %}
     </form>
 </div>
