@@ -18,6 +18,8 @@ def get_idcard_details(id):
             'dept': stud.stream,
             'mentor': stud.mentor.name
         }
+        if stud.is_lateral:
+            details['is_diploma'] = True
         return details
     except:
         return False

@@ -25,12 +25,11 @@ def general_details(request):
 
     if request.method == "POST":
         error = ""
-        filled_forms = FormFills.objects.get(
-            student=request.user.username.username)
+        filled_forms = FormFills.objects.get(student=request.user.username)
         if filled_forms.is_gen_details_filled:
             error = ["Can't Overwrite existing data!"]
         else:
-            stud = Students.objects.get(id=request.user.username)
+            stud = Student.objects.get(id=request.user.username)
             dob = request.POST['dob'].strip()
             blood_type = request.POST['blood_type'].strip()
             # HOUSE DETAILS
@@ -46,13 +45,13 @@ def general_details(request):
             # Class 10
             sc10_name = request.POST['sc10_name'].strip()
             sc10_med = request.POST['sc10_med'].strip()
-            sc10_marks = request.POST['sc10_marks'].strip()
+            sc10_marks = request.POST['sc10_score'].strip()
             sc10_year = request.POST['sc10_year'].strip()
             sc10_add = request.POST['sc10_add'].strip()
             # Class 12
             sc12_name = request.POST['sc12_name'].strip()
             sc12_med = request.POST['sc12_med'].strip()
-            sc12_marks = request.POST['sc12_marks'].strip()
+            sc12_marks = request.POST['sc12_score'].strip()
             sc12_year = request.POST['sc12_year'].strip()
             sc12_add = request.POST['sc12_add'].strip()
             # DIPLOMA SCORE
@@ -87,18 +86,25 @@ def general_details(request):
             except ValueError:
                 error = ["Mobile phone number can't contain characters!",
                          "Tip: No need for country code: (eg. +91 in India)"]
+            try:
+                if int(sc12_year) - int(sc10_year) < 2:
+                    error = [
+                        "How did you pass class 10 and 12 in less then 2 years? Magic??"]
 
-            if sc12_year - sc10_year < 2:
-                error = [
-                    "How did you pass class 10 and 12 in less then 2 years? Magic??"]
+                elif int(sc10_year) - int(dob.split('-')[0]) < 15:
+                    error = [
+                        "Your dob and class 10 passout year doesn't add up!",
+                        'Got multiple promotions in middle school? Contact your Mentor!']
 
-            elif sc10_marks > 100 or sc12_marks > 100:
-                error = [
-                    "How did you get more than 100 in boards? Good handwriting?"]
+                elif float(sc10_marks) > 100 or float(sc12_marks) > 100:
+                    error = [
+                        "How did you get more than 100 in boards? Good handwriting?"]
 
-            elif sc10_marks < 30 or sc12_marks < 30:
-                error = [
-                    "Well, your board marks are fishy! contact Mentor or reCheck!"]
+                elif float(sc10_marks) < 30 or float(sc12_marks) < 30:
+                    error = [
+                        "Well, your board marks are fishy! contact Mentor or reCheck!"]
+            except:
+                error = ["Well year, marks, etc cannot be alphabets"]
 
             if not error:
                 stud = Student.object.get(id=request.user.username)
