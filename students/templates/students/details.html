@@ -37,7 +37,7 @@
     <div class="text-info">ℹ
         <i>
             <b>All fields are mandatory</b> unless otherwise mentioned and changes made will be
-            <b>Permanent and Irrevesible!</b>
+            <b>Permanent and Irreversible!</b>
         </i>
     </div>
     {% endif %}
@@ -269,8 +269,7 @@
             </div>
             <label class="col-sm-2 col-form-label">Year of Passing</label>
             <div class="col-sm">
-                <input required name="sc12_year" type="number" min="2000" max="{{curr_year}}" step="1" class="form-control" {% if sc12_year
-                    %} value="{{sc12_year}}" readonly {% endif %} />
+                <input required name="sc12_year" type="number" min="2000" max="{{curr_year}}" step="1" class="form-control" {% if sc12_year %} value="{{sc12_year}}" readonly {% endif %} />
             </div>
         </div>
 

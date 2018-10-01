@@ -6,9 +6,10 @@ from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 
+import posixpath
 from . import addons
 from .models import Temp_user
-from csv import excel
+from django.http import HttpResponseRedirect
 from students.models import FormFills, Student
 from teachers.models import Teacher
 
@@ -21,18 +22,23 @@ def login(request):
             user = auth.authenticate(username=request.POST['username'].strip(),password=request.POST['password'].strip())
             if user is not None:
                 auth.login(request, user)
-                return redirect('index')
+                next = request.POST['next']
+                return HttpResponseRedirect(next)
             else:
                 error = "username or password invalid! Try signing up if not already!"
                 if Temp_user.objects.filter(uname=request.POST['username']).exists():
                     error = "Please Verify your email before logging in!"
                 
                 return render(request, 'accounts/login.html',{"title":"login_error", 'error':error})
-        else:
-            return render(request, 'accounts/login.html', {"title":"log in"})
+        else: # GET method
+            if request.GET.get('next'):
+                next = request.GET.get('next')
+            else:
+                next = '/index/'
+            return render(request, 'accounts/login.html', {"title":"log in", "next":next})
 
 
-def  logout(request):
+def logout(request):
     if request.method == 'POST':
         auth.logout(request)
         return redirect('index')

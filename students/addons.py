@@ -1,9 +1,9 @@
-from .models import Class10, Class12, Contributions, Details, \
-    ExtracurricularActivity, SeminarWorkshop, Student, FormFills
-
-
 from subject_and_marks.models import SemMarks
 from teachers.models import Teacher
+
+from .models import (Class10, Class12, Contributions, Details,
+                     ExtracurricularActivity, FormFills, SeminarWorkshop,
+                     Student)
 
 
 def get_idcard_details(id):
@@ -15,7 +15,7 @@ def get_idcard_details(id):
             'card_no': stud.id,
             'roll_no': stud.roll_no,
             'email': stud.email,
-            'department': stud.stream,
+            'dept': stud.stream,
             'mentor': stud.mentor.name
         }
         return details

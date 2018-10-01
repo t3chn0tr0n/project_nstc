@@ -6,10 +6,11 @@ from django.forms import ValidationError
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
-from . import addons
-from .models import FormFills, Student
 from students.addons import get_univ_details
 from students.models import Class10, FormFills
+
+from . import addons
+from .models import FormFills, Student
 
 
 def demo(request):
