@@ -6,11 +6,11 @@ from django.forms import ValidationError
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
-from students.addons import get_univ_details
-from students.models import Class10, FormFills
-
 from . import addons
 from .models import FormFills, Student
+from django.http import HttpResponse
+from students.addons import get_univ_details
+from students.models import Class10, FormFills
 
 
 def demo(request):
@@ -188,3 +188,8 @@ def univ_details(request):
             'fof': True
         }
         return render(request, 'message.html', d)
+
+
+@login_required(login_url=reverse_lazy('login'))
+def sem_marks(request, sem):
+    return HttpResponse(sem)
