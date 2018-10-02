@@ -2,13 +2,16 @@
 {% block body %}
     <div class="container">
         <center>
+
             <br />
-            <img src="https://image.flaticon.com/icons/svg/1053/1053364.svg" height="100px" weight="100px" alt="LOGIN"/>
-            <br />
+            {% load static %}
+            <img src="{% static 'img/favicon.ico/' %}" alt="NiT" width="50" height="50"/>
+            <h5 class="text-secondary text-monospace"><span class="text-primary">Log In</span> to NiT Portal</h5>
             <br />
 
             {% if error %}
-                <div class="alert alert-danger" style="width: 500px; padding:1.5px;">
+                <div class="alert alert-danger" style="width: 300px; padding: 2px;">
+                    <h5><span class="text-monospace">☣ERROR☣</span></h5>
                     {{ error }}
                 </div>
             {% endif %}
@@ -25,7 +28,7 @@
 
                 <input type="hidden" value="{{next}}" name="next" />
 
-                <input class="btn btn-primary"  type="submit" value="Login" />
+                <input class="btn btn-primary btn-sm"  type="submit" value="Login" style="width: 300px;" />
             </form>
             <br />
             <h5>

@@ -2,16 +2,16 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 
-import posixpath
-from . import addons
-from .models import Temp_user
-from django.http import HttpResponseRedirect
 from students.models import FormFills, Student
 from teachers.models import Teacher
+
+from . import addons
+from .models import Temp_user
 
 
 def login(request):
@@ -292,6 +292,7 @@ def message(title, mesg, request):
         mesg = [mesg]
     img = '<img src="' + addons.get_cute_image() + '" height="200px" width="200px" alt="a cute animal image">'
     return render(request, 'accounts/message.html', {'title':title, 'messages':mesg, 'cute_img':img})
+
 
 @login_required(login_url=reverse_lazy('login'))
 def index(request):

@@ -1,45 +1,52 @@
-{% extends 'accounts/main.html' %} {% block body %}
-<div class="container" style="height: 80%;" >
-    <center>
-        <br />
-        <img src="https://image.flaticon.com/icons/svg/1053/1053353.svg" height="100px" weight="100px" alt="SIGNUP!" />
-        <br /><br /> {% if error %}
-        <div class="alert alert-danger" style="width: 500px; padding:1.5px;">
-            {{ error }}
-        </div>
-        {% endif %}
+{% extends 'accounts/main.html' %} 
+{% block body %}
+    <div class="container" style="height: 80%;" >
+        <center>
+            <br />
+            {% load static %}
+            <img src="{% static 'img/favicon.ico/' %}" alt="NiT" width="50" height="50"/>
+            <h5 class="text-secondary text-monospace"><span class="text-success">Sign Up</span> to NiT Portal</h5>
+            <br />
 
-        <form method="POST" action="{% url 'signup' %}">
-            {% csrf_token %}
-            <p>
-                <input type="text" class="form-control" style="width: 300px; display:block;" name="username" placeholder="ID Card number" required />
-            </p>
+            {% if error %}
+                <div class="alert alert-danger" style="width: 300px; padding: 2px;">
+                    <h5><span class="text-monospace">☣ERROR☣</span></h5>
+                    {{ error }}
+                </div>
+            {% endif %}
 
-            <p>
-                <input type="email" class="form-control" style="width: 300px;" name="email" placeholder="Email" required />
-            </p>
+            <form method="POST" action="{% url 'signup' %}">
+                {% csrf_token %}
+                <p>
+                    <input type="text" class="form-control" style="width: 300px; display:block;" name="username" placeholder="ID Card number" required />
+                </p>
 
-            <p>
-                <input type="password" class="form-control" style="width: 300px;" name="password1" placeholder="Password" required />
-            </p>
+                <p>
+                    <input type="email" class="form-control" style="width: 300px;" name="email" placeholder="Email" required />
+                </p>
 
-            <p>
-                <input type="password" class="form-control" style="width: 300px;" name="password2" placeholder="Confirm Password" required
-                />
-            </p>
+                <p>
+                    <input type="password" class="form-control" style="width: 300px;" name="password1" placeholder="Password" required />
+                </p>
 
-            <p>
-                <input class="btn btn-primary btn-sm" type="submit" value="Sign Up!" />
-            </p>
-        </form>
-        <h5>
-            Already Registered? 
-            <a href="{% url 'login' %}">Log In</a>
-            or
-            <a href="{% url 'reset' %}">
-                Forgotten password?
-            </a>
-        </h5>
-    </center>
-</div>
+                <p>
+                    <input type="password" class="form-control" style="width: 300px;" name="password2" placeholder="Confirm Password" required
+                    />
+                </p>
+
+                <p>
+                    <input class="btn btn-success btn-sm" type="submit" value="Sign Up!" style="width: 300px;"  />
+                </p>
+            </form>
+            <h5>
+                Already Registered? 
+                <a href="{% url 'login' %}">Log In</a> 
+            </h5>
+            <h6>
+                <a href="{% url 'reset' %}">
+                    Forgotten password?
+                </a>
+            </h6>
+        </center>
+    </div>
 {% endblock %}
