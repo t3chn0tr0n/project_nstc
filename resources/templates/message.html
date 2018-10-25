@@ -24,7 +24,7 @@
             <div class="inner">
                 <center> 
                     {% if error %}
-                        <h2 class="text-danger"><b><u>ERROR</u></b></h2>
+                        <h2 class="text-danger"><b><u>ERROR</u></b></h2> <br />
                     {% elif success %}
                         <h2 class="text-success"><b>Saved Successfully!</b></h2>
                     {% elif fof %}
@@ -34,8 +34,7 @@
 
                     {% if messages %}
                         {% for line in messages %}
-                            <h3> {{ line | safe }} </h3>
-                            <br />
+                            <h3> {{ line | safe }} </h3>  
                         {% endfor %}
                     {% endif %}
                 </center>
