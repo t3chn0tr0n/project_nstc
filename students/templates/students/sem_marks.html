@@ -1,0 +1,158 @@
+{% extends 'students/main.html/' %} {% block body %}
+<div class="container">
+    <!--SEM MARKS-->
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <div class="container bg-light">
+            <br />
+            <h3>
+                <center>
+                    <b>
+                        <u>SEMESTER - {{curr_sem}}</u>
+                    </b>
+                </center>
+            </h3>
+            <br />
+
+            <div class="row">
+                <div class="col-sm-3 mx-auto">
+                    <b>Highest Score in Class</b>
+                </div>
+                <div class="col-sm-3 mx-auto">
+                    <input class="form-control" style="width: 50%;" type="number" min="0" max="10" step="0.01" required {% if is_filled %} value="{{ max_marks }}"
+                        readonly {% endif %} />
+                </div>
+
+                <div class="col-sm-2 mx-auto">
+                    <b>Attendance</b>
+                </div>
+                <div class="col-sm-3 mx-auto">
+                    <input class="form-control" style="width: 50%;" type="number" min="0" max="10" step="0.01" required {% if is_filled or attendence  %} value="{{ attendence }}"
+                        readonly {% endif %} />
+                </div>
+            </div>
+            <br />
+
+
+            <div class="row">
+                <div class="col-sm-3 mx-auto">
+                    <b>No. of Tutorial Class</b>
+                </div>
+                <div class="col-sm-3 mx-auto">
+                    <input class="form-control" style="width: 50%;" type="number" min="0" max="10" required {% if is_filled %} value="{{ tclass }}"
+                        readonly {% endif %} />
+                </div>
+
+                <div class="col-sm-2 mx-auto">
+                    <b>No. of F. School</b>
+                </div>
+                <div class="col-sm-3 mx-auto">
+                    <input class="form-control" style="width: 50%;" type="number" min="0" max="10" required {% if is_filled %} value="{{ fclass }}"
+                        readonly {% endif %} />
+                </div>
+            </div>
+            <br />
+
+
+            <div class="row">
+                <div class="col-sm-3 mx-auto">
+                    <b>SLC activities</b>
+                </div>
+
+                <div class="col-sm-3 mx-auto">
+                    <input class="form-control" style="width: 50%;" type="number" min="0" max="10" step="0.01" required {% if is_filled %} value="{{ slc_act }}"
+                        readonly {% endif %} />
+                </div>
+
+                <div class="col-sm-2 mx-auto">
+                    <b>Any Disciplinary action</b>
+                </div>
+                <div class="col-sm-3 mx-auto">
+                    <select class="custom-select" style="width: 50%;" type="text" required {% if is_filled %} value="{{ decip_act }}" readonly
+                        {% endif %}>
+                        <option disabled selected>Select</option>
+                        <option value="True"> Yes </option>
+                        <option value="False"> No </option>
+                    </select>
+                </div>
+            </div>
+            <br />
+        </div>
+        <br/>
+
+        <!--Table Goes Here-->
+        <center>
+            <h3>Marks Table</h3>
+        </center>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped table-hover">
+                <thead >
+                    <tr>
+                        <th scope="col">Sl. No.</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">Internals</th>
+                        <th scope="col">Final Marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sub in all_subs %}
+                        {% if sub.name %}
+                            <tr>
+                                <th scope="row">{{ sub.slno }}</td>
+                                <td>{{ sub.name }}</td>
+                                <td>
+                                    {% if sub.internal %}
+                                        sub.internal
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <input name="{{ sub.name }}" class="form-control" style="width:5rem;" 
+                                        {% if is_filled %} value="{{ sub.marks }}"readonly 
+                                        {% else %} type="number" min="0" max="10" step="0.01" title="Enter between 0-10" required
+                                        {% endif %}
+                                    />
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if not is_filled %}
+        <center>
+            <button class="btn btn-outline-primary" type="submit">Submit</button>
+        </center>
+        {% endif %}
+    </form>
+
+    <br />
+    <hr />
+    <!-- Sem buttons -->
+    <i> Your other semester marks...</i>
+    <div class="row bg-light">
+        {% for x in available %}
+        <span class="col-sm col-3 mx-auto">
+            {% if x == curr_sem %}
+            <button class="btn btn-outline-primary btn-sm" style="margin-bottom: 3px; margin-top: 3px;" disabled>
+                sem {{x}}
+            </button>
+            {% else %}
+            <a class="btn btn-outline-primary btn-sm" href="{% url 'sem_marks' x %}" style="margin-top: 3px; margin-bottom: 3px;">
+                sem {{x}}
+            </a>
+            {% endif %}
+        </span>
+        {% endfor %} {% for x in not_available %}
+        <span class="col-sm col-3 mx-auto" style="margin-top: 3px; margin-bottom: 3px;">
+            <a class="btn btn-outline-secondary disabled btn-sm">
+                sem {{ x }}
+            </a>
+        </span>
+        {% endfor %}
+    </div>
+    <br />
+</div>
+{% endblock %}

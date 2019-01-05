@@ -126,3 +126,15 @@ class FormFills(models.Model):
     is_sem6_filled = models.BooleanField(default=False)
     is_sem7_filled = models.BooleanField(default=False)
     is_sem8_filled = models.BooleanField(default=False)
+
+    def sem_fills_easy(self):
+        return {
+            "1": self.is_sem1_filled,
+            "2": self.is_sem2_filled,
+            "3": self.is_sem3_filled,
+            "4": self.is_sem4_filled,
+            "5": self.is_sem5_filled,
+            "6": self.is_sem6_filled,
+            "7": self.is_sem7_filled,
+            "8": self.is_sem8_filled
+        }

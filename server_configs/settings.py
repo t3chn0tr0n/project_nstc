@@ -2,7 +2,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-global_statics = os.path.join(BASE_DIR, 'resources/static/') 
+global_statics = os.path.join(BASE_DIR, 'resources/static/')
 global_templates = os.path.join(BASE_DIR, 'resources/templates/')
 
 
@@ -106,10 +106,10 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'resources/statics')
 STATICFILES_DIRS = [
     global_statics,
-	]
+]
 
 # Email settings (Emails are used for a/c varification)
 
-EMAIL_USE_TLS  = True
+EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587

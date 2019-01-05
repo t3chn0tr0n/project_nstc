@@ -1,14 +1,16 @@
 from builtins import ValueError
 
+from . import addons
+from .models import FormFills, Student
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.api import success
 from django.forms import ValidationError
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from jinja2 import Environment
 
-from . import addons
-from .models import FormFills, Student
-from django.http import HttpResponse
+from calendar import HTMLCalendar
 from students.addons import get_univ_details
 from students.models import Class10, FormFills
 
@@ -192,4 +194,11 @@ def univ_details(request):
 
 @login_required(login_url=reverse_lazy('login'))
 def sem_marks(request, sem):
-    return HttpResponse(sem)
+    if request.method == "POST":
+        # TODO: 
+        # 1. give names to all variable in the HTML
+        # 2. accept them here
+        pass
+    else: # get request
+        details = addons.get_sem_details(request.user.username, sem)
+    return render(request, 'students/sem_marks.html', details)
