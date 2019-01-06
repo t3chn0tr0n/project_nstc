@@ -10,13 +10,11 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from jinja2 import Environment
 
+from accounts.views import message
 from calendar import HTMLCalendar
 from students.addons import get_univ_details
 from students.models import Class10, FormFills
-
-
-def demo(request):
-    return render(request, 'students/details.html/')
+from teachers.models import Teacher
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -138,6 +136,12 @@ def general_details(request):
 
     # for GET request
     else:
+        # if a teacher comes here, well show the way out to them!
+        if Teacher.objects.filter(id=request.user.username):
+            title = "404"
+            msg = "This way leads nowhere for you!"
+            return message(title, msg, request)
+
         filled_forms = FormFills.objects.get(student=request.user.username)
         stud = Student.objects.get(id=request.user.username)
         details = {**addons.get_idcard_details(
@@ -185,6 +189,11 @@ def univ_details(request):
         return render(request, 'message.html', {'title': 'ERROR', 'error': True,  'messages': error})
 
     else:
+        # if a teacher comes here, well show the way out to them!
+        if Teacher.objects.filter(id=request.user.username):
+            title = "404"
+            msg = "This way leads nowhere for you!"
+            return message(title, msg, request)
         d = {
             'title': '404 Error',
             'fof': True
@@ -195,10 +204,15 @@ def univ_details(request):
 @login_required(login_url=reverse_lazy('login'))
 def sem_marks(request, sem):
     if request.method == "POST":
-        # TODO: 
+        # TODO:
         # 1. give names to all variable in the HTML
         # 2. accept them here
         pass
-    else: # get request
+    else:  # get request
+        # if a teacher comes here, well show the way out to them!
+        if Teacher.objects.filter(id=request.user.username):
+            title = "404"
+            msg = "This way leads nowhere for you!"
+            return message(title, msg, request)
         details = addons.get_sem_details(request.user.username, sem)
     return render(request, 'students/sem_marks.html', details)
