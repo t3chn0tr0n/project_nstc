@@ -76,7 +76,7 @@ def signup(request):
 
             if not flag_stud:
                 try:
-                    that_teach = Teacher.object.get(id=uid)
+                    that_teach = Teacher.objects.get(id=uid)
                     flag_teach = True
                     saved_email = that_teach.email
                 except:
@@ -116,9 +116,9 @@ def signup(request):
                 
                 # changing things in student/teacher table
                 if Student.objects.filter(id=tuser.uname).exists():
-                    user = Student.objects.update(is_registered=True)
+                    user = Student.objects.filter(id=tuser.uname).update(is_registered=True)
                 else:
-                    user = Teacher.objects.update(is_registered=True)
+                    user = Teacher.objects.filter(id=tuser.uname).update(is_registered=True)
                 
                 if addons.verification_mailto(receiver, token):                   
                     img = '<img src="' + addons.get_cute_image() + '" height="200px" width="200px" alt="a cute animal image">'
@@ -210,14 +210,14 @@ def resend(request):
         tuser.save()
         receiver = [tuser.email]
         token = new_token
-        if addons.varification_mailto(receiver, token):
+        if addons.verification_mailto(receiver, token):
             img = '<img src="' + addons.get_cute_image() + '" height="200px" width="200px" alt="a cute animal image">'
             return render(request, 'accounts/resend.html', {'title':'email varifiaction','case':'resend', 'token':new_token, 'cute_image': img})
         else:
-            message = "ERROR! mail not sent"
+            msg = "ERROR! mail not sent"
     else:
-        message = "Well, you have came a long way, to vain!"
-    return message("404", message, request)
+        msg = "Well, you have came a long way, to vain!"
+    return message("404", msg, request)
 
 
 def reset(request):
