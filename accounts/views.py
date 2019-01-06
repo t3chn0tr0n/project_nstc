@@ -263,9 +263,10 @@ def reset(request):
             else:
                 Temp_user.objects.create(uname=obj.id, password=password1, email=obj.email, token=reset_token, time=timezone.now())
             receiver = [obj.email]
-            if addons.verification_mailto(receiver, reset_token):
-                msg = ["If you entered correct Name, Id and your registered email id", 
+            if addons.reset_mailto(receiver, reset_token):
+                msg = ["If you entered correct ID Card No. and your registered email id", 
                 "expect to receive an email to reset password!",
+                "</h3> <em> If you have forgotten your registered email, contact your HOD </em> <h3>",
                 ]
             else:
                 msg = ["Error sending mail... Try again.", "If problem persists, contact your HOD!"]
