@@ -45,16 +45,22 @@
                 </div>
             </nav>
         </div> <br />
-         
         <div class="container">
+            <br />
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos hic totam omnis fuga labore et amet, ullam quae corrupti officia tempora. Eum ducimus qui ea, exercitationem, vitae ab quasi omnis placeat laudantium ad voluptatem facilis nisi, voluptas maxime porro? Sequi natus officia soluta commodi aliquam ut, tempore ea quos sint officiis ullam earum magni nam ipsa facere in saepe velit, iusto cumque quidem perferendis. Ut suscipit excepturi ea neque aspernatur exercitationem assumenda reiciendis culpa asperiores explicabo debitis at temporibus sapiente nihil, iste repellat unde mollitia consequuntur facilis! Magni, repellat illum asperiores totam ratione excepturi laborum sunt accusantium possimus sed ipsum.
-        </div>
-        
-        {% include 'includes/footer.html' %}
+            <br />
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos hic totam omnis fuga labore et amet, ullam quae corrupti officia tempora. Eum ducimus qui ea, exercitationem, vitae ab quasi omnis placeat laudantium ad voluptatem facilis nisi, voluptas maxime porro? Sequi natus officia soluta commodi aliquam ut, tempore ea quos sint officiis ullam earum magni nam ipsa facere in saepe velit, iusto cumque quidem perferendis. Ut suscipit excepturi ea neque aspernatur exercitationem assumenda reiciendis culpa asperiores explicabo debitis at temporibus sapiente nihil, iste repellat unde mollitia consequuntur facilis! Magni, repellat illum asperiores totam ratione excepturi laborum sunt accusantium possimus sed ipsum.
+            <br /> <br />
 
-        <!-- Bootstrap core JavaScript -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+            <h2><u> Available Links as of now: </u></h2>
+
+            <a href={% url 'details'%}> Student details </a>
+            <br />
+            <a href={% url 'sem_marks' 1 %}> Student Semester marks </a>
+            <br />
+            <br />
+            <br /> <br />
+        </div>
+        {% include 'includes/footer.html' %}
     </body>
 </html>

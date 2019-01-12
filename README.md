@@ -9,9 +9,19 @@ a django project for creating and maintaining the student database of my college
 3. PostgreSQL and pgAdmin
 4. psycopg2 (2.7.5 used)
 
+## Installation/setup process for testing the project
+
+1. Create a database in your database server (eg. `nitdb`)
+
+2. open the file `nit_project/server_configs/settings.py` and change the server credentials (ref. line no: 63-70)
+
+3. Run command - ``python .\manage.py migrate`` from the root folder
+
+4. Now finally it is ready for `runserver`
+
 ## Flow of Control
 
-Every user is needed to be loged in to access any data!
+Every user is needed to be logged in to access any data!
 There are 3 types of users: Students, Teachers, Hods.
 
 ### Login Process
