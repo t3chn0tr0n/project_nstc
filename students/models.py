@@ -12,7 +12,8 @@ class Student(models.Model):
     roll_no = models.IntegerField(default=000)
     registration_no = models.IntegerField(null=True, blank=True)
     admission_no = models.IntegerField(null=True, blank=True)
-    stream = models.CharField(default=" ", max_length=20)  # stores as CSE, ECE
+    dept = models.CharField(default=" ", max_length=20)  # stores as CSE, ECE
+    stream = models.CharField(default=" ", max_length=1) # B or M or D
     batch = models.CharField(default="", max_length=12)  # stores BAT20152019
     is_registered = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
