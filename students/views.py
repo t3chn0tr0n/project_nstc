@@ -292,6 +292,7 @@ def sem_marks(request, sem):
 
     else:  # GET request
         details = addons.get_sem_details(request.user.username, sem)
+        details['title'] = 'Sem {} Marks'.format(sem)
         if details == -1:
             return render(request, 'message.html', {'title': 'ERROR', 'error': True,  'messages': ['Subject list for the semester not found!']})
         if not forms.is_gen_details_filled and not forms.is_univ_details_filled:
