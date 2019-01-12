@@ -1,17 +1,20 @@
 {% extends 'students/main.html/' %} {% block body %}
 <div class="container">
     <!--SEM MARKS-->
-    <form method="POST" class="post-form">
+    {% if messg %}
+        <div class="container bg-info text-light" style="padding:0.5rem;"> 
+            <center> <em> 
+                ℹ&nbsp;&nbsp;&nbsp;
+                Please first fill General Details and University Details (in General Details page)
+            </em></center>
+        </div>
+        <br />
+    {% endif %}
+    <form method="POST">
         {% csrf_token %}
         <div class="container bg-light">
             <br />
-            <h3>
-                <center>
-                    <b>
-                        <u>SEMESTER - {{curr_sem}}</u>
-                    </b>
-                </center>
-            </h3>
+            <h3><center><b><u>SEMESTER - {{curr_sem}}</u> </b></center></h3>
             <br />
 
             <div class="row">
@@ -19,61 +22,75 @@
                     <b>Highest Score in Class</b>
                 </div>
                 <div class="col-sm-3 mx-auto">
-                    <input class="form-control" style="width: 50%;" type="number" min="0" max="10" step="0.01" required {% if is_filled %} value="{{ max_marks }}"
-                        readonly {% endif %} />
+                    <input class="form-control" style="width: 50%;" 
+                    {% if is_filled %} value="{{ highest_score }}" disabled readonly
+                    {% else %} name="highest_score" type="number" min="0" max="10" step="0.01" required {% endif %} />
                 </div>
-
                 <div class="col-sm-2 mx-auto">
-                    <b>Attendance</b>
+                    <b>Attendance (%) </b>
                 </div>
                 <div class="col-sm-3 mx-auto">
-                    <input class="form-control" style="width: 50%;" type="number" min="0" max="10" step="0.01" required {% if is_filled or attendence  %} value="{{ attendence }}"
-                        readonly {% endif %} />
+                    <input class="form-control" style="width: 50%;" 
+                    {% if is_filled or attendence  %} value="{{ attendance }}" disabled readonly
+                    {% else %} name="attendance" type="number" min="0" max="100" step="0.01" required  {% endif %} />
                 </div>
             </div>
             <br />
-
 
             <div class="row">
                 <div class="col-sm-3 mx-auto">
                     <b>No. of Tutorial Class</b>
                 </div>
                 <div class="col-sm-3 mx-auto">
-                    <input class="form-control" style="width: 50%;" type="number" min="0" max="10" required {% if is_filled %} value="{{ tclass }}"
-                        readonly {% endif %} />
+                    <input class="form-control" style="width: 50%;" 
+                    {% if is_filled %} value="{{ tut_class }}" disabled readonly
+                    {% else %} name="tut_class" type="number" min="0" max="10" required {% endif %} />
                 </div>
-
                 <div class="col-sm-2 mx-auto">
                     <b>No. of F. School</b>
                 </div>
                 <div class="col-sm-3 mx-auto">
-                    <input class="form-control" style="width: 50%;" type="number" min="0" max="10" required {% if is_filled %} value="{{ fclass }}"
-                        readonly {% endif %} />
+                    <input class="form-control" style="width: 50%;"
+                    {% if is_filled %} value="{{ f_school }}" disabled readonly
+                    {% else %} name="f_school" type="number" min="0" max="10" required {% endif %} />
                 </div>
             </div>
             <br />
-
 
             <div class="row">
                 <div class="col-sm-3 mx-auto">
                     <b>SLC activities</b>
                 </div>
-
                 <div class="col-sm-3 mx-auto">
-                    <input class="form-control" style="width: 50%;" type="number" min="0" max="10" step="0.01" required {% if is_filled %} value="{{ slc_act }}"
-                        readonly {% endif %} />
+                    <input class="form-control" style="width: 50%;" 
+                    {% if is_filled %} value="{{ slc }}" disabled readonly
+                    {% else %} name="slc" type="number" min="0" max="10" step="0.01" required {% endif %} />
                 </div>
-
                 <div class="col-sm-2 mx-auto">
                     <b>Any Disciplinary action</b>
                 </div>
                 <div class="col-sm-3 mx-auto">
-                    <select class="custom-select" style="width: 50%;" type="text" required {% if is_filled %} value="{{ decip_act }}" readonly
-                        {% endif %}>
-                        <option disabled selected>Select</option>
-                        <option value="True"> Yes </option>
-                        <option value="False"> No </option>
-                    </select>
+                    {% if is_filled %}
+                    <input class="form-control" style="width: 50%;" value="{{ disc_action }}" disabled readonly  />
+                    {% else %}
+                        <select class="custom-select" name="disc_action" style="width: 50%;" type="text" required >
+                            <option disabled selected>Select</option>
+                            <option value="True"> Yes </option>
+                            <option value="False"> No </option>
+                        </select>
+                    {% endif %}
+                </div>
+            </div>
+            <br />
+            
+            <div class="row">
+                <div class="col-sm-3 ml-2">
+                    <b>SGPA</b>
+                </div>
+                <div class="col-sm-3 ml-4">
+                    <input class="form-control" style="width: 50%;"
+                    {% if is_filled %} value="{{ sgpa }}" disabled readonly
+                    {% else %} name="sgpa" type="number" min="0" max="10" step="0.01" required {% endif %} />
                 </div>
             </div>
             <br />
@@ -94,23 +111,24 @@
                         <th scope="col">Final Marks</th>
                     </tr>
                 </thead>
+                
                 <tbody>
                     {% for sub in all_subs %}
                         {% if sub.name %}
                             <tr>
-                                <th scope="row">{{ sub.slno }}</td>
-                                <td>{{ sub.name }}</td>
+                                <th scope="row">{{ sub.slno }}</th>
+                                <td><b> {{ sub.name }} </b></td>
                                 <td>
                                     {% if sub.internal %}
-                                        sub.internal
+                                        <b> {{ sub.internal }} </b>
                                     {% else %}
                                         N/A
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <input name="{{ sub.name }}" class="form-control" style="width:5rem;" 
-                                        {% if is_filled %} value="{{ sub.marks }}"readonly 
-                                        {% else %} type="number" min="0" max="10" step="0.01" title="Enter between 0-10" required
+                                    <input class="form-control" style="width:5rem;" 
+                                        {% if is_filled %} value="{{ sub.marks }}" disabled readonly 
+                                        {% else %} name="{{ sub.name }}" type="number" min="0" max="10" step="0.01" title="Enter between 0-10" required
                                         {% endif %}
                                     />
                                 </td>

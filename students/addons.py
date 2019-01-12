@@ -51,27 +51,29 @@ def current_sem(id):
     if dif == 0:
         current_sem = 1
     elif dif == 1:
-        if current_month <= 7:
-            current_sem = 2
+        if current_month >= 7:
+            current_sem = 1
         else:
-            current_sem = 3
+            current_sem = 2
     elif dif == 2:
-        if current_month <= 7:
+        if current_month >= 7:
             current_sem = 4
         else:
-            current_sem = 5
+            current_sem = 3
     elif dif == 3:
-        if current_month <= 7:
+        if current_month >= 7:
             current_sem = 6
         else:
-            current_sem = 7
+            current_sem = 5
     else:
-        current_sem = 8
+        if current_month >= 7:
+            current_sem = 8
+        else:
+            current_sem = 7
     return current_sem
 
 
 def get_sem_details(id, sem):
-    no_details = False
     class Subject():
         def __init__(self, n, sub, int_marks='', marks='', lab=''):
             self.name = sub
@@ -84,46 +86,109 @@ def get_sem_details(id, sem):
         stud = Student.objects.get(id=id)
         filled_forms = FormFills.objects.get(student=id)
         is_sem_filled = filled_forms.sem_fills_easy()
-        sem_details = SemMarks.objects.get(student_id=id, sem_no=sem)
+        sem_details = SemMarks.objects.get(student_id=id, sem_no=int(sem))
+        no_details = False
     except:
         no_details = True
-
-    if not no_details and is_sem_filled:
+    error = False
+    if not no_details and is_sem_filled[sem]:
         all_subs = []
         sems_marks = sem_details.sems()
         for x in range(1, 12):
-            x = str(x)
-            if x > '6':
-                all_subs.append(
-                    Subject(('L'+ str(int(x)-6)), sem_marks[x][0], sems_marks[x][1], sems_marks[x][2]))
+            if sems_marks[str(x)][0] == None:
+                pass
             else:
-                all_subs.append(
-                    Subject(x, sem_marks[x][0], sems_marks[x][1], sems_marks[x][2]))
+                x = str(x)
+                if int(x) > 6:
+                    all_subs.append(
+                        Subject(('L'+ str(int(x)-6)), sems_marks[x][0], sems_marks[x][1], sems_marks[x][2]))
+                else:
+                    all_subs.append(
+                        Subject('T' + str(x), sems_marks[x][0], sems_marks[x][1], sems_marks[x][2]))
 
         details = {
-            'max_score_in_class': sem_details.max_score_in_class,
-            'no_of_tutorial_class': sem_details.no_of_tutorial_class,
+            'is_filled': True,
+            'highest_score': sem_details.max_score_in_class,
+            'tut_class': sem_details.no_of_tutorial_class,
             'attendance': sem_details.attendance,
-            'disciplinary_action': sem_details.disciplinary_action,
-            'no_of_fschool_class': sem_details.no_of_fschool_class,
-            'scl_activities': sem_details.scl_activities,
+            'disc_action': sem_details.disciplinary_action,
+            'f_school': sem_details.no_of_fschool_class,
+            'slc': sem_details.scl_activities,
             'sgpa': sem_details.sgpa,
         }
     else:
-        subs = Subjects.objects.get(sem=sem)
-        subs = subs.all_subs()
-        all_subs = []
-        for x in range(1,len(subs)+1):
-            if x > 6:
-                all_subs.append(Subject(('L'+ str(x-6)), subs[str(x)]))
-            else:
-                all_subs.append(Subject(str(x), subs[str(x)]))
-        details = {
-            'not_found': True
-        }
-    details['curr_sem'] = sem
-    details['all_subs'] = all_subs
-    details['available'] = [str(x) for x in range(1, int(sem)+1)]
-    details['not_available'] = [str(x) for x in range(int(sem)+1, 9)]   
-    return details
+        try:
+            subs = Subjects.objects.get(batch=stud.batch, dept=stud.dept, stream=stud.stream, sem=sem)
+            subs = subs.all_subs()
+            all_subs = []
+            for x in range(1,len(subs)+1):
+                if x > 6:
+                    all_subs.append(Subject(('L' + str(x-6)), subs[str(x)]))
+                else:
+                    all_subs.append(Subject(('T' + str(x)), subs[str(x)]))
+            details = {
+                'not_found': True
+            }
+        except:
+            error = True
+    if not error:
+        details['all_subs'] = all_subs
+        
+        # Sem management
+        details['curr_sem'] = sem
+        sem = current_sem(id)
+        details['available'] = [str(x) for x in range(1, int(sem)+1)]
+        if stud.stream == "B":
+            details['not_available'] = [str(x) for x in range(int(sem)+1, 9)] 
+        elif stud.stream == "D":
+            details['not_available'] = [str(x) for x in range(int(sem)+1, 7)]
+        elif stud.stream == "M":
+            details['not_available'] = [str(x) for x in range(int(sem)+1, 5)]
+
+        return details
+    else:
+        return -1
     
+
+def form_fill_sem(id, sem):
+    forms = FormFills.objects.get(student=Student.objects.get(id=id))
+    if sem == '1':
+        forms.is_sem1_filled = True
+    elif sem == '2':
+        forms.is_sem2_filled = True
+    elif sem == '3':
+        forms.is_sem3_filled = True
+    elif sem == '4':
+        forms.is_sem4_filled = True
+    elif sem == '5':
+        forms.is_sem5_filled = True
+    elif sem == '6':
+        forms.is_sem6_filled = True
+    elif sem == '7':
+        forms.is_sem7_filled = True
+    elif sem == '8':
+        forms.is_sem8_filled = True
+    forms.save()
+
+
+def is_prev_sems_filled(id, curr_sem):
+    forms = FormFills.objects.get(student=Student.objects.get(id=id))
+    filled_sem = forms.sem_fills_easy()
+    sem = int(sem)
+    for x in range[1, sem]:
+        if not filled_sem[str(x)]:
+            return x
+    return 0
+
+
+def any_sem_yet(id):
+    stud = Student.objects.get(id=id)
+    batch = stud.batch
+    year = int(batch[3:7])
+    date = datetime.datetime.now()
+    current_year = int(date.year)
+    current_month = int(date.month)
+    diff = current_year - year
+    if diff == 0 or (diff == 1 and current_month == 2):
+        return False
+    return True

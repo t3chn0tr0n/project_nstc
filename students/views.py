@@ -8,13 +8,22 @@ from django.forms import ValidationError
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from jinja2 import Environment
 
 from accounts.views import message
-from calendar import HTMLCalendar
-from students.addons import get_univ_details
-from students.models import Class10, FormFills
+from students.addons import (
+                                get_univ_details, 
+                                form_fill_sem, 
+                                is_prev_sems_filled, 
+                                any_sem_yet
+                            )
+from students.models import Class10, Class12, FormFills
+from subject_and_marks.models import SemMarks, Subjects
 from teachers.models import Teacher
+
+# Test Ground for new templates - Contains unchecked code - comment it out if it causes error
+@login_required(login_url=reverse_lazy('login'))
+def demo(request):
+    return render(request, 'students/sem_marks.html', {'messg':True})
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -70,7 +79,7 @@ def general_details(request):
                     error = ["Land phone number too long!"]
                 elif len(str(land_phone)) == 8:
                     error = ["Please provide STD code for Land phone.",
-                             "example: 03322222222"]
+                            "example: 03322222222"]
                 elif len(str(land_phone)) < 8:
                     error = ["Land phone number too short!"]
             except ValueError:
@@ -85,7 +94,7 @@ def general_details(request):
                     error = ["Mobile Number must be equal to 10 digits!"]
             except ValueError:
                 error = ["Mobile phone number can't contain characters!",
-                         "Tip: No need for country code: (eg. +91 in India)"]
+                        "Tip: No need for country code: (eg. +91 in India)"]
             try:
                 if int(sc12_year) - int(sc10_year) < 2:
                     error = [
@@ -114,12 +123,12 @@ def general_details(request):
                     details.diploma_score = dip_score
                     details.save()
                 sc10 = Class10.objects.create(student=request.user.username, medium=sc10_med,
-                                              school_name=sc10_name, passing_year=sc10_year, school_address=sc10_add, score=sc10_marks)
+                                            school_name=sc10_name, passing_year=sc10_year, school_address=sc10_add, score=sc10_marks)
                 sc12 = Class12.objects.create(student=request.user.username, medium=sc12_med,
-                                              school_name=sc12_name, passing_year=sc12_year, school_address=sc12_add, score=sc12_marks)
+                                            school_name=sc12_name, passing_year=sc12_year, school_address=sc12_add, score=sc12_marks)
                 forms = FormFills.objects.get(student=request.user.username)
-                form.is_gen_details_filled = True
-                form.save()
+                forms.is_gen_details_filled = True
+                forms.save()
                 sc10.save()
                 sc12.save()
                 d = {
@@ -164,7 +173,7 @@ def univ_details(request):
 
         if admin_no is '' or reg_no is '':
             error = [
-                "Who has blank admission and/or Registration numbers?", "stop fooling arround"]
+                "Who has blank Admission and/or Registration numbers?"]
         try:
             admin_no = int(admin_no)
             reg_no = int(reg_no)
@@ -185,6 +194,9 @@ def univ_details(request):
             stud.admission_no = admin_no
             stud.registration_no = reg_no
             stud.save()
+            forms = FormFills.objects.get(student=request.user.username)
+            forms.is_univ_details_filled = True
+            forms.save()
             return render(request, 'message.html', {'title': 'Saved!', 'success': True})
         return render(request, 'message.html', {'title': 'ERROR', 'error': True,  'messages': error})
 
@@ -203,16 +215,90 @@ def univ_details(request):
 
 @login_required(login_url=reverse_lazy('login'))
 def sem_marks(request, sem):
+    if Teacher.objects.filter(id=request.user.username).exists():
+        error = ['Teachers cannot view this page!', 'Teachers don\'t give sems anymore! :D']
+        return render(request, 'message.html', {'title': 'ERROR',  'messages': error})   
+    
+    forms = FormFills.objects.get(student=Student.objects.get(id=request.user.username).id)
+
     if request.method == "POST":
-        # TODO:
-        # 1. give names to all variable in the HTML
-        # 2. accept them here
-        pass
-    else:  # get request
-        # if a teacher comes here, well show the way out to them!
-        if Teacher.objects.filter(id=request.user.username):
-            title = "404"
-            msg = "This way leads nowhere for you!"
-            return message(title, msg, request)
+        user = request.user.username
+        error = ''
+        filled_sems = forms.sem_fills_easy() 
+        if not forms.is_gen_details_filled and not forms.is_univ_details_filled:
+            error = ['Please first fill General Details and University Details (in General Details page)']
+        elif not is_prev_sems_filled:
+            error = ["Fill previous semester marks first", "Semester {} is not filled".format(is_prev_sems_filled)]
+        elif filled_sems[sem]:
+            error = ['Your data is already saved! Cannot re submit!']
+        elif not any_sem_yet:
+            error = ['No semester has been taken yet!']
+        
+        try:
+            sem = int(sem)
+        except:
+            error = ["Internal Server Error!"]
+        try:
+            stud = Student.objects.get(id=user)
+        except:
+            error = ["Problem in finding the student"]
+        # part - 1: Details
+        try:
+            details = {
+                        'student_id': stud.id,
+                        'sem_no': int(sem),
+                        'max_score_in_class': float(request.POST['highest_score'].strip()),
+                        'attendance': int(request.POST['attendance'].strip()),
+                        'no_of_tutorial_class': int(request.POST['tut_class'].strip()),
+                        'no_of_fschool_class': int(request.POST['f_school'].strip()),
+                        'scl_activities': request.POST['slc'].strip(),
+                        'disciplinary_action': request.POST['disc_action'].strip(),
+                        'sgpa': float(request.POST['sgpa'].strip()),
+                    }
+        except:
+            error = ["Invalid Input. Try again!"]
+
+        # part - 2: Marks
+        subs = Subjects.objects.get(batch=stud.batch, dept=stud.dept, stream=stud.stream, sem=sem)
+        subs = subs.get_subjects_as_dict() # a dictionary of all subjects
+        marks = {}
+        try:
+            if not error:
+                for x,y in subs.items():
+                    if y in request.POST:
+                        marks[x]= y
+                        marks[x+'_marks'] = request.POST[y]
+                    else:
+                        marks[x] = None
+                        marks[x+'_internal'] = None
+                        marks[x+'_marks'] = None                
+                # if student data exists due to teacher uploading internal marks -- update
+                # TODO: CHECK IF THIS WORKS!
+                if SemMarks.objects.filter(student_id=stud.id, sem=sem).exists():
+                    stud_marks = SemMarks.objects.get(student_id=stud.id, sem=sem)
+                    stud_marks.update(**details, **marks)                
+                else: # create new entry
+                    SemMarks.objects.create(**details, **marks)
+                    form_fill_sem(stud.id, sem)                    
+        except:
+            error = ["Internal Server Error!", 
+                            "Cause: Student not found or database integrity errors"] 
+
+        if error:
+            return render(request, 'message.html', {'title': 'ERROR', 'error': True,  'messages': error})
+        else:
+            msg = ["SUCCESS", "Your data has been saved!"]
+            return render(request, 'message.html', {'title': 'SUCCESS',  'messages': msg})
+
+    else:  # GET request
         details = addons.get_sem_details(request.user.username, sem)
-    return render(request, 'students/sem_marks.html', details)
+        if details == -1:
+            return render(request, 'message.html', {'title': 'ERROR', 'error': True,  'messages': ['Subject list for the semester not found!']})
+        if not forms.is_gen_details_filled and not forms.is_univ_details_filled:
+            details['messg']: True
+        return render(request, 'students/sem_marks.html', details)
+
+
+@login_required(login_url=reverse_lazy('login'))
+def extracurricular_activities(request):
+    pass
