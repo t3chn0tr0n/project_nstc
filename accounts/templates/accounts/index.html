@@ -18,7 +18,7 @@
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark container-fluid">
                 <div class="container">
                     {% load static %}
-                    <img src="{% static 'img/favicon.ico/' %}" width="30" height="30" class="d-inline-block align-top" alt="" >
+                    <img src="{% static 'img/favicon.ico/' %}" width="30" height="30" class="d-inline-block align-top" alt="NiT" >
                     <a class="navbar-brand" href="/"> <b> &nbsp; Narula Institute Of Technology</b> </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -34,8 +34,9 @@
                             <a class="btn btn-outline-success my-2 my-sm-0"href="{% url 'signup' %}">Signup</a>
                         {% else %}
                             <span class="text-light"> Welcome, {{ user.username }} &nbsp; </span>
-                            <a class="btn btn-outline-danger my-2 my-sm-0" href="javascript:{document.getElementById('logout').submit()}" onclick="" >Logout</a>
+                            
                             <form id="logout" method="POST" action="{% url 'logout' %}">
+								<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
                                 {% csrf_token %}
                                 <input type="hidden" />
                             </form>

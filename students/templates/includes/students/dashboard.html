@@ -1,5 +1,60 @@
-    <!-- Navbar 2: The Dashboard-->
-    <div class="bg-dark text-light container-fluid" style="padding:10px; outline: 2px solid orange;">
-        <center> -- A SASSY DASHBOARD GOES HERE -- </center>
+<nav class="navbar navbar-expand-md navbar-light bg-light border" style="margin: 0; padding: 0;">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="container">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">General Details
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">Extracurricular activities
+
+          </a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Sem Marks
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Sem 1</a>
+            <a class="dropdown-item" href="#">Sem 2</a>
+            <a class="dropdown-item" href="#">Sem 3</a>
+            <a class="dropdown-item" href="#">Sem 4</a>
+            <a class="dropdown-item" href="#">Sem 5</a>
+            <a class="dropdown-item" href="#">Sem 6</a>
+            <a class="dropdown-item" href="#">Sem 7</a>
+            <a class="dropdown-item" href="#">Sem 8</a>
+
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-danger" href="#">Fill General and University Details First</a>
+
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact Mentor
+
+          </a>
+        </li>
+
+      </ul>
+
+      <form id="logout" method="POST" action="{% url 'logout' %}">
+        <button class="btn btn-outline-danger btn-sm" type="submit">Logout</button>
+        {% csrf_token %}
+        <input type="hidden" />
+      </form>
     </div>
-    <br />
+  </div>
+</nav>
+<br />

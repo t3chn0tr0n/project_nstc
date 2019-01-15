@@ -1,0 +1,24 @@
+<style>
+    li.dropdown:hover>.dropdown-menu {
+        display: block;
+    }
+</style>
+
+<nav class="navbar bg-light" style="margin: 0; padding: 0;">
+    <div class="container">
+        <span class="navbar text-info text-monospace" style="font-size: 18px;">
+            {% load static %}
+            <img src="{% static 'img/jis.png/' %}" class="d-inline-block align-top mr-2" alt="JIS" width="50" height="40" />
+            <img src="{% static 'img/nit.png/' %}" class="d-inline-block align-top" alt="NiT" width="40" height="30" /><b>&nbsp;ONLINE
+                STUDENT-TEACHER PORTAL </b>
+
+        </span>
+        {% if request.user.is_authenticated %}
+        <span class="navbar">
+            <span class="text-success">&nbsp;&nbsp;Welcome,&nbsp;</span>
+            {{request.user.first_name}}
+        </span>
+        {% endif %}
+
+    </div>
+</nav>
