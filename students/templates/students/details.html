@@ -15,12 +15,10 @@
                 </label>
                 <label class="col-sm-4"> {{card_no}} </label>
 
-                {% if roll %}
                 <label class="col-sm-2">
-                    <b> Roll No.: </b>
+                    <b> Stream: </b>
                 </label>
-                <label class="col-sm-2"> {{roll}} </label>
-                {% endif %}
+                <label class="col-sm-2"> {{stream}} </label>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2">
@@ -69,7 +67,7 @@
             <div align="right">
                 <button id="submit1" type="submit" class="btn btn-success btn-sm"> Submit changes </button>
                 <br />
-                <span class="font-italic text-danger">[Note: Please RE-CKECK before submitting]</span>
+                <span class="font-italic small text-danger">[Note: Please RE-CKECK before submitting]</span>
             </div>
             {% endif %}
         </form>
@@ -132,12 +130,12 @@
 
             <!--Local-->
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label"> Local Guardian (if any) </label>
+                <label class="col-sm-2 col-form-label"> Local Guardian <span class="small">(if any)</span> </label>
                 <div class="col-sm-4">
                     <input name="loc_guard" class="form-control" {% if loc_guard %} value="{{loc_guard}}" readonly {% else %} placeholder="Enter your Local Guardian Name"
                         {% endif %}/>
                 </div>
-                <label class="col-sm-2 col-form-label"> Local Address (if any) </label>
+                <label class="col-sm-2 col-form-label"> Local Address <span class="small">(if any)</span>    </label>
                 <div class="col-sm">
                     <textarea name="loc_add" class="form-control" {% if loc_add %} readonly>{{loc_add}}
                     {% else %}
@@ -149,7 +147,7 @@
 
             <!-- contact nos -->
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Landline No.(if any)</label>
+                <label class="col-sm-2 col-form-label">Landline No.<span class="small">(if any)</span></label>
                 <div class="col-sm-4">
                     <input name="land_phone" class="form-control" {% if land_phone %} value="{{land_phone}}" readonly{% else %} placeholder="STD code required! (eg. 033 for Kolkata)" {% endif %}/>
                 </div>

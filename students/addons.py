@@ -17,9 +17,15 @@ def get_idcard_details(id):
             'card_no': stud.id,
             'roll_no': stud.roll_no,
             'email': stud.email,
-            'dept': stud.stream,
-            'mentor': stud.mentor.name
+            'dept': stud.dept,
+            'mentor': stud.mentor.name,
         }
+        if stud.stream == 'B':
+            details['stream'] = "B.Tech"
+        elif stud.stream == 'M':
+            details['stream'] = "M.Tech"
+        else:
+            details['stream'] = "Diploma"
         if stud.is_lateral:
             details['is_diploma'] = True
         return details
@@ -101,7 +107,7 @@ def get_sem_details(id, sem):
                 x = str(x)
                 if int(x) > 6:
                     all_subs.append(
-                        Subject(('L'+ str(int(x)-6)), sems_marks[x][0], sems_marks[x][1], sems_marks[x][2]))
+                        Subject(('L' + str(int(x)-6)), sems_marks[x][0], sems_marks[x][1], sems_marks[x][2]))
                 else:
                     all_subs.append(
                         Subject('T' + str(x), sems_marks[x][0], sems_marks[x][1], sems_marks[x][2]))
@@ -118,10 +124,11 @@ def get_sem_details(id, sem):
         }
     else:
         try:
-            subs = Subjects.objects.get(batch=stud.batch, dept=stud.dept, stream=stud.stream, sem=sem)
+            subs = Subjects.objects.get(
+                batch=stud.batch, dept=stud.dept, stream=stud.stream, sem=sem)
             subs = subs.all_subs()
             all_subs = []
-            for x in range(1,len(subs)+1):
+            for x in range(1, len(subs)+1):
                 if x > 6:
                     all_subs.append(Subject(('L' + str(x-6)), subs[str(x)]))
                 else:
@@ -133,13 +140,13 @@ def get_sem_details(id, sem):
             error = True
     if not error:
         details['all_subs'] = all_subs
-        
+
         # Sem management
         details['curr_sem'] = sem
         sem = current_sem(id)
         details['available'] = [str(x) for x in range(1, int(sem)+1)]
         if stud.stream == "B":
-            details['not_available'] = [str(x) for x in range(int(sem)+1, 9)] 
+            details['not_available'] = [str(x) for x in range(int(sem)+1, 9)]
         elif stud.stream == "D":
             details['not_available'] = [str(x) for x in range(int(sem)+1, 7)]
         elif stud.stream == "M":
@@ -148,7 +155,7 @@ def get_sem_details(id, sem):
         return details
     else:
         return -1
-    
+
 
 def form_fill_sem(id, sem):
     forms = FormFills.objects.get(student=Student.objects.get(id=id))
