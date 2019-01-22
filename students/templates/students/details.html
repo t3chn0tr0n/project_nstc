@@ -2,7 +2,7 @@
 {% block body %}
     <div class="container">
         <!-- FIXED DETAILS -->
-        <div class="container jumbotron" style="padding:1.5rem; padding-bottom: 0.3rem; margin-bottom:0rem;">
+        <div class="jumbotron" style="padding:1.5rem; padding-bottom: 0.3rem; margin-bottom:0rem;">
             <div class="form-group row">
                 <label class="col-sm-2">
                     <b> Name: </b>
@@ -34,7 +34,7 @@
         </div>
 
         {% if not filled %}
-        <div class="text-info">ℹ
+        <div class="text-info small">ℹ
             <i>
                 <b>All fields are mandatory</b> unless otherwise mentioned and changes made will be
                 <b>Permanent and Irreversible!</b>
@@ -67,7 +67,7 @@
             <div align="right">
                 <button id="submit1" type="submit" class="btn btn-success btn-sm"> Submit changes </button>
                 <br />
-                <span class="font-italic small text-danger">[Note: Please RE-CKECK before submitting]</span>
+                <span class="font-italic small text-danger">[Note: Please RE-CHECK before submitting]</span>
             </div>
             {% endif %}
         </form>
@@ -169,11 +169,11 @@
                 <div class="col-sm-4">
                     <input required name="mob_no" class="form-control" {% if mob_no %} value="{{ mob_no }}" readonly/>
                     <span class="text-info">ℹ
-                        <i> Mobile No. can changed in Profile Settings!</i>
+                        <span class="small"> <i> Mobile No. can changed in Profile.</i> </small>
                     </span>
                     {% else %} placeholder="Your Mobile No."/>
                     <span class="text-info">ℹ
-                        <i> Mobile No. can later be changed in Profile Settings!</i>
+                        <span class="small"> <i> Mobile No. can later be changed in Profile.</i> </span>
                     </span>
                     {% endif %}
 
@@ -294,11 +294,11 @@
             <center>
                 <input required class="btn btn-primary" type="submit" value="submit" />
                 <br />
-                <span class="font-italic text-danger">[Note: Please RE-CKECK before submitting]</span>
+                <span class="font-italic small text-danger">[Note: Please RE-CKECK before submitting]</span>
             </center>
             <br /> {% else %} ℹ
             <em>
-                <span class="text-info">You may contact your mentor if you want to update any details!</span>
+                <span class="text-info small">You may contact your mentor or HOD if you want to update any details!</span>
             </em>
             {% endif %}
         </form>
