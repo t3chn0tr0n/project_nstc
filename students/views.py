@@ -14,16 +14,16 @@ from students.addons import (
     is_prev_sems_filled,
     any_sem_yet,
     get_idcard_details,
-    get_general_details
+    get_general_details,
+    get_sem_details
 )
 from .models import (Class10, Class12, FormFills, Details, Student,
                      ExtracurricularActivity, SeminarWorkshop, Contributions)
 from subject_and_marks.models import SemMarks, Subjects
 from teachers.models import Teacher
 
+
 # Test Ground for new templates - Contains unchecked code - comment it out if it causes error
-
-
 @login_required(login_url=reverse_lazy('login'))
 def demo(request):
     return render(request, 'students/student_profile.html')
@@ -34,8 +34,8 @@ def general_details(request):
     # if a teacher comes here, well show the way out to them!
     if Teacher.objects.filter(id=request.user.username):
         title = "404"
-        msg = "This way leads nowhere for you!"
-        return message(title, msg, request)
+        error = ['Teachers cannot view this page!']
+        return message(title, error, request)
 
     details = get_idcard_details(request.user.username)
     if not details:
@@ -84,7 +84,6 @@ def general_details(request):
             # land phone no verification
             if len(land_phone) != 0:
                 try:
-
                     land_phone = int(land_phone)
                     if len(str(land_phone)) > 11:
                         error = ["Land phone number too long!"]
@@ -224,7 +223,7 @@ def univ_details(request):
 
 @login_required(login_url=reverse_lazy('login'))
 def sem_marks(request, sem):
-    if Teacher.objects.filter(id=request.user.username).exists():
+    if Teacher.objects.filter(id=request.user.username):
         error = ['Teachers cannot view this page!',
                  'Teachers don\'t give sems anymore! :D']
         return render(request, 'message.html', {'title': 'ERROR',  'messages': error})
@@ -307,11 +306,11 @@ def sem_marks(request, sem):
 
     else:  # GET request
         details = get_sem_details(request.user.username, sem)
-        details['title'] = 'Sem {} Marks'.format(sem)
         if details == -1:
             return render(request, 'message.html', {'title': 'ERROR', 'error': True,  'messages': ['Subject list for the semester not found!']})
         if not forms.is_gen_details_filled and not forms.is_univ_details_filled:
             details['messg']: True
+        details['title'] = 'Sem {} Marks'.format(sem)
         return render(request, 'students/sem_marks.html', details)
 
 
