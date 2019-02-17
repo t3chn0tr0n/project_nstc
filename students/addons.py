@@ -1,7 +1,7 @@
 from builtins import object
 
-from .models import Class10, Class12, Contributions, Details, \
-    ExtracurricularActivity, FormFills, SeminarWorkshop, Student
+from .models import (Class10, Class12, Contributions, Details,
+                     ExtracurricularActivity, FormFills, SeminarWorkshop, Student)
 
 import datetime
 from subject_and_marks.models import SemMarks, Subjects
@@ -31,6 +31,39 @@ def get_idcard_details(id):
         return details
     except:
         return False
+
+
+def get_general_details(id):
+    stud = Student.objects.get(id=id)
+    filled_forms = FormFills.objects.get(student=id)
+    if filled_forms.is_gen_details_filled:
+        data = Details.objects.get(card_no=id)
+        class10 = Class10.objects.get(student=id)
+        class12 = Class12.objects.get(student=id)
+        details = {
+            'dob': data.dob,
+            'blood_type': data.blood_grp,
+            'guard': data.guardian,
+            'perm_add': data.perm_add,
+            'loc_guard': data.loc_guardian,
+            'loc_add': data.loc_add,
+            'land_phone': data.land_phone,
+            'g_mob_no': data.guardian_mobile_no,
+            'mob_no': data.mobile_no,
+            'sc10_med': class10.medium,
+            'sc10_name': class10.school_name,
+            'sc10_year': class10.passing_year,
+            'sc10_add': class10.school_address,
+            'sc10_score': class10.score,
+            'sc12_med': class12.medium,
+            'sc12_name': class12.school_name,
+            'sc12_year': class12.passing_year,
+            'sc12_add': class12.school_address,
+            'sc12_score': class12.score,
+        }
+        if stud.is_lateral:
+            details['dip_score'] = data.diploma_score
+    return details
 
 
 def get_univ_details(id):
