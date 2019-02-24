@@ -51,8 +51,8 @@ class Details(models.Model):
     loc_guardian = models.CharField(default="", max_length=50)
     loc_add = models.CharField(default="", max_length=50)
     land_phone = models.IntegerField(null=True)
-    guardian_mobile_no = models.IntegerField(default="000")
-    mobile_no = models.IntegerField(default="000")
+    guardian_mobile_no =  models.CharField(default="", max_length=10)
+    mobile_no = models.CharField(default="", max_length=10)
     diploma_score = models.FloatField(max_length="50", null=True)
 
     # returns a dictionary object of student, ready to be serialized
@@ -129,13 +129,16 @@ class FormFills(models.Model):
     is_sem8_filled = models.BooleanField(default=False)
 
     def sem_fills_easy(self):
-        return {
+        sems = {
             "1": self.is_sem1_filled,
             "2": self.is_sem2_filled,
             "3": self.is_sem3_filled,
             "4": self.is_sem4_filled,
-            "5": self.is_sem5_filled,
-            "6": self.is_sem6_filled,
-            "7": self.is_sem7_filled,
-            "8": self.is_sem8_filled
         }
+        if Student.objects.get(id=self.student).stream in ('B', 'D') :
+            sems["5"] =  self.is_sem5_filled
+            sems["6"] =  self.is_sem6_filled
+        if Student.objects.get(id=self.student).stream == 'B':
+            sems["7"] =  self.is_sem7_filled
+            sems["8"] =  self.is_sem8_filled
+        return sems
