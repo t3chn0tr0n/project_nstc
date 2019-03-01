@@ -195,11 +195,11 @@ def univ_details(request):
             error = ["ERROR finding the student"]
 
         # If already filled, fail loudly!
-        if stud.admission_no or stud.registration_no:
+        if stud.univ_roll_no or stud.registration_no:
             error = ["Can't Overwrite existing data!"]
 
         if not error:
-            stud.admission_no = admin_no
+            stud.univ_roll_no = admin_no
             stud.registration_no = reg_no
             stud.save()
             forms = FormFills.objects.get(student=request.user.username)

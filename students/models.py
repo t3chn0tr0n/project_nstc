@@ -9,9 +9,9 @@ class Student(models.Model):
     id = models.CharField(default=" ", max_length=15, primary_key=True)
     name = models.CharField(default=" ", max_length=50)
     mentor = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    roll_no = models.IntegerField(default=000)
+    univ_roll_no = models.IntegerField(default=000) # This is a unique field, candidate key!
     registration_no = models.IntegerField(null=True, blank=True)
-    admission_no = models.IntegerField(null=True, blank=True)
+    admission_no = models.IntegerField(null=True, blank=True) # last 3 digits = class roll no.
     dept = models.CharField(default=" ", max_length=20)  # stores as CSE, ECE
     stream = models.CharField(default=" ", max_length=1) # B or M or D
     batch = models.CharField(default="", max_length=12)  # stores BAT20152019
@@ -19,27 +19,6 @@ class Student(models.Model):
     is_verified = models.BooleanField(default=False)
     email = models.EmailField(max_length=70)
     is_lateral = models.BooleanField(default=False)
-
-    # returns a dictionary object of student, ready to be serialized
-    def get_student_data(self):
-        details = {
-            'id': self.id,
-            'name': self.name,
-            'mentor': self.mentor,
-            'roll_no': self.roll_no,
-            'registration_no': self.registration_no,
-            'admission_no': self.admission_no,
-            'stream': self.stream,
-            'batch': self.batch,
-            'is_registered': self.is_registered,
-            'is_verified': self.is_verified,
-            'email': self.email,
-            'is_lateral': self.is_lateral
-        }
-        return details
-
-    def get_marks_of_sem(self, sem):
-        return SemMarks.objects.get(student_id=self.id, sem_no=sem)
 
 
 class Details(models.Model):
