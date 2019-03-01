@@ -9,9 +9,9 @@ class Student(models.Model):
     id = models.CharField(default=" ", max_length=15, primary_key=True)
     name = models.CharField(default=" ", max_length=50)
     mentor = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    univ_roll_no = models.IntegerField(default=000) # This is a unique field, candidate key!
-    registration_no = models.IntegerField(null=True, blank=True)
-    admission_no = models.IntegerField(null=True, blank=True) # last 3 digits = class roll no.
+    univ_roll_no = models.CharField(default=" ", max_length=20, null=True) # This is a unique field, candidate key!
+    registration_no = models.CharField(default=" ", max_length=20, null=True)
+    admission_no = models.CharField(default=" ", max_length=20, null=True) # last 3 digits = class roll no.
     dept = models.CharField(default=" ", max_length=20)  # stores as CSE, ECE
     stream = models.CharField(default=" ", max_length=1) # B or M or D
     batch = models.CharField(default="", max_length=12)  # stores BAT20152019
