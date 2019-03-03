@@ -1,5 +1,6 @@
 {% extends 'students/main.html/' %} 
 {% block body %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <div class="container">
         <!-- FIXED DETAILS -->
         <div class="jumbotron" style="padding:1.5rem; padding-bottom: 0.3rem; margin-bottom:0rem;">
@@ -34,7 +35,8 @@
         </div>
 
         {% if not filled %}
-        <div class="text-info small">ℹ
+        <div class="text-info small">
+            <i class="fas fa-exclamation-circle text-info"></i>
             <i>
                 <b>All fields are mandatory</b> unless otherwise mentioned and changes made will be
                 <b>Permanent and Irreversible!</b>
@@ -45,19 +47,19 @@
         <br />
         <br />
         <!-- University Details -->
-        <form method="POST" action="{% url 'univ_details' %}" target="{% url 'univ_details' %}">
+        <form method="POST" action="{% url 'univ_details' %}" target="_blank">
             <!-- <form> -->
             {% csrf_token %}
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Admission No.</label>
                 <div class="col-sm-4">
-                    <input required name="admin_no" class="form-control" {% if admin_no %} value="{{ admin_no }}" {% else %} placeholder="Enter once issued"
+                    <input required name="admin_no" class="form-control" {% if admin_no %} value="{{ admin_no }}" readonly disabled {% else %} placeholder="Enter once issued"
                         {% endif %}/>
                 </div>
 
                 <label class="col-sm-2 col-form-label">Registration No.</label>
                 <div class="col-sm-4">
-                    <input required name="reg_no" class="form-control" {% if reg_no %} value="{{ reg_no }}" {% else %} placeholder="Enter once issued"
+                    <input required name="reg_no" class="form-control" {% if reg_no %} value="{{ reg_no }}" readonly disabled {% else %} placeholder="Enter once issued"
                         {% endif %}/>
                 </div>
             </div>
@@ -149,7 +151,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Landline No.<span class="small">(if any)</span></label>
                 <div class="col-sm-4">
-                    <input name="land_phone" class="form-control" {% if land_phone %} value="{{land_phone}}" readonly{% else %} placeholder="STD code required! (eg. 033 for Kolkata)" {% endif %}/>
+                    <input name="land_phone" class="form-control" {% if filled %} {% if land_phone %} value="{{land_phone}}" {% else %} value = "N/A" {% endif %} readonly {% else %} placeholder="STD code required! (eg. 033 for Kolkata)" {% endif %}/>
                 </div>
 
                 <label class="col-sm-2 col-form-label">Guardian Mobile</label>
@@ -168,11 +170,11 @@
                 <label class="col-sm-2 col-form-label">Mobile No.</label>
                 <div class="col-sm-4">
                     <input required name="mob_no" class="form-control" {% if mob_no %} value="{{ mob_no }}" readonly/>
-                    <span class="text-info">ℹ
+                    <span class="text-info"><i class="fas fa-exclamation-circle text-info"></i>
                         <span class="small"> <i> Mobile No. can changed in Profile.</i> </small>
                     </span>
                     {% else %} placeholder="Your Mobile No."/>
-                    <span class="text-info">ℹ
+                    <span class="text-info"><i class="fas fa-exclamation-circle text-info"></i>
                         <span class="small"> <i> Mobile No. can later be changed in Profile.</i> </span>
                     </span>
                     {% endif %}
@@ -281,25 +283,30 @@
                     </textarea>
                 </div>
             </div>
-            <br /> {% if is_diploma %}
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label"> Diploma Score (SGPA) </label>
-                <div class="col-sm-4">
-                    <input required name="dip_score" class="form-control" type="number" max="10" min="0" step="0.01" {% if dip_score %} value="{{dip_score}}" readonly {% endif %} />
-                </div>
-            </div>
-            <br /> {% endif %} {% if not filled %}
-            <br />
-            <!-- SUBMIT BUTTON-->
-            <center>
-                <input required class="btn btn-primary" type="submit" value="submit" />
+            {% if is_diploma %}
                 <br />
-                <span class="font-italic small text-danger">[Note: Please RE-CKECK before submitting]</span>
-            </center>
-            <br /> {% else %} ℹ
-            <em>
-                <span class="text-info small">You may contact your mentor or HOD if you want to update any details!</span>
-            </em>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label"> Diploma Score (SGPA) </label>
+                    <div class="col-sm-4">
+                        <input required name="dip_score" class="form-control" type="number" max="10" min="0" step="0.01" {% if dip_score %} value="{{dip_score}}" readonly {% endif %} />
+                    </div>
+                </div>
+                <br /> 
+            {% endif %} 
+            {% if not filled %}
+                <br />
+                <!-- SUBMIT BUTTON-->
+                <center>
+                    <input required class="btn btn-primary" type="submit" value="submit" />
+                    <br />
+                    <span class="font-italic small text-danger">[Note: Please RE-CKECK before submitting]</span>
+                </center>
+                <br /> 
+            {% else %} 
+                <i class="fas fa-exclamation-circle text-info"></i>
+                <em>
+                    <span class="text-info small">You may contact your mentor or HOD if you want to update any details!</span>
+                </em> <br /><br />
             {% endif %}
         </form>
     </div>

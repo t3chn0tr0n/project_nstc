@@ -1,4 +1,4 @@
-<footer class=" bg-primary text-light container-fluid" style="padding: 15px;">
+<footer class=" bg-primary text-light container-fluid" style="{% if fixed_footer %}position: absolute; bottom: 0; padding: 15px;{% endif %} padding: 15px;">
     <center>
             © Narula Institute of Technology, {% now "Y" %}. <br />
             Created with ❤ by ASA for <i>Narula Institute Of Technology</i> 
