@@ -73,7 +73,7 @@ class SemMarks(models.Model):
         }
 
 
-class Subjects(models.Model):
+class Subjects(models.Model): # A list of all subjects
     sem = models.IntegerField(default=0)
     dept = models.CharField(default="", max_length=5) # M or B for mtech or btech
     stream = models.CharField(default="", max_length=1)
@@ -120,3 +120,12 @@ class Subjects(models.Model):
             "10": self.lab4,
             "11": self.lab5
         }
+
+
+class Departments(models.Model): # A list of all departments, their HODs and Courses offered
+    dept_code = models.CharField(default="", max_length=5, primary_key=True) # subject code, e.g. CSE for Computer Science
+    dept_name = models.CharField(default="", max_length=30)
+    hod = models.CharField(default=" ", max_length=15)
+    btech = models.BooleanField(default=True)
+    mtech = models.BooleanField(default=False)
+    diploma = models.BooleanField(default=False)
