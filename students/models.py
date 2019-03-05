@@ -7,7 +7,9 @@ from teachers.models import Teacher
 
 class Student(models.Model):
     id = models.CharField(default=" ", max_length=15, primary_key=True)
-    name = models.CharField(default=" ", max_length=50)
+    name = models.CharField(default=" ", max_length=50) #First Name
+    middle_name = models.CharField(default=" ", max_length=50) # Middle name
+    surname = models.CharField(default=" ", max_length=50) # Last name
     mentor = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     univ_roll_no = models.CharField(default=" ", max_length=20, null=True) # This is a unique field, candidate key!
     registration_no = models.CharField(default=" ", max_length=20, null=True)
