@@ -123,3 +123,9 @@ class FormFills(models.Model):
             sems["7"] =  self.is_sem7_filled
             sems["8"] =  self.is_sem8_filled
         return sems
+
+
+class Counselings(models.Model):
+    student = models.CharField(default=" ", max_length=15, primary_key=True)
+    date = models.DateField(default=timezone.now)
+    topic = models.CharField(default=" ", max_length=30)
