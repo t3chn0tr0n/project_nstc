@@ -57,8 +57,8 @@ class ExtracurricularActivity(models.Model):
     industry_visit_2_date = models.DateField(default=timezone.now)
 
 
-class SeminarWorkshop(models.Model):
-    attendee = models.CharField(default=" ", max_length=15, primary_key=True)
+class SeminarsWorkshops(models.Model):
+    attendee = models.CharField(default=" ", max_length=15)
     name = models.CharField(default="", max_length=50)
     date = models.DateField(default=timezone.now)
     organiser = models.CharField(default="", max_length=50)
@@ -66,6 +66,7 @@ class SeminarWorkshop(models.Model):
 
 class Contributions(models.Model):
     student = models.CharField(default=" ", max_length=15, primary_key=True)
+    contributions = models.CharField(default="", max_length=1000)
     annual_magazine_paper = models.CharField(default="", max_length=1000)
     annual_magazine_event = models.CharField(default="", max_length=1000)
     wall_magazine_paper = models.CharField(default="", max_length=1000)
