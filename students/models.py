@@ -43,8 +43,10 @@ class Details(models.Model):
 
 class ExtracurricularActivity(models.Model):
     student = models.CharField(default=" ", max_length=15, primary_key=True)
-    soft_skill = models.CharField(default="", max_length=50)
-    aptitude = models.CharField(default="", max_length=50)
+    soft_skill_conduct = models.IntegerField(default=0)
+    soft_skill_attend = models.IntegerField(default=0)
+    aptitude_conduct = models.IntegerField(default=0)
+    aptitude_attend = models.IntegerField(default=0)
     mock_interview = models.BooleanField(default=False)
     online_test = models.BooleanField(default=False)
     gate_exam = models.BooleanField(default=False)
@@ -52,9 +54,9 @@ class ExtracurricularActivity(models.Model):
     saraswati_puja = models.BooleanField(default=False)
     vishwakarma_puja = models.BooleanField(default=False)
     industry_visit_1 = models.CharField(default="", max_length=50)
-    industry_visit_1_date = models.DateField(default=timezone.now)
+    industry_visit_1_date = models.DateField(null=True)
     industry_visit_2 = models.CharField(default="", max_length=50)
-    industry_visit_2_date = models.DateField(default=timezone.now)
+    industry_visit_2_date = models.DateField(null=True)
 
 
 class SeminarsWorkshops(models.Model):
@@ -127,6 +129,6 @@ class FormFills(models.Model):
 
 
 class Counselings(models.Model):
-    student = models.CharField(default=" ", max_length=15, primary_key=True)
+    student = models.CharField(default=" ", max_length=15)
     date = models.DateField(default=timezone.now)
     topic = models.CharField(default=" ", max_length=30)

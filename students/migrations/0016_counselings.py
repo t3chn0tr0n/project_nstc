@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Counselings',
             fields=[
-                ('student', models.CharField(default=' ', max_length=15, primary_key=True, serialize=False)),
+                ('id', models.CharField(default=' ', max_length=15, primary_key=True, serialize=False)),
+                ('student', models.CharField(default=' ', max_length=15)),
                 ('date', models.DateField(default=django.utils.timezone.now)),
                 ('topic', models.CharField(default=' ', max_length=30)),
             ],
