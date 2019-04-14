@@ -68,16 +68,14 @@ class SeminarsWorkshops(models.Model):
 
 class Contributions(models.Model):
     student = models.CharField(default=" ", max_length=15, primary_key=True)
-    contributions = models.CharField(default="", max_length=1000)
-    annual_magazine_paper = models.CharField(default="", max_length=1000)
-    annual_magazine_event = models.CharField(default="", max_length=1000)
-    wall_magazine_paper = models.CharField(default="", max_length=1000)
-    wall_magazine_event = models.CharField(default="", max_length=1000)
-    technical_academic_awards = models.CharField(default="", max_length=1000)
-    paper_publication = models.CharField(default="", max_length=500)
-    oncampus = models.CharField(default="", max_length=1000)
-    offcampus = models.CharField(default="", max_length=1000)
-
+    contributions = models.TextField(default="")
+    annual_magazine_paper = models.TextField(default="")
+    annual_magazine_event = models.TextField(default="")
+    wall_magazine_paper = models.TextField(default="")
+    wall_magazine_event = models.TextField(default="")
+    technical_academic_awards = models.TextField(default="")
+    paper_publication = models.TextField(default="")
+    
 
 class Class10(models.Model):
     student = models.CharField(default=" ", max_length=15, primary_key=True)
