@@ -74,6 +74,7 @@ class Contributions(models.Model):
     wall_magazine_paper = models.TextField(default="")
     wall_magazine_event = models.TextField(default="")
     technical_academic_awards = models.TextField(default="")
+    technical_contests = models.TextField(default="")
     paper_publication = models.TextField(default="")
     
 
