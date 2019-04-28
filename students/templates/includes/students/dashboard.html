@@ -26,15 +26,13 @@
             Sem Marks
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Sem 1</a>
-            <a class="dropdown-item" href="#">Sem 2</a>
-            <a class="dropdown-item" href="#">Sem 3</a>
-            <a class="dropdown-item" href="#">Sem 4</a>
-            <a class="dropdown-item" href="#">Sem 5</a>
-            <a class="dropdown-item" href="#">Sem 6</a>
-            <a class="dropdown-item" href="#">Sem 7</a>
-            <a class="dropdown-item" href="#">Sem 8</a>
-
+            {% for x in nav_sems %}
+              {% if x.state %}
+                <span class="dropdown-item disabled">Sem {{ x.num }}</span>
+              {% else %}
+                <a class="dropdown-item" href="{% url 'sem_marks' x.num %}">Sem {{ x.num }}</a>
+              {% endif %}
+            {% endfor %}
             <div class="dropdown-divider"></div>
             <a class="dropdown-item text-danger" href="#">Fill General and University Details First</a>
 
@@ -42,9 +40,11 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#">Contact Mentor
+          <a class="nav-link" href="#">Certificates</a>
+        </li>
 
-          </a>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact Mentor</a>
         </li>
 
       </ul>

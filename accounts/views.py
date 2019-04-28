@@ -294,7 +294,27 @@ def message(title, mesg, request):
     img = '<img src="' + addons.get_cute_image() + '" height="200px" width="200px" alt="a cute animal image">'
     return render(request, 'accounts/message.html', {'title':title, 'messages':mesg, 'cute_img':img})
 
+# TODO:
+@login_required(login_url=reverse_lazy('login'))
+def change_email():
+    # Step1: Get the email and password
+    # STEP2: Verify the password
+    # Step3: Send the verification link to email IF password is correct
+    # Step4: Verify the email => validate_new_email()
+    
+    if request.method == "POST":
+        email = request.POST['email'].strip()
+    # No GET request available for this page: Only way access this is by profile page!
+    else:
+        return render(request, 'message.html', {'fof': True})
+    pass
+
+# TODO:
+def validate_new_email():
+    # change email in auth_user and students_student/teacher_teacher
+    pass
 
 @login_required(login_url=reverse_lazy('login'))
 def index(request):
-    return render(request, 'accounts/index.html', {'title':'index'})
+    img = '<img src="' + addons.get_cute_image() + '" height="200px" width="200px" alt="a cute animal image">'
+    return render(request, 'accounts/index.html', {'title':'Index', 'cute_img':img})

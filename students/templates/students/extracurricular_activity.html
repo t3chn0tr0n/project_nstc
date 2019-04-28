@@ -1,0 +1,320 @@
+{% extends 'students/main.html/' %}
+{% block body %}
+<div class="container">
+{% load static %}
+
+    <!-- form1 -->
+    <form class="container">
+        {% csrf_token %}
+        <!--Softskill-->
+        <span class="form-text text-primary mb-3"><i><b> Please fill the following after it has been completed.<span class="text-info"> DO NOT FILL before that. </span></b></i></span>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label"> <b> Soft Skill Class </b> </label>
+            <div class="col-sm-3 mb-1">
+                <label class="sr-only"> Classes Conducted </label>
+                <input id="sftskl_condt" title="Classes Conducted: Enter between 0-50" class="form-control" min="0"
+                    max="50" type="number" placeholder="Conducted" {% if sftskl_condt %} value={{sftskl_condt}} disabled readonly {% endif %}/>
+            </div>
+            <div class="col-sm-3">
+                <label class="sr-only"> Classes Attended </label>
+                <input id="sftskl_attnd" title="Classes Attended: Enter between 0-50" class="form-control" min="0"
+                    max="50" type="number" placeholder="Attended" {% if sftskl_attnd %} value={{sftskl_attnd}} disabled readonly {% endif %}/>
+            </div>
+        </div>
+        <!--Aptitude-->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label"> <b> Aptitute Class </b> </label>
+            <div class="col-sm-3 mb-1">
+                <label class="sr-only"> Classes Conducted </label>
+                <input id="apti_condt" title="Classes Conducted: Enter between 0-50" class="form-control" min="0" max="100"
+                    type="number" placeholder="Conducted" {% if apti_condt %} value={{apti_condt}} disabled readonly {% endif %}/>
+            </div>
+            <div class="col-sm-3">
+                <label class="sr-only"> Classes Attended </label>
+                <input id="apti_attnd" title="Classes Attended: Enter between 0-50" class="form-control" min="0" max="100"
+                    type="number" placeholder="Attended" {% if apti_attnd %} value={{apti_attnd}} disabled readonly {% endif %}/>
+            </div>
+        </div>
+        <!--Moock Interview-->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label"> <b> Mock Interview </b> </label>
+            <div class="col-sm-3">
+                {% if mck_intrvw %}
+                    <span class="form-control text-secondary"> {{mck_intrvw}} </span>
+                {% else %}
+                    <select id="mck_intrvw" class="custom-select">
+                        <option value="yes"> Yes </option>
+                        <option selected value="no"> No </option>
+                    </select>
+                {% endif %}
+            </div>
+        </div>
+        <!-- Industrial Visit-1 -->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label mt-1"><b> Industrial Visit-1 </b></label>
+            <div class="col-sm-3">
+                <label class="sr-only">Date of visit</label>
+                <input id="iv1_date" type="date" class="form-control mt-1" title="Date of visit" {% if iv1_date %} value={{iv1_date}} disabled readonly {% endif %}/>
+            </div>
+            <div class="col-sm-4">
+                <label class="sr-only">Name of the Institution</label>
+                <input id="iv1_place" title="Name of the Institution" class="form-control mt-1" placeholder="Name of the Institution" {% if iv1_place %} value={{iv1_place}} disabled readonly {% endif %}/>
+            </div>
+        </div>
+        <!-- Industrial Visit-2 -->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label"><b> Industrial Visit-2 </b></label>
+            <div class="col-sm-3">
+                <label class="sr-only">Date of visit</label>
+                <input id="iv2_date" title="Date of visit" type="date" class="form-control mt-1" title="Date of visit" {% if iv2_date %} value={{iv2_date}} disabled readonly {% endif %}/>
+            </div>
+            <div class="col-sm-4">
+                <label class="sr-only">Name of the Institution</label>
+                <input id="iv2_place" title="Name of the Institution" class="form-control mt-1" placeholder="Name of the Institution" {% if iv2_place %} value={{iv2_place}} disabled readonly {% endif %}/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <span class="col-sm form-text text-muted font-weight-bold"> Did you give/will give these exams? </span>
+        </div>
+        <!-- Online Test -->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label"><b> Online Test </b></label>
+            <div class="col-sm-3">
+                {% if onln_tst %}
+                    <span class="form-control text-secondary"> {{onln_tst}} </span>
+                {% else %}
+                    <select id="onln_tst" class="custom-select">
+                        <option value="yes"> Yes </option>
+                        <option value="no" selected> No </option>
+                    </select>
+                {% endif %}
+            </div>
+        </div>
+        <!-- GATE Exam -->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label"><b> GATE Exam </b></label>
+            <div class="col-sm-3">
+                {% if gate %}
+                    <span class="form-control text-secondary"> {{gate}} </span>
+                {% else %}
+                    <select id="gate" class="custom-select">
+                        <option value="yes"> Yes </option>
+                        <option value="no" selected> No </option>
+                    </select>
+                {% endif %}
+            </div>
+        </div>
+        <!-- CAT/MAT/JEMAT Exam -->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label"><b> CAT/MAT/JEMAT Exam </b></label>
+            <div class="col-sm-3">
+                {% if cat %}
+                    <span class="form-control text-secondary"> {{cat}} </span>
+                {% else %}
+                    <select id="cat" class="custom-select">
+                        <option value="yes"> Yes </option>
+                        <option value="no" selected> No </option>
+                    </select>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div align="right">
+            <a type="button" href="#submit" id="submit1" class="btn btn-success btn-sm"> Submit changes </a>
+        </div>
+        <hr />
+        <br />
+    </form>
+
+    <!-- form2 -->
+    <form id="form2" id="form2" class="container">
+        {%csrf_token%}
+        <!-- Swaraswati Puja -->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label "> <b> Swaraswati Puja Participation </b> </label>
+            <div class="col-sm-3">
+                {% if swrswti_puja %}
+                    <span class="form-control text-secondary"> {{swrswti_puja}} </span>
+                {% else %}
+                    <select id="swrswti_puja" class="custom-select">
+                        <option value="yes"> Yes </option>
+                        <option value="no" selected> No </option>
+                    </select>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Viswakarma Puja -->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label "> <b> Viswa Karma Puja Participation </b> </label>
+            <div class="col-sm-3">
+                {% if vswkrma_puja %}
+                    <span class="form-control text-secondary"> {{vswkrma_puja}} </span>
+                {% else %}
+                    <select id="vswkrma_puja" class="custom-select">
+                        <option value="yes"> Yes </option>
+                        <option value="no" selected> No </option>
+                    </select>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Contributions -->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label"><b> Contributions Made To: </b></label>
+            <div class="col-sm-6 ">
+                <textarea id="contribs" title="Contributions Made" class="form-control" rows="1" placeholder="Use commas to seperate different Contributions [PLEASE DON'T USE ENTER]" {% if contribs %} value={{contribs}} disabled readonly {% endif %}></textarea>
+            </div>
+        </div>
+
+        <!-- Annual Magazine -->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label"> <b> Annual Magazine </b> </label>
+            <div class="col-sm-3">
+                <label class="sr-only"> Paper Publications </label>
+                <textarea id="ann_mag_pap_pub" title="Paper Publications" class="form-control mb-1" rows="2" cols="10" placeholder="Paper Publications (Use commas to seperate each)" >{{ ann_mag_pap_pub }}</textarea>
+            </div>
+            <div class="col-sm-3">
+                <label class="sr-only"> Events & Topics </label>
+                <textarea id="ann_mag_evnts" title="Events & Topics" class="form-control mb-1" rows="2" cols="10" placeholder="Events & Topics (Use commas to seperate each)">{{ ann_mag_evnts }}</textarea>
+            </div>
+        </div>
+
+        <!-- Wall Magazine -->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label"> <b> Wall Magazine </b> </label>
+            <div class="col-sm-3">
+                <label class="sr-only"> Paper Publications </label>
+                <textarea id="wall_mag_pap_pub" title="Paper Publications" class="form-control mb-1" rows="2" cols="10" placeholder="Paper Publications (Use commas to seperate each)">{{wall_mag_pap_pub}}</textarea>
+            </div>
+            <div class="col-sm-3">
+                <label class="sr-only"> Events & Topics </label>
+                <textarea id="wall_mag_evnts" title="Events & Topics" class="form-control mb-1" rows="2" cols="10" placeholder="Events & Topics (Use commas to seperate each)">{{wall_mag_evnts}}</textarea>
+            </div>
+        </div>
+
+        <!-- Paper Publications-->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label"><b> Papers Published </b></label>
+            <div class="col-sm-6">
+                <textarea id="papers_pub" title="Papers Published" class="form-control" rows="1" placeholder="Use commas to seperate different Contests [PLEASE DON'T USE ENTER]">{{tech_contst}}</textarea>
+            </div>
+        </div>
+
+        <!-- Technical Contest -->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label"><b> Technical Contests </b></label>
+            <div class="col-sm-6">
+                <textarea id="tech_contst" title="Technical Contests" class="form-control" rows="1" placeholder="Use commas to seperate different Contests [PLEASE DON'T USE ENTER]">{{tech_contst}}</textarea>
+            </div>
+        </div>
+
+        <!-- Awards -->
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label"><b> Academic/Technical Awards </b></label>
+            <div class="col-sm-6">
+                <textarea id="awrds" title="Academic/Technical Awards" class="form-control" rows="1" placeholder="Use commas to seperate different Awards [PLEASE DON'T USE ENTER]">{{awrds}}</textarea>
+            </div>
+        </div>
+
+        <div align="right">
+            <a type="button" href="#submit" id="submit2" class="btn btn-success btn-sm"> Submit changes </a>
+        </div>
+        <hr /><br />
+    </form>
+
+    <!-- form3: Table 1 Seminer/Workshop Attainded-->
+    <div class="container">
+        <!-- Table 1: Seminer/Workshop Attainded -->
+        <div class="row">
+            <label class="col-sm-3 col-form-label "> <b> Seminers/Workshops Attended </b> </label>
+            <form id="form3" method="POST">
+                {%csrf_token%}
+                <table class="table table-borderless">
+                    <tr><input id="wrk_shp_form_count"  class="m-1 lead" style="border: 0;" value="{{wrk_shp}}" readonly/> </tr>
+                    <tr>
+                        <th> </th>
+                        <th>Name/Topic</th>
+                        <th>Date</th>
+                        <th>Organisation</th>
+                    </tr>
+                    <tbody id="wrk_shp_form_body" width="350px" border="0">
+                        {% for x in wrk_shp_list %}
+                        <tr>
+                            <td><input type="checkbox" class="chkBox" hidden/></td>
+                            <td><span class="text-secondary">{{x.name}}</span></td>
+                            <td><span class="text-secondary">{{x.date}}</span></td>
+                            <td><span class="text-secondary">{{x.org}}</span></td>
+                        </tr>
+                        {% endfor %}
+                        <tr id="wrk_shp_form" hidden>
+                            <td><input type="checkbox" name="wrk_shp_form_chkBox[]" class="mr-1" class="chkBox"/></td>
+                            <td><input type="text" name="wrk_shp_name[]" class="form-control" value/></td>
+                            <td><input type="date" name="wrk_shp_dates[]" class="form-control"/></td>
+                            <td><input type="text" name="wrk_shp_org" class="form-control"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <span id="wrk_shp_warn" class="text-danger small" hidden> Please fill all fields or delete blank field! </span>
+                <br />
+                <input type="button" value="Add New" onclick="addRow('wrk_shp_form');" class="btn btn-outline-primary btn-sm" />
+                <input type="button" value="Delete Row" onclick="deleteRow('wrk_shp_form')" id="wrk_shp_form_del" class="btn btn-outline-danger btn-sm" hidden/>
+                <a type="button" href="#submit" id="sub_wrk_shp_form" class="btn btn-success btn-sm" hidden> Submit changes </a>
+            </form>
+        </div>
+        <br />
+        <hr /><br />
+    </div>
+
+    <!-- form4: Table 2 Counseling -->
+    <div class="container">
+        <div class="row">
+            <label class="col-sm-3 col-form-label "> <b> Date of Counseling With Comments </b> </label>
+            <form id="form3" method="POST">
+                {%csrf_token%}
+                <table class="table table-borderless">
+                    <tr>
+                        <input id="counslng_form_count" class="m-1 lead" style="border: 0;" value="{{counslng_count}}" readonly />
+                    </tr>
+                    <tr>
+                        <th> </th>
+                        <th>Date</th>
+                        <th>Discussion Topic</th>
+                    </tr>
+                    <tbody id="counslng_form_body" width="350px" border="0">
+                        {% for x in counslng_list %}
+                        <tr>
+                            <td><input type="checkbox" class="chkBox" hidden/></td>
+                            <td><span class="text-secondary">{{x.date}}</span></td>
+                            <td><span class="text-secondary">{{x.topic}}</span></td>
+                        </tr>
+                        {% endfor %}
+                        <tr id="counslng_form" hidden>
+                            <td><input type="checkbox" name="counslng_form_chkBox[]" class="mr-1" class="chkBox"/></td>
+                            <td><input type="date" name="counslng_form_dates[]" class="form-control"/></td>
+                            <td><input type="text" name="counslng_form_topics[]" class="form-control"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <span id="counslng_warn" class="text-danger small" hidden> Please fill all fields or delete blank field!
+                </span>
+                <br />
+                <input type="button" value="Add New" onclick="addRow('counslng_form');" class="btn btn-outline-primary btn-sm" />
+                <input type="button" value="Delete Row" onclick="deleteRow('counslng_form')" id="counslng_form_del" class="btn btn-outline-danger btn-sm" hidden />
+                <a type="button" href="#submit" id="sub_counslng_form" class="btn btn-success btn-sm" hidden> Submit changes </a>
+            </form>
+        </div>
+        <br />
+    </div>
+    <br /> <br />
+    <!-- SCRIPTS -->
+    <span>
+        <script src="{% static 'students/js/extracurricular_activity.js' %}"></script>
+    </span>
+</div>
+
+<!-- POPUP -->
+{% include 'includes/popup.html'%}
+{% endblock %}

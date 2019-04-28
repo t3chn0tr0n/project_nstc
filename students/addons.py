@@ -1,7 +1,7 @@
 from builtins import object
 
-from .models import (Class10, Class12, Contributions, Details,
-                     ExtracurricularActivity, FormFills, SeminarWorkshop, Student)
+from .models import (Class10, Class12, Contributions, Details, Counselings,
+                     ExtracurricularActivity, FormFills, SeminarsWorkshops, Student)
 
 import datetime
 from subject_and_marks.models import SemMarks, Subjects
@@ -12,13 +12,14 @@ def get_idcard_details(id):
     try:
         stud = Student.objects.get(id=id)
         details = {
-            'name': stud.name,
+            'name': stud.name + stud.middle_name + stud.surname,
             'id': stud.id,
             'card_no': stud.id,
-            'roll_no': stud.roll_no,
+            'roll_no': stud.univ_roll_no,
             'email': stud.email,
             'dept': stud.dept,
             'mentor': stud.mentor.name,
+            'nav_sems': sem_for_nav_bar(id)
         }
         if stud.stream == 'B':
             details['stream'] = "B.Tech"
@@ -60,6 +61,7 @@ def get_general_details(id):
             'sc12_year': class12.passing_year,
             'sc12_add': class12.school_address,
             'sc12_score': class12.score,
+            'nav_sems': sem_for_nav_bar(id)
         }
         if stud.is_lateral:
             details['dip_score'] = data.diploma_score
@@ -71,7 +73,7 @@ def get_univ_details(id):
     filled_forms = FormFills.objects.get(student=id)
     if filled_forms.is_univ_details_filled:
         details = {
-            'admin_no':  stud.admission_no,
+            'admin_no': stud.univ_roll_no,
             'reg_no': stud.registration_no
         }
         return details
@@ -173,7 +175,10 @@ def get_sem_details(id, sem):
             error = True
     if not error:
         details['all_subs'] = all_subs
-
+        if stud.is_lateral:
+            details['lat'] = True
+        else:
+            details['lat'] = False
         # Sem management
         details['curr_sem'] = sem
         sem = current_sem(id)
@@ -184,7 +189,7 @@ def get_sem_details(id, sem):
             details['not_available'] = [str(x) for x in range(int(sem)+1, 7)]
         elif stud.stream == "M":
             details['not_available'] = [str(x) for x in range(int(sem)+1, 5)]
-
+        details['nav_sems'] = sem_for_nav_bar(id)
         return details
     else:
         return -1
@@ -232,3 +237,158 @@ def any_sem_yet(id):
     if diff == 0 or (diff == 1 and current_month == 2):
         return False
     return True
+
+
+def get_page_details(id):
+    forms = FormFills.objects.get(student=id)
+    sems = forms.sem_fills_easy()
+
+    class page:
+        def __init__(self, name, link, filled, sem=None, sem_no=None):
+            self.name = name
+            self.link = link
+            self.filled = filled
+            self.sem = sem
+            self.sem_no = sem_no
+
+    pages_details = [
+        page('General Details', 'details', forms.is_gen_details_filled),
+        page('University Details', None, forms.is_univ_details_filled),
+        # Add Extracurricular activity page
+        # Add Choose Elective page
+    ]
+
+    # Add sem fields and if a sem does not exist (eg. sem8 for Mtech), skip that entry!
+    for x in range(1, 9):
+        if str(x) in sems:
+            pages_details.append(page(name=(
+                'Sem ' + str(x)), link='sem_marks', filled=sems[str(x)], sem=True, sem_no=x))
+
+    details = {'pages': pages_details, 'nav_sems': sem_for_nav_bar(id)}
+    return details
+
+
+def extra_curricular(id):
+    d = {
+        'title': "Extracurricular activity",
+        'nav_sems': sem_for_nav_bar(id)
+    }
+    if ExtracurricularActivity.objects.filter(student=id).exists():
+        ea = ExtracurricularActivity.objects.get(student=id)
+        d['sftskl_condt'] = ea.soft_skill_conduct
+        d['sftskl_attnd'] = ea.soft_skill_attend
+        d['apti_condt'] = ea.aptitude_conduct
+        d['apti_attnd'] = ea.aptitude_attend
+        d['mck_intrvw'] = ea.mock_interview
+        d['iv1_date'] = ea.industry_visit_1_date
+        d['iv1_place'] = ea.industry_visit_1
+        d['iv2_date'] = ea.industry_visit_2_date
+        d['iv2_place'] = ea.industry_visit_2
+        d['onln_tst'] = ea.online_test
+        d['gate'] = ea.gate_exam
+        d['cat'] = ea.cat_exam
+        d['swrswti_puja'] = ea.saraswati_puja
+        d['vswkrma_puja'] = ea.vishwakarma_puja
+    if SeminarsWorkshops.objects.filter(attendee=id).exists():
+        sw = SeminarsWorkshops.objects.filter(attendee=id)
+        l = []
+
+        class Seminar:
+            def __init__(self, n, d, o):
+                self.name = n
+                self.date = d
+                self.org = o
+        for x in sw:
+            l.append(Seminar(x.name, x.date, x.organiser))
+        l = sorted(l, key=lambda x: x.date)
+        d['wrk_shp_list'] = l
+        d['wrk_shp'] = len(l)
+    else:
+        d['wrk_shp'] = 0
+
+    if Counselings.objects.filter(student=id).exists():
+        cs = Counselings.objects.filter(student=id)
+        l = []
+
+        class Counciling:
+            def __init__(self, d, t):
+                self.date = d
+                self.topic = t
+        for x in cs:
+            l.append(Counciling(x.date, x.topic))
+        d['counslng_count'] = len(l)
+        l = sorted(l, key=lambda x: x.date)
+        d['counslng_list'] = l
+    else:
+        d['counslng_count'] = 0
+
+    if Contributions.objects.filter(student=id).exists():
+        cbs = Contributions.objects.get(student=id)
+        d['contribs'] = cbs.contributions
+        d['ann_mag_pap_pub'] = cbs.annual_magazine_paper
+        d['ann_mag_evnts'] = cbs.annual_magazine_event
+        d['wall_mag_evnts'] = cbs.wall_magazine_event
+        d['wall_mag_pap_pub'] = cbs.wall_magazine_paper
+        d['tech_contst'] = cbs.technical_contests
+        d['awrds'] = cbs.technical_academic_awards
+    return d
+
+
+def sem_for_nav_bar(id):
+    stud = Student.objects.get(id=id)
+
+    class Semester:
+        def __init__(self, num, state):
+            self.num = num
+            self.state = state
+
+    cur_sem = current_sem(id)
+    l = []
+    for x in range(1, cur_sem+1):
+        if stud.is_lateral and x in (1, 2):
+            l.append(Semester(x, 'true'))
+        else:
+            l.append(Semester(x, 'false'))
+
+    if stud.stream == "B":
+        max_sem = 8
+    elif stud.stream == "D":
+        max_sem = 6
+    elif stud.stream == "M":
+        max_sem = 4
+    for x in range(int(current_sem(id))+1, max_sem+1):
+        l.append(Semester(x, 'true'))
+    return l
+
+
+def comma_separated_add(model_obj, input_obj):
+    '''
+    ... This function helps to add comma seperated fields, doing various integrity checks.
+    ... Param 1: The object of the model
+    ... Param 2: The variable storing the input
+    ... Returns: A sting with all modifications(if at all!)
+    '''
+    if input_obj:
+        if input_obj[-1] in (',', '\n',):
+            input_obj = input_obj[:-1]
+        model_obj = model_obj.split(', ')
+        input_obj = input_obj.split(',')
+        if model_obj[0] in (' ', ''):
+            model_obj.pop(0)
+        for x in input_obj:
+            x = x.strip()
+            if x not in model_obj:
+                model_obj.append(x)
+        model_obj = ', '.join(model_obj)
+    return model_obj
+
+
+def yes_to_true(var):
+    if var == "yes":
+        return True
+    else:
+        return False
+
+
+def profile(id):
+    pass

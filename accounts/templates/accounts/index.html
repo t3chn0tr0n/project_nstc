@@ -1,67 +1,22 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>NiT | {{ title }}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        {% load static %}
-        <link rel="shortcut icon" type="image/png" href="{% static 'snaps/img/favicon.ico/' %}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'snaps/css/style.css' %}" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    </head>
-
-    <body>
-        <!-- navbar -->
-        <div>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark container-fluid">
-                <div class="container">
-                    {% load static %}
-                    <img src="{% static 'img/favicon.ico/' %}" width="30" height="30" class="d-inline-block align-top" alt="NiT" >
-                    <a class="navbar-brand" href="/"> <b> &nbsp; Narula Institute Of Technology</b> </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                        </ul>  
-                            
-                        {% if not user.is_authenticated %}
-                            <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'login' %}"> Login</a>
-                            &nbsp;
-                            <a class="btn btn-outline-success my-2 my-sm-0"href="{% url 'signup' %}">Signup</a>
-                        {% else %}
-                            <span class="text-light"> Welcome, {{ user.username }} &nbsp; </span>
-                            
-                            <form id="logout" method="POST" action="{% url 'logout' %}">
-								<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
-                                {% csrf_token %}
-                                <input type="hidden" />
-                            </form>
-
-                        {% endif %}
-                    </div>
-                </div>
-            </nav>
-        </div> <br />
-        <div class="container">
-            <br />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos hic totam omnis fuga labore et amet, ullam quae corrupti officia tempora. Eum ducimus qui ea, exercitationem, vitae ab quasi omnis placeat laudantium ad voluptatem facilis nisi, voluptas maxime porro? Sequi natus officia soluta commodi aliquam ut, tempore ea quos sint officiis ullam earum magni nam ipsa facere in saepe velit, iusto cumque quidem perferendis. Ut suscipit excepturi ea neque aspernatur exercitationem assumenda reiciendis culpa asperiores explicabo debitis at temporibus sapiente nihil, iste repellat unde mollitia consequuntur facilis! Magni, repellat illum asperiores totam ratione excepturi laborum sunt accusantium possimus sed ipsum.
-            <br />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos hic totam omnis fuga labore et amet, ullam quae corrupti officia tempora. Eum ducimus qui ea, exercitationem, vitae ab quasi omnis placeat laudantium ad voluptatem facilis nisi, voluptas maxime porro? Sequi natus officia soluta commodi aliquam ut, tempore ea quos sint officiis ullam earum magni nam ipsa facere in saepe velit, iusto cumque quidem perferendis. Ut suscipit excepturi ea neque aspernatur exercitationem assumenda reiciendis culpa asperiores explicabo debitis at temporibus sapiente nihil, iste repellat unde mollitia consequuntur facilis! Magni, repellat illum asperiores totam ratione excepturi laborum sunt accusantium possimus sed ipsum.
-            <br /> <br />
-
+{% extends 'accounts/main.html' %}
+{% block body %}
+    <div class="container">
+        <center>
             <h2><u> Available Links as of now: </u></h2>
-
-            <a href={% url 'details'%}> Student details </a>
+            <h4>
+            <a href={% url 'details'%} target="_blank"> Student details </a>
             <br />
-            <a href={% url 'sem_marks' 1 %}> Student Semester marks </a>
+            <a href={% url 'sem_marks' 1 %} target="_blank"> Student Semester marks </a>
+            <br />
+            <a href={% url 'profile' %} target="_blank"> Student Profile </a>
+            <br />
+            <a href={% url 'extracurricular' %} target="_blank"> Student Extracurricular Activity </a>
             <br />
             <br />
             <br /> <br />
+            <h4>
         </div>
-        {% include 'includes/footer.html' %}
-    </body>
-</html>
+        {{cute_img | safe}}
+        </center>
+    </div>
+{% endblock %}

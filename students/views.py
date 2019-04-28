@@ -1,5 +1,5 @@
 from builtins import ValueError
-
+import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.api import success
 from django.forms import ValidationError
@@ -15,10 +15,14 @@ from students.addons import (
     any_sem_yet,
     get_idcard_details,
     get_general_details,
-    get_sem_details
+    get_sem_details,
+    get_page_details,
+    comma_separated_add,
+    yes_to_true,
+    extra_curricular
 )
-from .models import (Class10, Class12, FormFills, Details, Student,
-                     ExtracurricularActivity, SeminarWorkshop, Contributions)
+from .models import (Class10, Class12, FormFills, Details, Student, Counselings,
+                     ExtracurricularActivity, SeminarsWorkshops, Contributions)
 from subject_and_marks.models import SemMarks, Subjects
 from teachers.models import Teacher
 
@@ -26,7 +30,8 @@ from teachers.models import Teacher
 # Test Ground for new templates - Contains unchecked code - comment it out if it causes error
 @login_required(login_url=reverse_lazy('login'))
 def demo(request):
-    return render(request, 'students/student_profile.html')
+    # return render(request, 'teachers/int_marks_landing.html', {'fixed_footer': True})
+    return render(request, 'teachers/table.html')
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -174,14 +179,17 @@ def general_details(request):
 
 @login_required(login_url=reverse_lazy('login'))
 def univ_details(request):
+    # if a teacher comes here, well raise a 404!
+    if Teacher.objects.filter(id=request.user.username):
+        return render(request, 'message.html', {'title': '404', 'error': True, 'fof': True})
+
     if request.method == "POST":
-        error = ""
+        error = ''
         admin_no = request.POST['admin_no'].strip()
         reg_no = request.POST['reg_no'].strip()
 
         if admin_no is '' or reg_no is '':
-            error = [
-                "Who has blank Admission and/or Registration numbers?"]
+            error = ["Who has blank Admission and/or Registration numbers?"]
         try:
             admin_no = int(admin_no)
             reg_no = int(reg_no)
@@ -192,11 +200,11 @@ def univ_details(request):
         try:
             stud = Student.objects.get(id=user)
         except:
-            error = ["ERROR finding the student"]
+            error = ["Student not found!"]
 
         # If already filled, fail loudly!
         if stud.univ_roll_no or stud.registration_no:
-            error = ["Can't Overwrite existing data!"]
+            error = ["You have already filled the university details!"]
 
         if not error:
             stud.univ_roll_no = admin_no
@@ -208,17 +216,8 @@ def univ_details(request):
             return render(request, 'message.html', {'title': 'Saved!', 'success': True})
         return render(request, 'message.html', {'title': 'ERROR', 'error': True,  'messages': error})
 
-    else:
-        # if a teacher comes here, well show the way out to them!
-        if Teacher.objects.filter(id=request.user.username):
-            title = "404"
-            msg = "This way leads nowhere for you!"
-            return message(title, msg, request)
-        d = {
-            'title': '404 Error',
-            'fof': True
-        }
-        return render(request, 'message.html', d)
+    else:  # if GET request
+        return render(request, 'message.html', {'title': '404', 'error': True, 'fof': True})
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -305,6 +304,13 @@ def sem_marks(request, sem):
             return render(request, 'message.html', {'title': 'SUCCESS',  'messages': msg})
 
     else:  # GET request
+        if Student.is_lateral and sem in (1, 2, '1', '2'):
+            d = {
+                'title': 'ERROR',  
+                'messages': ['You are a lateral student, remember?']
+                }
+            return render(request, 'message.html', d)
+            
         details = get_sem_details(request.user.username, sem)
         if details == -1:
             return render(request, 'message.html', {'title': 'ERROR', 'error': True,  'messages': ['Subject list for the semester not found!']})
@@ -316,27 +322,281 @@ def sem_marks(request, sem):
 
 @login_required(login_url=reverse_lazy('login'))
 def extracurricular_activities(request):
-    pass
+    if request.method == "GET" and Student.objects.filter(id=request.user.username).exists():
+        return render(request, 'students/extracurricular_activity.html', extra_curricular(request.user.username))
+    else:
+        return render(request, 'message.html', {'title': '404', 'fof': True})
 
 
+# Form 2
 @login_required(login_url=reverse_lazy('login'))
-def change_email(request):
-    pass
-    # Step1: Get the email
-    # Step2: Send the verification link to email
-    # Step3: Verify the email => activate_email()
+def ea_form1(request):
+    if request.method != "POST" and Teacher.objects.filter(id=request.user.username).exists():
+        return render(request, 'message.html', {'title': '404',  'fof': True})
+
+    sftskl_condt = request.POST['sftskl_condt'].strip()
+    sftskl_attnd = request.POST['sftskl_attnd'].strip()
+    apti_condt = request.POST['apti_condt'].strip()
+    apti_attnd = request.POST['apti_attnd'].strip()
+    mck_intrvw = request.POST['mck_intrvw'].strip()
+    iv1_date = request.POST['iv1_date'].strip()
+    iv1_place = request.POST['iv1_place'].strip()
+    iv2_date = request.POST['iv2_date'].strip()
+    iv2_place = request.POST['iv2_place'].strip()
+    onln_tst = request.POST['onln_tst'].strip()
+    gate = request.POST['gate'].strip()
+    cat = request.POST['cat'].strip()
+
+    msg = ""
+
+    if ExtracurricularActivity.objects.filter(student=request.user.username).exists():
+        ea = ExtracurricularActivity.objects.get(student=request.user.username)
+
+        if not ea.soft_skill_conduct and not ea.soft_skill_attend and sftskl_condt and sftskl_attnd:
+            ea.update(soft_skill_conduct=sftskl_condt,
+                      soft_skill_attend=sftskl_attnd)
+            ea.save
+        else:
+            msg = True
+
+        if not ea.aptitude_conduct and not ea.aptitude_attend and apti_condt and apti_attnd:
+            ea.update(aptitude_conduct=sftskl_condt,
+                      aptitude_attend=sftskl_attnd)
+            ea.save
+        else:
+            msg = True
+
+        if not ea.mock_interview and mck_intrvw == 'yes':
+            ea.update(mock_interview=True)
+            ea.save
+        else:
+            msg = True
+
+        if not ea.industry_visit_1 and not ea.industry_visit_1_date and iv1_date and iv1_place:
+            ea.update(industry_visit_1=iv1_place,
+                      industry_visit_1_date=iv1_date)
+            ea.save
+        else:
+            msg = True
+
+        if not ea.industry_visit_2 and not ea.industry_visit_2_date and iv2_date and iv2_place:
+            ea.update(industry_visit_2=iv2_place,
+                      industry_visit_2_date=iv2_date)
+            ea.save
+        else:
+            msg = True
+
+        if not ea.online_test and onln_tst == 'yes':
+            ea.update(online_test=True)
+            ea.save
+        else:
+            msg = True
+
+        if not ea.gate_exam and gate == 'yes':
+            ea.update(gate_exam=True)
+            ea.save
+        else:
+            msg = True
+
+        if not ea.cat_exam and cat == 'yes':
+            ea.update(cat_exam=True)
+            ea.save
+        else:
+            msg = True
+    else:
+        if not sftskl_condt or not sftskl_attnd:
+            sftskl_condt = 0
+            sftskl_attnd = 0
+        if not apti_condt or not apti_attnd:
+            apti_condt = 0
+            apti_attnd = 0
+        mck_intrvw = yes_to_true(mck_intrvw)
+        gate = yes_to_true(gate)
+        cat = yes_to_true(cat)
+        ExtracurricularActivity.objects.create(student=request.user.username, soft_skill_conduct=sftskl_condt, soft_skill_attend=sftskl_attnd, aptitude_conduct=apti_condt, aptitude_attend=apti_attnd,
+                                               mock_interview=mck_intrvw, industry_visit_1=iv1_place, industry_visit_1_date=iv1_date, industry_visit_2=iv2_place, industry_visit_2_date=iv2_date, online_test=onln_tst, gate_exam=gate, cat_exam=cat)
+    return_msg = """ <h4 class="text-success"> SUCCESS </h4>
+                        You data has been Saved!"""
+    if msg:
+        return_msg += """<span class="text-muted small" Few entries were omitted! </span>"""
+    return HttpResponse(return_msg)
+
+
+# Form 1
+@login_required(login_url=reverse_lazy('login'))
+def ea_form2(request):
+    if request.method != "POST" and Teacher.objects.filter(id=request.user.username).exists():
+        return render(request, 'message.html', {'title': '404',  'fof': True})
+
+    swrswti_puja = request.POST['swrswti_puja'].strip()
+    vswkrma_puja = request.POST['vswkrma_puja'].strip()
+    contribs_made = request.POST['contribs'].strip()
+    ann_mag_pap_pub = request.POST['ann_mag_pap_pub'].strip()
+    ann_mag_evnts = request.POST['ann_mag_evnts'].strip()
+    wall_mag_evnts = request.POST['wall_mag_evnts'].strip()
+    wall_mag_pap_pub = request.POST['wall_mag_pap_pub'].strip()
+    papers_pub = request.POST['papers_pub'].strip()
+    tech_contst = request.POST['tech_contst'].strip()
+    awrds = request.POST['awrds'].strip()
+
+    if ExtracurricularActivity.objects.filter(student=request.user.username).exists():
+        ec_obj = ExtracurricularActivity.objects.get(
+            student=request.user.username)
+        if swrswti_puja == "true":
+            ec_obj.saraswati_puja = True
+        if vswkrma_puja == "true":
+            ec_obj.vishwakarma_puja = True
+        ec_obj.save()
+    else:
+        swrswti_puja = yes_to_true(swrswti_puja)
+        vswkrma_puja = yes_to_true(vswkrma_puja)
+        ExtracurricularActivity.objects.create(
+            student=request.user.username, saraswati_puja=swrswti_puja, vishwakarma_puja=vswkrma_puja)
+
+    if Contributions.objects.filter(student=request.user.username).exists():
+        contribs = Contributions.objects.get(student=request.user.username)
+    else:
+        contribs = Contributions.objects.create(student=request.user.username)
+
+    contribs.contributions = comma_separated_add(
+        contribs.contributions, contribs_made)
+    contribs.annual_magazine_paper = comma_separated_add(
+        contribs.annual_magazine_paper, ann_mag_pap_pub)
+    contribs.wall_magazine_event = comma_separated_add(
+        contribs.wall_magazine_event, ann_mag_evnts)
+    contribs.wall_magazine_paper = comma_separated_add(
+        contribs.wall_magazine_paper, wall_mag_pap_pub)
+    contribs.wall_magazine_event = comma_separated_add(
+        contribs.wall_magazine_event, wall_mag_evnts)
+    contribs.paper_publication = comma_separated_add(
+        contribs.paper_publication, papers_pub)
+    contribs.technical_contests = comma_separated_add(
+        contribs.technical_contests, tech_contst)
+    contribs.technical_academic_awards = comma_separated_add(
+        contribs.technical_academic_awards, awrds)
+    contribs.save()
+
+    msg = """ <h4 class="text-success"> SUCCESS </h4>
+            You data has been Saved!"""
+    return HttpResponse(msg)
+
+
+# Seminars/Workshops Attended
+@login_required(login_url=reverse_lazy('login'))
+def ea_form3(request):
+    if request.method != "POST" and Teacher.objects.filter(id=request.user.username).exists():
+        return render(request, 'message.html', {'title': '404',  'fof': True})
+
+    names = request.POST.getlist('names[]')
+    dates = request.POST.getlist('dates[]')
+    orgs = request.POST.getlist('orgs[]')
+
+    error = ""
+    blank = ""
+    duplicate = ""
+
+    if (len(names) != len(dates)) or (len(dates) != len(orgs)) or (len(orgs) != len(names)):
+        error = "Internal Server Error!"
+
+    attendee = request.user.username
+    for i in range(len(names)):
+        # skip if any field is blank
+        if (names[i] in [' ', None]) or (dates[i]in [' ', None]) or (orgs[i]in [' ', None]):
+            blank = "Blank fields were omitted! "
+            continue
+
+        # check if addition willcause redundancy
+        elif SeminarsWorkshops.objects.filter(attendee=attendee, name=names[i], date=dates[i], organiser=orgs[i]).exists():
+            duplicate = "Duplicate entries were omitted!"
+            continue
+
+        else:
+            SeminarsWorkshops.objects.create(
+                attendee=attendee, name=names[i], date=dates[i], organiser=orgs[i])
+
+    msg = """ <h4 class="text-success"> SUCCESS </h4>
+            You data has been Saved! <br /> Refresh page to view changes <span class="text-secondary small">""" + blank + "<br />" + duplicate + "</span>"
+    return HttpResponse(msg)
+
+
+# Counseling With Comments
+@login_required(login_url=reverse_lazy('login'))
+def ea_form4(request):
+    if request.method != "POST" and Teacher.objects.filter(id=request.user.username).exists():
+        return render(request, 'message.html', {'title': '404',  'fof': True})
+
+    topics = request.POST.getlist('topics[]')
+    dates = request.POST.getlist('dates[]')
+
+    error = ""
+    blank = ""
+    duplicate = ""
+
+    if (len(topics) != len(dates)):
+        error = "Internal Server Error!"
+
+    attendee = request.user.username
+    for i in range(len(topics)):
+        # skip if any field is blank
+        if (topics[i] in [' ', None]) or (dates[i]in [' ', None]):
+            blank = "Blank fields were omitted!"
+            continue
+
+        # check if addition willcause redundancy
+        elif Counselings.objects.filter(student=attendee, topic=topics[i], date=dates[i]).exists():
+            duplicate = "Duplicate entries were omitted!"
+            continue
+
+        else:
+            Counselings.objects.create(
+                student=attendee, topic=topics[i], date=dates[i])
+
+    msg = """ <h4 class="text-success"> SUCCESS </h4>
+            You data has been Saved! <br /> Refresh page to view changes <span class="text-secondary small">""" + blank + "<br />" + duplicate + "</span>"
+    return HttpResponse(msg)
 
 
 @login_required(login_url=reverse_lazy('login'))
 def change_phone(request):
+    # if a teacher comes here, well show the way out to them!
     if Teacher.objects.filter(id=request.user.username):
-        pass
-        # show error
+        title = "Error"
+        error = ['Teachers have nothing to do with this page!']
+        return message(title, error, request)
 
     if request.method == "POST":
-        user = Student.objects.get(id=request.user.username)
+        m_no = request.POST['mob_no'].strip()
+        error = False
+        try:
+            mob_no = int(m_no)
+            if len(str(m_no)) != 10:
+                error = ["Mobile Number must be equal to 10 digits!"]
+        except ValueError:
+            error = ["Mobile phone number can't contain characters!",
+                     "Tip: No need for country code: (eg. +91 in India)"]
+        if not error:
+            Details.objects.filter(
+                card_no=request.user.username).update(mobile_no=m_no)
+            return render(request, 'message.html', {'title': 'Success', 'success': True})
+        else:
+            title = "Error"
+            return message(title, error, request)
+
+    # No GET request available for this page: Only way access this is by profile page!
+    else:
+        return render(request, 'message.html', {'fof': True})
 
 
+# TODO:
 @login_required(login_url=reverse_lazy('login'))
 def profile(request):
-    pass
+    if Teacher.objects.filter(id=request.user.username):
+        title = "404"
+        error = ['Teachers cannot view this page!']
+        return message(title, error, request)
+    details = get_idcard_details(request.user.username)
+    if not details:
+        error = ["Error getting student details"]
+    profile = get_profile(request.user.username)
+    details.update(profile)
+    return render(request, 'students/student_profile.html', details)
