@@ -9,14 +9,12 @@
       <ul class="navbar-nav mr-auto">
 
         <li class="nav-item">
-          <a class="nav-link" href="#">General Details
-            <span class="sr-only">(current)</span>
+          <a class="nav-link" href="{% url 'details' %}">General Details
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#">Extracurricular activities
-
+          <a class="nav-link" href="{% url 'extracurricular' %}">Extracurricular activities
           </a>
         </li>
 
@@ -27,10 +25,10 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             {% for x in nav_sems %}
-              {% if x.state %}
+              {% if x.state == 'true' %}
                 <span class="dropdown-item disabled">Sem {{ x.num }}</span>
               {% else %}
-                <a class="dropdown-item" href="{% url 'sem_marks' x.num %}">Sem {{ x.num }}</a>
+                <a class="dropdown-item" target="_blank" href="{% url 'sem_marks' x.num %}">Sem {{ x.num }}</a>
               {% endif %}
             {% endfor %}
             <div class="dropdown-divider"></div>
@@ -40,11 +38,11 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#">Certificates</a>
+          <a class="nav-link" href="{% url 'certificate' %}">Certificates</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#">Contact Mentor</a>
+          <a class="nav-link" href="teacher_id">Contact Mentor</a>
         </li>
 
       </ul>
