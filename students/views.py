@@ -304,7 +304,8 @@ def sem_marks(request, sem):
             return render(request, 'message.html', {'title': 'SUCCESS',  'messages': msg})
 
     else:  # GET request
-        if Student.is_lateral and sem in (1, 2, '1', '2'):
+        student = Student.objects.get(id=request.user.username)
+        if student.is_lateral and sem in (1, 2, '1', '2'):
             d = {
                 'title': 'ERROR',  
                 'messages': ['You are a lateral student, remember?']
@@ -590,13 +591,9 @@ def change_phone(request):
 # TODO:
 @login_required(login_url=reverse_lazy('login'))
 def profile(request):
-    if Teacher.objects.filter(id=request.user.username):
-        title = "404"
-        error = ['Teachers cannot view this page!']
-        return message(title, error, request)
-    details = get_idcard_details(request.user.username)
-    if not details:
-        error = ["Error getting student details"]
-    profile = get_profile(request.user.username)
-    details.update(profile)
+    details = get_page_details(request.user.username)
+    details.update(get_idcard_details(request.user.username))
+    details.update(get_univ_details(request.user.username))
+    details['email'] = Student.objects.get(id=request.user.username).email
+    details['mob_no'] = Details.objects.get(card_no=request.user.username).mobile_no
     return render(request, 'students/student_profile.html', details)

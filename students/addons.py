@@ -242,7 +242,7 @@ def any_sem_yet(id):
 def get_page_details(id):
     forms = FormFills.objects.get(student=id)
     sems = forms.sem_fills_easy()
-
+    stud = Student.objects.get(id=id)
     class page:
         def __init__(self, name, link, filled, sem=None, sem_no=None):
             self.name = name
@@ -250,21 +250,25 @@ def get_page_details(id):
             self.filled = filled
             self.sem = sem
             self.sem_no = sem_no
-
+    def true2yes(var):
+        if var:
+            return 'yes'
+        else:
+            return 'no'
     pages_details = [
-        page('General Details', 'details', forms.is_gen_details_filled),
-        page('University Details', None, forms.is_univ_details_filled),
-        # Add Extracurricular activity page
+        page('General Details', 'details', true2yes(forms.is_gen_details_filled)),
+        page('University Details', None, true2yes(forms.is_univ_details_filled)),
+        page('Extracurricular Details', 'extracurricular', 'na'),
         # Add Choose Elective page
     ]
-
     # Add sem fields and if a sem does not exist (eg. sem8 for Mtech), skip that entry!
     for x in range(1, 9):
+        if (stud.is_lateral and x in (1, 2)) or (stud.stream == 'D' and x in (7, 8)) or (stud.stream == 'M' and x in range(5, 9)):
+            continue
         if str(x) in sems:
-            pages_details.append(page(name=(
-                'Sem ' + str(x)), link='sem_marks', filled=sems[str(x)], sem=True, sem_no=x))
-
+            pages_details.append(page(name=('Sem ' + str(x)), link='sem_marks', filled=sems[str(x)], sem=True, sem_no=x))
     details = {'pages': pages_details, 'nav_sems': sem_for_nav_bar(id)}
+
     return details
 
 
@@ -388,7 +392,3 @@ def yes_to_true(var):
         return True
     else:
         return False
-
-
-def profile(id):
-    pass

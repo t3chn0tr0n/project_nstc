@@ -158,9 +158,15 @@
                 sem {{x}}
             </button>
             {% else %}
-            <a class="btn btn-outline-primary btn-sm" href="{% url 'sem_marks' x %}" style="margin-top: 3px; margin-bottom: 3px;">
-                sem {{x}}
-            </a>
+                {% if lat and x == 1 or x == 2%}
+                    <a class="btn btn-outline-secondary disabled btn-sm">
+                    sem {{ x }}
+                    </a>
+                {% else %}
+                    <a class="btn btn-outline-primary btn-sm" href="{% url 'sem_marks' x %}" style="margin-top: 3px; margin-bottom: 3px;">
+                        sem {{x}}
+                    </a>
+                {% endif %}
             {% endif %}
         </span>
         {% endfor %} {% for x in not_available %}
