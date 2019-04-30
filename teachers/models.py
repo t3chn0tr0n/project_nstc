@@ -5,7 +5,7 @@ class Teacher(models.Model):
     id = models.CharField(default=" ", max_length=15, primary_key=True)
     name = models.CharField(default=" ", max_length=50)
     code_name = models.CharField(default=" ", max_length=5)
-    stream = models.CharField(default=" ", max_length=20) # stores as cse, ece, etc
+    dept = models.CharField(default=" ", max_length=20) # stores as cse, ece, etc
     mentees1 = models.CharField(default="0-0", max_length=27, null=True)
     mentees2 = models.CharField(default="0-0", max_length=27, null=True)
     mentees3 = models.CharField(default="0-0", max_length=27, null=True)
