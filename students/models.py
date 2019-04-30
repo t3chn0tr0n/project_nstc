@@ -31,7 +31,7 @@ class Details(models.Model):
     perm_add = models.CharField(default="", max_length=50)  # permanent address
     loc_guardian = models.CharField(default="", max_length=50)
     loc_add = models.CharField(default="", max_length=50)
-    land_phone = models.IntegerField(null=True)
+    land_phone = models.CharField(default="", max_length=11)
     guardian_mobile_no =  models.CharField(default="", max_length=10)
     mobile_no = models.CharField(default="", max_length=10)
     diploma_score = models.FloatField(max_length="50", null=True)
