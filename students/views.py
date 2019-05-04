@@ -1,5 +1,6 @@
 from builtins import ValueError
 import json
+from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.api import success
 from django.forms import ValidationError
@@ -565,27 +566,24 @@ def change_phone(request):
         error = ['Teachers have nothing to do with this page!']
         return message(title, error, request)
 
-    if request.method == "POST":
-        m_no = request.POST['mob_no'].strip()
-        error = False
+    if request.method == 'POST' and request.is_ajax():
+        mob_no = request.POST['mob_no'].strip()
+        mob_len=len(mob_no)
+        password = request.POST['password']
+        user = auth.authenticate(username=request.user.username, password=password)
         try:
-            mob_no = int(m_no)
-            if len(str(m_no)) != 10:
-                error = ["Mobile Number must be equal to 10 digits!"]
+            mob_no = int(mob_no)
+            if user and mob_len == 10:
+                d = Details.objects.filter(card_no=request.user.username).update(mobile_no=mob_no)
+            else:
+                if(mob_len != 10):
+                    return HttpResponse("Mobile no is not valid!!")
+                else:
+                    return HttpResponse("Password is invalid!!")
         except ValueError:
-            error = ["Mobile phone number can't contain characters!",
-                     "Tip: No need for country code: (eg. +91 in India)"]
-        if not error:
-            Details.objects.filter(
-                card_no=request.user.username).update(mobile_no=m_no)
-            return render(request, 'message.html', {'title': 'Success', 'success': True})
-        else:
-            title = "Error"
-            return message(title, error, request)
+            return HttpResponse("Mobile no is not valid!!")
+    return HttpResponse("1")
 
-    # No GET request available for this page: Only way access this is by profile page!
-    else:
-        return render(request, 'message.html', {'fof': True})
 
 
 # TODO:
@@ -597,6 +595,11 @@ def profile(request):
     details['email'] = Student.objects.get(id=request.user.username).email
     details['mob_no'] = Details.objects.get(card_no=request.user.username).mobile_no
     return render(request, 'students/student_profile.html', details)
+
+
+# TODO:
+def change_email(request):
+    pass
 
 
 def certificate(request):

@@ -121,29 +121,22 @@
             </div>
 
             <!-- Phone reset-->
-            <form method="POST" action="{% url 'change_phone' %}" target="{% url 'change_phone' %}">
-                {% csrf_token %}
+            <div>
+            {% csrf_token %}
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">
                         <b> Registered Mobile: </b>
                     </label>
                     <div class="col-sm-4 mb-2">
-                        <input class="form-control" id="mob_no" name="mob_no" value="{{ mob_no }}" disabled required />
+                        <input class="form-control" id="mob_no" name="mob_no" maxlength="40" minlength="10" data-bv-stringlength-message="The full name must be more than 10 and less than 40 characters" value="{{ mob_no }}" disabled required />
                     </div>
                     <div id="mob_no_change" class="col-sm-1 col-form-label" style="display: inline;">
                         <input type="button" class="btn btn-outline-info btn-sm" onclick="change('mob_no_change', 'mob_no_submit', 'mob_no');"
                             value="Change it" />
                     </div>
-
-                    <div id="mob_no_submit" class="col-sm p-0" style="display: none;">
-                        <lable class="col-1 col-form-label small text-secondary" style="display: inline;">Password:</lable>
-                        <input type="password" name="password" class="col-md-4 form-control form-control-sm mb-1" style="display: inline;" required />
-                        <button type="submit" class="btn btn-success btn-sm">Submit</button>
-                        <input type="button" class="btn btn-danger btn-sm" onclick="cancel('mob_no_change', 'mob_no_submit', 'mob_no');"
-                            value="Cancel" />
-                    </div>
+                    <div id="mob_no_submit" class="col-sm p-0" style="display: none;"></div>
                 </div>
-            </form>
+            </div>
             <span class="small text-secondary"> <i class="fas fa-exclamation-circle text-info"></i> To change any other
                 details, contact your Mentor or HOD.</span>
         </div>
