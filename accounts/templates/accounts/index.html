@@ -2,8 +2,10 @@
 {% block body %}
     <div class="container">
         <center>
+        <br>
             <h2><u> Available Links as of now: </u></h2>
-            <h4>
+            <h4> For Students </h4>
+            <h5>
             <a href={% url 'details'%} target="_blank"> Student details </a>
             <br />
             <a href={% url 'sem_marks' 1 %} target="_blank"> Student Semester marks </a>
@@ -12,11 +14,18 @@
             <br />
             <a href={% url 'extracurricular' %} target="_blank"> Student Extracurricular Activity </a>
             <br />
+            <hr />
+            </h5>
+            <h4> For Teachers </h4>
+            <h5>
+            <a href={% url 'upload_student'%} target="_blank"> Student List Upload </a>
             <br />
-            <br /> <br />
-            <h4>
+            <a href={% url 'mentees'%} target="_blank"> Mentor Mentees List </a>
+            <br />
+            </h5>
+            <br /> 
+            <br />
         </div>
-        {{cute_img | safe}}
         </center>
     </div>
 {% endblock %}

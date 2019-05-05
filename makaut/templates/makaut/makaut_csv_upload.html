@@ -1,0 +1,171 @@
+{% extends 'students/main.html/' %} 
+{% block body %}
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  {% load static %}
+  <script src="{% static 'makaut/js/makaut_csv_upload.js' %}"></script>
+  {% csrf_token %}
+  <center>
+    <h3 class="text-info">Upload Student CSV</h3>
+  </center>
+  <br />
+  <div class="container">
+  <form>
+    <span class="text-secondary text-monospace"> Uploading student list for: </span>
+    <div class="btn-group btn-group-toggle mb-3" data-toggle="buttons">
+        <label class="btn btn-sm btn-light mt-3 active">
+            <input type="radio" name="is_reg" id="is_reg" checked onchange="reg_selected();"/> Regular
+        </label>
+        <label class="btn btn-sm btn-light mt-3">
+            <input type="radio" name="is_lat" id="is_lat" onchange="lat_selected();"/> Lateral
+        </label>
+    </div>
+    <span class="small" id="selection">&nbsp;&nbsp;&nbsp;(Regular is selected)</span>
+    <div class="row">
+      <label class="col-sm-1 col-form-label mb-1">Batch</label>
+      <div class="col-sm-2">
+        <input name="batch" id="batch" class="form-control" type="text" placeholder="eg. BAT20162020" />
+      </div>
+      <label class="col-sm-1"></label>
+      <label class="col-form-label col-sm-2">Stream of students</label>
+      <div class="col-sm-2">
+        <select class="form-control" id="stream" required>
+          <option selected disabled value="">Select stream</option>
+          <option value="B-TECH">B-TECH</option>
+          <option value="M-TECH">M-TECH</option>
+          <option value="DEPLOMA">DEPLOMA</option>
+        </select>
+      </div>
+      <label class="col-sm-1"></label>
+      <label class="col-form-label col-sm-1">Dept.</label>
+      <div class="col-sm-1">
+        <span class="form-control bg-light text-secondary"> {{ dept }} </span>
+      </div>
+    </div>
+    <br />
+
+    <h5 class="text-secondary mt-2 mb-3"> <u>
+      Enter Column Numbers (in the CSV) of</u>:
+    </h5>
+    <div class="row">
+      <label class="col-sm-2 col-form-label">Id card Column no.</label>
+      <div class="col-sm-1">
+        <input required name="batch" id="Id_card" class="form-control" type="number" min="1" max="20" />
+      </div>
+      <label class="col-sm-1"></label>
+      <label class="col-sm-2 col-form-label">Roll No. Column no.</label>
+      <div class="col-sm-1">
+        <input required name="batch" class="form-control" id="Roll_no" type="number" min="1" max="20" />
+      </div>
+    </div>
+    <br />
+
+    <div class="row">
+      <label class="col-sm-2 col-form-label">First Name Column no.</label>
+      <div class="col-sm-1">
+        <input required name="f_name" class="form-control" id="First_Name" type="number" min="1" max="20" />
+      </div>
+      <label class="col-sm-1"></label>
+      <label class="col-sm-2 col-form-label">Middle Name Column no.</label>
+      <div class="col-sm-1">
+        <input id="m_name" name="m_name" class="form-control" type="number" min="1" max="20" disabled />
+      </div>
+      <label class="col-sm-1"></label>
+      <label class="col-sm-2 col-form-label">Last Name Column no.</label>
+      <div class="col-sm-1">
+        <input required name="l_name" class="form-control" type="number" id="Last_name" min="1" max="20" />
+      </div>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="customCheck1" name="no_m_name" checked
+        onclick="toggleMiddle('m_name');" />
+      <label class="custom-control-label" for="customCheck1">No Middle-name Column no.</label>
+    </div>
+    <br />
+    <div class="row">
+      <label class="col-sm-2 col-form-label">Mentor Id Column no.</label>
+      <div class="col-sm-1">
+        <input required class="form-control" type="number" id="mentor_id" min="1" max="20" />
+      </div>
+      <label class="col-sm-1"></label>
+      <label class="col-sm-2 col-form-label">Email Column no.</label>
+      <div class="col-sm-1">
+        <input id="email" name="m_name" class="form-control" type="number" min="1" max="20"/>
+      </div>
+    </div>
+    <br />
+    <span class="text-info"> Make sure your CSV File does not contain Column name headers. If so, please check this box:
+      <input type="checkbox" id="is_header"/>
+    </span>
+    <div id="select_file">
+      <input class="form-control-file form-control-sm m-0 mt-3 mb-2 " id="inputfile" type="file" name="csv_file"
+        accept=".csv" required style="display: inline;"/>
+      <button class="btn btn-sm btn-success" id="viewfile" onclick="return false;">🔃 Load Data</button>
+      <button type="reset" class="btn btn-sm btn-danger" id="reset">🔁 RESET</button>
+    </div>
+    <br/>
+  </form>
+    <div class="container">
+      <center>
+        <h3 class="text-danger" id="error_csv_upload"></h3>
+      </center>
+      <br />
+    </div>
+
+    <div id="dataTab" hidden>
+      <table id="tableMain" class="table table-striped table-bordered" style="font-size:small;">
+        <thead>
+          <tr>
+            <th>Id card</th>
+            <th>Roll no</th>
+            <th>First Name</th>
+            <th>Middle Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Mentor Id</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--the content is comming from makaut_csv_upload_js.js-->
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Id card</th>
+            <th>Roll no</th>
+            <th>First Name</th>
+            <th>Middle Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Mentor id</th>
+          </tr>
+        </tfoot>
+      </table>
+      <center>
+        <div class="col-lg-2" id="show_buttons">
+          <button id="upload_db" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#confirmModal">Upload</button>
+          <button type="reset" id="cancel" class="btn btn-sm btn-danger">Cancel</button>
+        </div>
+      </center>
+    </div>
+  </div>
+  <!--modal-->
+  <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="Confirm Submission" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Please recheck!</h5>
+          </div>
+          <div class="modal-body">
+              <p>You are trying to save this data into database! This Action is <b class="text-danger"> irreversible!</b></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="confirmedUpload" class="btn btn-success">Save changes</button>
+            <button type="button" class="btn btn-danger" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
+          </div>
+        </div>
+      </div>
+  </div>
+<br /> <br />
+{% endblock %}

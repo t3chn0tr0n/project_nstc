@@ -16,6 +16,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'makaut',
     'students',
     'teachers',
     'subject_and_marks',

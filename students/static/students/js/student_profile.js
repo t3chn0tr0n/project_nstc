@@ -13,7 +13,6 @@ function change(div_id_1, div_id_2, id) {
   }
   document.getElementById(id).value = "";
   document.getElementById("mob_no_submit").innerHTML = "&nbsp&nbsp&nbsp<span class=\"text-danger\">Phone no must be 10 digit!!</span>&nbsp&nbsp<input type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"cancel('mob_no_change', 'mob_no_submit', 'mob_no');\" value=\"Cancel\" />";
-
 }
 
 function cancel(div_id_1, div_id_2, id) {
@@ -24,7 +23,6 @@ function cancel(div_id_1, div_id_2, id) {
   } else {
     document.getElementById(id).value = phone;
   }
-
   document.getElementById(id).disabled = true;
   $("#mob_no_submit").html("");
 }
@@ -54,23 +52,16 @@ function check_it() {
   } else {
     alert("Please insert the password!!");
   }
-
 }
 
 $(document).ready(function () {
-
   /*on change phone no*/
   $("#mob_no").keyup(function () {
     var mobile = document.getElementById('mob_no').value;
     if (mobile.length == 10) {
-      //console.log(mobile.length);
       $("#mob_no_submit").html("");
       document.getElementById("mob_no_submit").innerHTML = "&nbsp<lable class=\"col-1 col-form-label small text-secondary\" style=\"display: inline;\">Password:</lable>&nbsp&nbsp&nbsp<input type=\"password\" name=\"password\" class=\"col-md-4 form-control form-control-sm mb-2\" id=\"password\" style=\"display: inline;\" required />&nbsp&nbsp&nbsp<button type=\"submit\" onclick=\"check_it()\" class=\"btn btn-success btn-sm\"  id=\"change_mobile_no\">Submit</button>&nbsp&nbsp&nbsp<input type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"cancel('mob_no_change', 'mob_no_submit', 'mob_no');\" value=\"Cancel\" />";
       document.getElementById("mob_no").disabled = true;
-      //$("#mob_no_submit").html("");onclick=\"check_it()\"
     }
-
-
   });
-
 });

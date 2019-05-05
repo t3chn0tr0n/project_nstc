@@ -1,0 +1,70 @@
+{% extends 'students/main.html/' %} 
+{% block body %}
+    {% load static %}
+    <script src="{% static 'makaut/js/mentees.js' %}"></script>
+    <style>
+        input[type="text"]::placeholder {  
+                /* Firefox, Chrome, Opera */ 
+                text-align: center; 
+            }
+        input[type="text"]:-ms-input-placeholder{  
+                /* IE */ 
+                text-align: center; 
+            }
+    </style>
+    <div class="container">
+        <center>
+        <h3 class="text-primary p-2"><b> MAKAUT MAR 100 POINTS </b></h3>
+        </center>
+        
+        <div class="row">
+            <div class="col-6 mx-auto">
+                <input type="text" class="form-control form-control-lg " placeholder="Search students of your Department" id="myInput" onkeyup="filter()">
+            </div>
+            <div class="col-5 mx-auto">
+                <button id="mass_gen_cert" class="btn btn-lg btn-outline-info"> Generate Certificate of all eligible students&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📃</button>
+            </div>
+        </div>
+
+        <form action="{% url 'student_report' %}" method="POST">
+            {% csrf_token %}
+            <div class="table-responsive-sm">
+                <table id="editable_table" style="text-align:center;" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <center>Student ID</center>
+                            </th>
+                            <th>
+                                <center>Student Name</center>
+                            </th>
+                            <th>
+                                <center>View Chart</center>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <br><br> {% for i in info %}
+                        <tr>
+                            <td>
+                                <center>{{i.id}}</center>
+                            </td>
+                            <td>
+                                <p>{{ i.name }}{% if i.middle_name != " "%}&nbsp{{ i.middle_name }}{% endif %}&nbsp{{ i.surname }}</p>
+                            </td>
+                            <td><button class="btn btn-sm btn-outline-primary" value="{{i.id}}" name="student_id">View</button></td>
+                            <input type="hidden" value="{{ i.mentor }}" name="mentor_id">
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <input type="hidden" id="mentor" value="{{ mentor }}" name="mentor">
+                <br />
+                <br />
+            </div>
+        </form>
+        <br/>
+        <br/><br/>
+        <br/><br/>
+    </div>
+{% endblock %}
