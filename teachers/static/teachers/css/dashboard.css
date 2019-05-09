@@ -1,0 +1,142 @@
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.rank{
+    padding: 2px;
+    margin-bottom: 0;
+    font-size: 0.7em;
+    font-style: italic;
+    text-align: center;
+    color: #999;
+    font-weight: bold;
+}
+.navtitle{
+
+}
+
+#sidebar {
+    min-width: 200px;
+    max-width: 200px;
+    padding: 0px;
+    transition: all 0.3s;
+    text-align: center;
+    background-color:  #f9f9f9;
+}
+
+#sidebar.active {
+    margin-left: -200px;
+}
+
+#sidebar .sidebar-header {
+    padding-top: 20px;
+    color: #666;
+    text-align: center;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+#sidebar .sidebar-header img {
+    width: 50px; 
+    height: 50px;
+    border-radius:50px;
+    margin-right: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#sidebar ul.components {
+    display: block;
+    margin: 5px;
+    padding: 10px;
+    padding: 10px;
+    text-decoration: none;
+}
+#sidebar ul li{
+    padding: 1px;
+    padding-top: 10px;
+}
+
+#sidebar ul li a {
+    padding: 1px;
+    font-size: 0.9em;
+    display: block;
+    text-decoration: none;
+    color: #777;
+    text-align: center;
+    /* font-weight: bold; */
+}
+
+#sidebar ul li a:hover {
+    color: #006eff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    color: #5f95ec !important;
+    text-decoration: none;
+    padding: 0;  
+}
+
+ul ul a:hover {
+    background: #73a4f5 !important;
+    color: #fff !important;
+}
+
+#sidebar .bootlink a:hover{
+    color: #fff !important;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+/* Medium and Big Screens
+@media (min-width: 700px) {
+    .toggleButton{
+        display:none !important;
+    }
+} */
+
+/* Small Mobile Screens */
+@media (max-width: 700px) {
+    #sidebar {
+        margin-left: -200px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+    .title{
+        display: none;
+    }
+    
+}

@@ -1,11 +1,10 @@
-{% extends 'students/main.html/' %} 
+{% extends 'makaut/main.html/' %} 
 {% block body %}
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
   <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   {% load static %}
-  <script src="{% static 'makaut/js/makaut_csv_upload.js' %}"></script>
+  <script src="{% static 'student/js/student_csv_upload.js' %}"></script>
   {% csrf_token %}
   <center>
     <h3 class="text-info">Upload Student CSV</h3>
@@ -102,8 +101,8 @@
     <div id="select_file">
       <input class="form-control-file form-control-sm m-0 mt-3 mb-2 " id="inputfile" type="file" name="csv_file"
         accept=".csv" required style="display: inline;"/>
-      <button class="btn btn-sm btn-success" id="viewfile" onclick="return false;">🔃 Load Data</button>
-      <button type="reset" class="btn btn-sm btn-danger" id="reset">🔁 RESET</button>
+      <button class="btn btn-sm btn-success" id="viewfile" onclick="return false;"><i class="fab fa-cloudversify"></i> Load Data</button>
+      <button type="reset" class="btn btn-sm btn-danger" id="reset"><i class="fas fa-undo"></i> RESET</button>
     </div>
     <br/>
   </form>
@@ -143,9 +142,9 @@
         </tfoot>
       </table>
       <center>
-        <div class="col-lg-2" id="show_buttons">
-          <button id="upload_db" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#confirmModal">Upload</button>
-          <button type="reset" id="cancel" class="btn btn-sm btn-danger">Cancel</button>
+        <div id="show_buttons">
+          <button id="upload_db" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#confirmModal"><i class="fas fa-file-upload"></i> Upload</button>
+          <button type="reset" id="cancel" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Cancel</button>
         </div>
       </center>
     </div>
@@ -161,8 +160,8 @@
               <p>You are trying to save this data into database! This Action is <b class="text-danger"> irreversible!</b></p>
           </div>
           <div class="modal-footer">
-            <button type="button" id="confirmedUpload" class="btn btn-success">Save changes</button>
-            <button type="button" class="btn btn-danger" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
+            <button type="button" id="confirmedUpload" class="btn btn-success"><i class="fas fa-save"></i> Save changes</button>
+            <button type="button" class="btn btn-danger" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-window-close"></i> Cancel</button>
           </div>
         </div>
       </div>

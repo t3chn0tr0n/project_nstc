@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% if title %}
+        <title> NiT | {{ title }} </title>
+    {% else %}
+        <title> NiT Student-Teacher Portal </title>
+    {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico/' %}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'teachers/css/dashboard.css'%}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="{% static 'teachers/js/dashboard.js' %}"/></script>
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="container-fluid">
+        <div class="row bg-light pt-3 pb-1">
+            <div  class="col-1 text-info toggleButton pl-4 pr-4">
+                <a id="sidebarCollapse">
+                    <h5 style="display:inline;">&nbsp;&nbsp;<abbr title="Toggle Side Bar"class="initialism"><i class="fas fa-align-justify"></i></abbr></h5>
+                </a>
+            </div>
+            <div class="col">
+                <img src="{% static 'img/jis.png/' %}" class="d-inline-block align-top mr-2 img-fluid" alt="JIS" width="50" height="40" />
+                <img src="{% static 'img/nit.png/' %}" class="d-inline-block align-top pt-1 img-fluid" alt="NiT" width="40" height="30" />
+                <h3 style="display:inline;" class="text-monospace text-info navtitle">&nbsp;STUDENT-TEACHER PORTAL</h3>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            
+                <div class="border-left border-bottom border-top text-secondary small rounded p-1 "><i class="fas fa-tachometer-alt"></i><b> DASHBOARD</b></div>
+            
+            <div class="sidebar-header">
+                <img src="{% static 'teachers/img/profile.jpg'%}" class="img-fluid" ><br />
+                {{request.user.username}}<br/>
+            </div>
+            <div class="rank">
+                {{rank}}
+            </div>
+            <ul class="list-unstyled components m-0">
+                <!--Search Student-->
+                <li class="mt-0">
+                    <a href="#"><i class="fas fa-search"> Search</i></a>
+                </li>
+
+                <!--Mentees-->
+                <li>
+                    <a href="#"><i class="fas fa-users"> Mentees </i></a>
+                </li>
+                
+                <!-- Internal Marks-->
+                <li>
+                    <a href="#"><i class="fas fa-marker"> Internal Marks</i></a>
+                </li>
+                <!--Profile-->
+                <li>
+                    <a href="#"><i class="fas fa-user-cog"> Your Profile</i></a>
+                </li>
+            </ul>
+            <br />
+            
+            {% if is_hod %}
+            <!-- PRO -->
+            <a class="rank text-success small border-top border-bottom border-success rounded" onclick="$('#profeatures').toggle();">Toggle Pro Features</a>
+            <ul id="profeatures" class="list-unstyled components p-0 m-0 ml-2 mr-2 border-right border-left border-success rounded" style="display: none;">
+                <!--MAKAUT MAR-->
+                <li>
+                    <a href="#"><i class="fas fa-graduation-cap"> MAKAUT MAR</i></a>
+                </li>
+                <!--UPLOAD-->
+                <li>
+                    <a href="#csvUpload" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-upload"> Upload</i></a>
+                    <ul class="collapse list-unstyled" id="csvUpload">
+                        <li>
+                            <a href="#">Student List</a>
+                        </li>
+                        <li>
+                            <a href="#">Subject List</a>
+                        </li>
+                    </ul>
+                </li>
+                <!--DOWNLOAD-->
+                <li>
+                    <a href="#csvDownload" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-download"> Download</i></a>
+                    <ul class="collapse list-unstyled" id="csvDownload">
+                        <li>
+                            <a href="#">Student List</a>
+                        </li>
+                        <li>
+                            <a href="#">Subject List</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Internal Marks-->
+                <li>
+                    <a href="#"><i class="fas fa-users-cog"> Manage Mentors</i></a>
+                </li>
+            </ul>
+            {% endif %}
+            <br /><br />
+            <center class="bootlink text-danger">
+            <a class="btn btn-sm btn-outline-danger ">logout</a>
+            </center>
+            <br />
+        </nav>
+
+        <!--PAGE CONTENT-->
+        <div id="content" class="rounded-top rounded-left border border-left-1 border-top-1">
+            {% block main_body %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+{% include 'includes/footer.html' %}
+</html>

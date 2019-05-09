@@ -1,0 +1,65 @@
+{% extends 'students/main.html/' %}
+{% block body %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+  crossorigin="anonymous">
+<div class="container">
+<style>
+  td,th{
+    text-align: center;
+  }
+</style>
+  
+  <h4>
+    <center class="text-info"> MARKS UPLOAD PORTAL </center>
+  </h4>
+  <table class="table table-bordered table-hover table-responsive-sm mb-5">
+  
+  <i class="text-info fas fa-exclamation-circle mt-3"></i>
+  <span class="text-secondary small mt-2" style="padding-top: 0.5em;">
+    TAB can be used to navigate from one marks input field to another! 
+  </span>
+
+    <thead>
+      <tr>
+        <th scope="col" style="width: 5%; ">Id</th>
+        <th scope="col" style="width: 15%; ">University Roll</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col" style="width: 10%;">Class Roll No</th>
+        <th scope="col" style="width: 20%;">Marks</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for x in students %}
+      <tr >
+        <td>x.id</td>
+        <td>x.fname</td>
+        <td>x.lname</td>
+        <td>x.roll</td>
+        <td> <input class="form-control" value={{ x.value }} required /> </td>
+      </tr>
+      {% endfor %}
+
+      <tr>
+        <td>NIT/2016/0760</td>
+        <td>430110025</td>
+        <td>Jingalala</td>
+        <td>Ray</td>
+        <td>82</td>
+        <td> <input type="number" min=0 max=30 class="form-control" value="29" required/> </td>
+      </tr>
+
+      <tr>
+        <td>NIT/2016/0760</td>
+        <td>430110025</td>
+        <td>Jingalala</td>
+        <td>Ray</td>
+        <td>82</td>
+        <td><input type="number" min=0 max=30 class="form-control" value="25" required/></td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+{% endblock %}

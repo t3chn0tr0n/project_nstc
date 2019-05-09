@@ -1,4 +1,4 @@
-{% extends 'students/main.html/' %} 
+{% extends 'makaut/main.html/' %} 
 {% block body %}
     {% load static %}
     <script src="{% static 'makaut/js/mentees.js' %}"></script>
@@ -12,21 +12,20 @@
                 text-align: center; 
             }
     </style>
-    <div class="container">
+    <div class="container" >
         <center>
         <h3 class="text-primary p-2"><b> MAKAUT MAR 100 POINTS </b></h3>
         </center>
-        
+        <br />
         <div class="row">
-            <div class="col-6 mx-auto">
+            <div class="col-5 mx-auto">
                 <input type="text" class="form-control form-control-lg " placeholder="Search students of your Department" id="myInput" onkeyup="filter()">
             </div>
-            <div class="col-5 mx-auto">
-                <button id="mass_gen_cert" class="btn btn-lg btn-outline-info"> Generate Certificate of all eligible students&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📃</button>
-            </div>
+            
+                <button id="mass_gen_cert" class="btn btn-lg btn-outline-secondary col-5 mx-auto" title="Generate Certificate of all eligible students"> Batch Generate Certificate <i class="fas fa-file-invoice"></i></button>
         </div>
 
-        <form action="{% url 'student_report' %}" method="POST">
+        <form class="container" action="{% url 'student_report' %}" method="POST">
             {% csrf_token %}
             <div class="table-responsive-sm">
                 <table id="editable_table" style="text-align:center;" class="table table-hover">
