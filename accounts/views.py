@@ -28,7 +28,6 @@ def login(request):
                 error = "username or password invalid! Try signing up if not already!"
                 if Temp_user.objects.filter(uname=request.POST['username']).exists():
                     error = "Please Verify your email before logging in!"
-                
                 return render(request, 'accounts/login.html',{"title":"login_error", 'error':error})
         else: # GET method
             if request.GET.get('next'):
