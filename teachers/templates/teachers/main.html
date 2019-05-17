@@ -45,7 +45,7 @@
             
             <div class="sidebar-header">
                 <img src="{% static 'teachers/img/profile.jpg'%}" class="img-fluid" ><br />
-                {{request.user.username}}<br/>
+                {{request.user.first_name}}<br/>
             </div>
             <div class="rank">
                 {{rank}}
@@ -112,7 +112,11 @@
             {% endif %}
             <br /><br />
             <center class="bootlink text-danger">
-            <a class="btn btn-sm btn-outline-danger ">logout</a>
+            <form id="logout" method="POST" action="{% url 'logout' %}">
+                <button class="btn btn-outline-danger btn-sm" type="submit">Logout</button>
+                {% csrf_token %}
+                <input type="hidden" />
+            </form>
             </center>
             <br />
         </nav>

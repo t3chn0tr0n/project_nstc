@@ -32,7 +32,8 @@ from teachers.models import Teacher
 @login_required(login_url=reverse_lazy('login'))
 def demo(request):
     # return render(request, 'teachers/int_marks_landing.html', {'fixed_footer': True})
-    return render(request, 'teachers/table.html')
+    # return render(request, 'teachers/table.html')
+    return render(request, 'message.html', {'title': '404', 'error': True, 'fof': True})
 
 
 @login_required(login_url=reverse_lazy('login'))

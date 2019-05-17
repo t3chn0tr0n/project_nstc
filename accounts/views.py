@@ -28,12 +28,12 @@ def login(request):
                 error = "username or password invalid! Try signing up if not already!"
                 if Temp_user.objects.filter(uname=request.POST['username']).exists():
                     error = "Please Verify your email before logging in!"
-                return render(request, 'accounts/login.html',{"title":"login_error", 'error':error})
+                return render(request, 'accounts/login.html',{"title":"login_error", 'error':error, "next":reverse_lazy('index')})
         else: # GET method
             if request.GET.get('next'):
                 next = request.GET.get('next')
             else:
-                next = '/index/'
+                next = reverse_lazy('index')
             return render(request, 'accounts/login.html', {"title":"log in", "next":next})
 
 
@@ -48,7 +48,6 @@ def signup(request):
         return redirect('index')
     else:
         if request.method == "POST":
-
             uid = request.POST['username'].strip()
             email = request.POST['email'].strip()
             password1 = request.POST['password1'].strip()
@@ -61,10 +60,8 @@ def signup(request):
                 #ii. send email
                 #iii. show Email sent page
             #-4. if username exists, show an error page
-
             # validations:
             # =============
-
             error = ""
             try:
                 that_stud = Student.objects.get(id=uid)
@@ -127,7 +124,6 @@ def signup(request):
                 return message('signed up', responce, request)
             if error:
                 return render(request, 'accounts/signup.html', {'title':'signup error', 'error':error})
-        
         else: # request.method is "GET"
             return render(request, 'accounts/signup.html', {'title':'signup'})
 
@@ -150,11 +146,11 @@ def activate(request):
                 # getting the user's name and desig
                 try:
                     stud = Student.objects.get(id=tuser.uname)
-                    name = stud.name
+                    name = stud.name + " " + stud.middle_name + " " + stud.surname
                     desig = "s" # s for student
                 except:
                     teach = Teacher.objects.get(id=tuser.uname)
-                    name = teach.name
+                    name = teach.name + teach
                     desig = "t" # t for teacher
 
                 user = User.objects.create_user(username=tuser.uname, first_name=name, last_name=desig, password=tuser.password, email=tuser.email)
@@ -306,14 +302,18 @@ def change_email():
     # No GET request available for this page: Only way access this is by profile page!
     else:
         return render(request, 'message.html', {'fof': True})
-    pass
+
 
 # TODO:
 def validate_new_email():
     # change email in auth_user and students_student/teacher_teacher
     pass
 
+
 @login_required(login_url=reverse_lazy('login'))
 def index(request):
-    img = '<img src="' + addons.get_cute_image() + '" height="200px" width="200px" alt="a cute animal image">'
-    return render(request, 'accounts/index.html', {'title':'Index', 'cute_img':img})
+    user = request.user.username
+    if Student.objects.filter(id=user).exists():
+        return redirect('profile')
+    else:
+        return redirect('upload_student')
