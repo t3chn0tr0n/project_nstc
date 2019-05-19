@@ -1,6 +1,20 @@
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
+.outer {
+    height: 80%;
+    display: grid;
+}
+
+.outer .inner {
+    margin: auto;
+}
+
+
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
 .wrapper {
     display: flex;
     width: 100%;
@@ -15,9 +29,6 @@
     color: #999;
     font-weight: bold;
 }
-.navtitle{
-
-}
 
 #sidebar {
     min-width: 200px;
@@ -31,7 +42,9 @@
 #sidebar.active {
     margin-left: -200px;
 }
-
+#sidebar.active .outer{
+    width: 80%;
+}
 #sidebar .sidebar-header {
     padding-top: 20px;
     color: #666;
@@ -117,13 +130,6 @@ ul ul a:hover {
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
-/* Medium and Big Screens
-@media (min-width: 700px) {
-    .toggleButton{
-        display:none !important;
-    }
-} */
-
 /* Small Mobile Screens */
 @media (max-width: 700px) {
     #sidebar {
