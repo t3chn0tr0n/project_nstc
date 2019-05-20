@@ -16,3 +16,5 @@ class Teacher(models.Model):
     phone_no_1 = models.CharField(default=0, max_length=12)
     phone_no_2 = models.CharField(null=True, blank=True, max_length=12)
     is_hod = models.BooleanField(default=False)
+    is_principal = models.BooleanField(default=False)
+    desig = models.CharField(default=" ", max_length=20)
