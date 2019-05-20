@@ -20,6 +20,7 @@ function reg_selected() {
   document.getElementById('selection').innerHTML = "&nbsp;&nbsp;&nbsp;(Regular is selected)";
   document.getElementById('stream').innerHTML = "<option selected disabled value=\"\">Select stream</option><option value=\"B-TECH\">B-TECH</option><option value=\"M-TECH\">M-TECH</option><option value=\"DEPLOMA\">DEPLOMA</option>";
 }
+
 $(document).ready(function () {
   document.getElementById("upload_db").disabled = true;
   document.getElementById("cancel").disabled = true;
@@ -157,7 +158,7 @@ $(document).ready(function () {
     location.reload();
   });
 
-  $("#upload_db").click(function () {
+  $("#confirmedUpload").click(function () {
     var table = document.getElementById("tableMain");
     var rowCount = table.rows.length;
     var st;
@@ -197,6 +198,7 @@ $(document).ready(function () {
             alert("Change is successfully saved!!");
             location.reload();
           }
+          
         });
       } else {
         $("#error_csv_upload").html("INPUT FIELDS ARE INCOMPLETE!!!");

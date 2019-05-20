@@ -59,7 +59,7 @@
 
                 <!--Mentees-->
                 <li>
-                    <a href="#"><i class="fas fa-users"> Mentees </i></a>
+                    <a href="{% url 'mentees_list' %}"><i class="fas fa-users"> Mentees </i></a>
                 </li>
                 
                 <!-- Internal Marks-->
@@ -79,14 +79,14 @@
             <ul id="profeatures" class="list-unstyled components p-0 m-0 ml-2 mr-2 border-right border-left border-success rounded" style="display: none;">
                 <!--MAKAUT MAR-->
                 <li>
-                    <a href="#"><i class="fas fa-graduation-cap"> MAKAUT MAR</i></a>
+                    <a href="{% url 'mentees' %}"><i class="fas fa-graduation-cap"> MAKAUT MAR</i></a>
                 </li>
                 <!--UPLOAD-->
                 <li>
                     <a href="#csvUpload" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-upload"> Upload</i></a>
                     <ul class="collapse list-unstyled" id="csvUpload">
                         <li>
-                            <a href="#">Student List</a>
+                            <a href="{% url 'upload_student' %}">Student List</a>
                         </li>
                         <li>
                             <a href="#">Subject List</a>

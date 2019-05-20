@@ -28,3 +28,19 @@ def mentees_of(teacher, year):
     
     except:
             return False
+
+
+def get_teach_details(request):
+    teach = Teacher.objects.get(id=request.user.username)
+    rank = teach.desig
+    if teach.is_principal:
+        rank = "Principal"
+    elif teach.is_hod:
+        rank = "HOD"
+    d = {
+        'id': teach.id,
+        'dept': teach.dept, 
+        'rank': rank, 
+        'is_hod': teach.is_hod,
+        }
+    return d

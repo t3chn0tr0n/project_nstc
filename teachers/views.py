@@ -1,8 +1,11 @@
+import json
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+from django.http import HttpResponse
+
 from .models import *
-from accounts.views import message
+from .addons import (get_teach_details)
 from students.models import Student
 
 
@@ -13,6 +16,8 @@ def upload_student(request):
         title = "404"
         error = ['Students cannot view this page!']
         return message(title, error, request)
+    d = get_teach_details(request)
+    
     if request.method == 'POST' and request.is_ajax():
         hod = Teacher.objects.get(id=request.user.username)
         if hod.is_hod:
@@ -52,26 +57,97 @@ def upload_student(request):
                 student.objects.create(id=id, admission_no=ad, name=n, middle_name=m, surname=s,
                                        mentor=ment, email=e, dept=dept, is_lateral=Is_lat, batch=Batch, stream=Stream)
         else:
-            title = "Access Denied"
+            d['title'] = "Access Denied"
             error = ['</h3> <h2 class="text-danger">ACCESS DENIED!</h2>',
                      'ONLY HODS CAN UPLOAD STUDENT LIST!'
                      ]
-            return message(title, error, request)
+            return render(request, 'message.html', d)
 
     # GET Request
     hod = Teacher.objects.get(id=request.user.username)
     if hod.is_hod == "true":
-        title = "Access Denied"
+        d['title'] = "Access Denied"
         error = ['</h2> <h3 class="text-danger">ACCESS DENIED!</h3><h2>',
                  'ONLY HODS CAN ACCESS THIS PAGE!'
                  ]
+        return render(request, 'teachers/message.html', d)
+    else:
+        d['title']= "Upload Student"
+        return render(request, 'teachers/student_csv_upload.html', d)
+
+
+@login_required(login_url=reverse_lazy('login'))
+def student_search(request):
+    if Student.objects.filter(id=request.user.username):
+        title = "404"
+        error = ['Students cannot view this page!']
         return message(title, error, request)
-    mentor_id = request.user.username
-    ment = Teacher.objects.get(id=mentor_id)
+    else:
+        if request.method == "POST":
+            pass
+        else:
+            ment = Teacher.objects.get(id=request.user.username)
+            if ment.is_hod:
+                rank = "HOD"
+                is_hod = True
+            else:
+                rank = "Mentor"
+                is_hod = False
+            return render(request, 'teachers/search.html', {'dept': ment.dept, 'title': "Upload Student", "rank": rank, 'is_hod': is_hod})
+
+
+def princi_teacher_view(request):
+    teacher = Teacher.objects.all()
+    ment = Teacher.objects.get(id=request.user.username)
     if ment.is_hod:
         rank = "HOD"
         is_hod = True
     else:
         rank = "Mentor"
         is_hod = False
-    return render(request, 'teachers/student_csv_upload.html', {'dept': hod.dept, 'title': "Upload Student", "rank": rank, 'is_hod': is_hod})
+    return render(request, 'teachers/princi_teacher_view.html', {'teacher':teacher, 'dept': ment.dept, 'title': "Upload Student", "rank": rank, 'is_hod': is_hod})
+
+
+#TODO: only can be done by principal
+def assign_hod(request):
+
+    if request.method == "POST" and request.is_ajax():
+        mentor_id=request.POST.get('mentor_id')
+        new_obj = Teacher.objects.get(id=mentor_id)
+        old_hod =  Teacher.objects.get(is_hod=True)
+        new_obj.is_hod=True
+        old_hod.is_hod=False
+        new_obj.save()
+        old_hod.save()
+        return HttpResponse('l')
+    # ment = Teacher.objects.get(id=request.user.username)
+    # if ment.is_hod:
+    #     rank = "HOD"
+    #     is_hod = True
+    # else:
+    #     rank = "Mentor"
+    #     is_hod = False
+    return render(request, 'teachers/princi_teacher_view.html', {'dept': ment.dept, 'title': "Upload Student", "rank": rank, 'is_hod': is_hod})
+
+
+def mentees_list(request):
+    teach = Teacher.objects.get(id=request.user.username)
+    students = Student.objects.filter(mentor=teach)
+    d = get_teach_details(request)
+    if len(students) == 0:
+        d['title'] = "Students List"
+        d['msg'] = ["You have no student as mentees yet!"]
+        return render(request, 'teachers/message.html', d)
+    batches = []
+    for x in students:
+        if x.batch not in batches:
+            batches.append(x.batch)
+    d['mentees'] = students
+    d['batches'] = batches
+    return render(request, 'teachers/mentees.html', d)
+
+
+def view_student(request, x, y, z):
+    d = get_teach_details(request)
+    id = x
+    return render(request, 'teachers/mentees.html', d)

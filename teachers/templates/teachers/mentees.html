@@ -1,0 +1,43 @@
+{% extends 'teachers/main.html/' %} 
+{% block main_body %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+{% load static %}
+<script src="{% static 'teachers/js/mentees.js' %}"></script>
+<center><h2 class="text-primary"> Your Mentees</h2></center>
+<br />
+<div class="table-responsive-md">
+  <table id="mentees_table" class="table table-sm table-hover table-striped small" style="text-align:center;">
+    <thead>
+      <tr>
+        <th>
+          <center>ID NO.</center>
+        </th>
+        <th>
+          <center>Name</center>
+        </th>
+        <th>
+          <center>BATCH</center>
+        </th>
+        <th>
+          <center>View Details</center>
+        </th>
+    </thead>
+    <tbody> 
+      {% for x in mentees %}
+        <tr>
+        <td>{{ x.id }}</td>
+        <td>{{ x.name }}
+          {% if x.middle_name != " " or x.middle_name != "" or x.middle_name != "NULL" %}&nbsp;{{ x.middle_name }}{% endif %}
+          &nbsp;{{ x.surname}}
+        </td>
+        <td>{{ x.batch }}</td>
+        <td><a class="btn btn-sm btn-outline-info" href="{% url 'view_student' x.id %}">view </a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br />
+</div>
+{% endblock %}

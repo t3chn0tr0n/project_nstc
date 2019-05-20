@@ -15,6 +15,7 @@ from accounts.views import message
 from students.addons import get_idcard_details
 from students.models import Student
 from teachers.models import Teacher
+from teachers.addons import (get_teach_details)
 
 @login_required(login_url=reverse_lazy('login'))
 def student_report(request):
@@ -22,6 +23,7 @@ def student_report(request):
         title = "404"
         error = ['Students cannot view this page!']
         return message(title, error, request)
+
     if request.method == "POST":
         student_id = request.POST.get('student_id',  '')
         mentor_id = request.user.username
@@ -64,13 +66,7 @@ def student_report(request):
             new_entry = 1
         details = get_idcard_details(student_id)
         student_info = Student.objects.filter(id=student_id)
-        ment = Teacher.objects.get(id=mentor_id)
-        if ment.is_hod:
-            rank = "HOD"
-            is_hod = True
-        else:
-            rank = "Mentor" 
-            is_hod = False
+        d =  get_teach_details(request)
         a = {
             'info_student': student_info,
             'mentor': mentor_id,
@@ -85,13 +81,11 @@ def student_report(request):
             'sem8': sem8,
             'total': total_table,
             'new_entry': new_entry,
-            'rank': rank,
-            'title': "Student MAR",
-            'is_hod': is_hod,
         }
         a.update(details)
+        a.update(d)
         return render(request, 'makaut/student_view.html', a)
-    else:
+    else: # GET request redirects
         return mentees(request)
 
 
@@ -101,43 +95,15 @@ def mentees(request):
         title = "404"
         error = ['Students cannot view this page!']
         return message(title, error, request)
-    if request.method == "POST":
-        back = request.POST.get('back', '')
-        if(back == 'back'):
-            mentor_id = request.user.username
-            student_obj = Student.objects.filter(mentor=mentor_id)
-            ment = Teacher.objects.get(id=mentor_id)
-            if ment.is_hod:
-                rank = "HOD"
-                is_hod = True
-            else:
-                rank = "Mentor" 
-                is_hod = False
-            return render(request, 'makaut/mentees.html',  {
-                'mentor': mentor_id,
-                'info': student_obj,
-                'check': "0",
-                'rank': rank,
-                'is_hod': is_hod
-            })
+
     mentor_id = request.user.username
     ment = Teacher.objects.get(id=mentor_id)
-    if ment.is_hod:
-        rank = "HOD"
-        is_hod = True
-    else:
-        rank = "Mentor" 
-        is_hod = False
     student_obj = Student.objects.filter(mentor=mentor_id)
-    return render(request, 'makaut/mentees.html',  {
-        'mentor': mentor_id,
-        'info': student_obj,
-        'check': "0",
-        'rank': rank,
-        'title': "MAR Search",
-        'is_hod': is_hod
-    })
-
+    d =  get_teach_details(request)
+    d['mentor'] = mentor_id
+    d['info'] = student_obj
+    d['check'] = "0"
+    return render(request, 'makaut/mentees.html', d)
 
 @login_required(login_url=reverse_lazy('login'))
 def update(request):
@@ -145,6 +111,7 @@ def update(request):
         title = "404"
         error = ['Students cannot view this page!']
         return message(title, error, request)
+    
     if request.method == 'POST' and request.is_ajax():
         student_id = request.POST['student_id'].strip()
         sem1 = [int(i) for i in json.loads(request.POST['sem1'])]
@@ -457,14 +424,9 @@ def update(request):
         SEM7.save()
         SEM8.save()
         total_obj.save()
-    ment = Teacher.objects.get(id=mentor_id)
-    if ment.is_hod:
-        rank = "HOD"
-        is_hod = True
-    else:
-        rank = "Mentor" 
-        is_hod = False
-    return render(request, 'makaut/mentees.html', {'rank': rank, 'is_hod': is_hod})
+    d =  get_teach_details(request)
+    d['title'] = "M.A.R. Update"
+    return render(request, 'makaut/mentees.html', d)
 
 
 @login_required(login_url=reverse_lazy('login'))

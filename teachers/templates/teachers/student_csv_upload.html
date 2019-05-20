@@ -1,10 +1,10 @@
-{% extends 'makaut/main.html/' %} 
-{% block body %}
+{% extends 'teachers/main.html/' %} 
+{% block main_body %}
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
   <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
   {% load static %}
-  <script src="{% static 'student/js/student_csv_upload.js' %}"></script>
+  <script src="{% static 'teachers/js/student_csv_upload.js' %}"></script>
   {% csrf_token %}
   <center>
     <h3 class="text-info">Upload Student CSV</h3>
@@ -154,14 +154,14 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Please recheck!</h5>
+            <h5 id="modal_title" class="modal-title">Please recheck!</h5>
           </div>
-          <div class="modal-body">
+          <div id="modal_body" class="modal-body">
               <p>You are trying to save this data into database! This Action is <b class="text-danger"> irreversible!</b></p>
           </div>
           <div class="modal-footer">
-            <button type="button" id="confirmedUpload" class="btn btn-success"><i class="fas fa-save"></i> Save changes</button>
-            <button type="button" class="btn btn-danger" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-window-close"></i> Cancel</button>
+            <button id="confirmedUpload" class="btn btn-success"><i class="fas fa-save"></i> Save changes</button>
+            <button id="modal_cancel" class="btn btn-danger" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-window-close"></i> Cancel</button>
           </div>
         </div>
       </div>

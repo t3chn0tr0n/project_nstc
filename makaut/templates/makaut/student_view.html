@@ -1,9 +1,9 @@
-{% extends 'makaut/main.html/' %} {% block body %} {% load static %}
+{% extends 'teachers/main.html' %} {% block main_body %} {% load static %}
 <script src="{% static 'makaut/js/student_view.js' %}"></script>
-<div class="container-fluid">
+<div>
     <input type="hidden" value="{{ new_entry }}" id="new_entry">
     <!--STUDENT INFROMATION-->
-    <div class="jumbotron container" style="padding:1.5rem; padding-bottom: 0.3rem; margin-bottom:0rem;">
+    <div class="jumbotron" style="padding:1.5rem; padding-bottom: 0.3rem; margin-bottom:0rem;">
         <div class="form-group row">
             <label class="col-sm-2">
                 <b> Name: </b>
@@ -34,11 +34,12 @@
         </div>
     </div>
     
-    <div class="container-fluid pt-2">
-        <span class="small"> For best view in small screens, use 'desktop view'. </span>
+    <div class="pt-2">
+        <span class="small"> For best view in small screens, use 'desktop view'. <br/>
+        <i class="text-info"><b><i class="fas fa-info-circle"></i>&nbsp;Please Close the Dashboard while viewing this page. </b> Hint: Click on the 4-bar button on top left.</i> </span>
     </div>
 
-    <!-- BUTTONS -->
+    <!-- STICKY BUTTONS -->
     <div class="bg-white sticky-top p-3" >
         <span style="float:left;">
             <form action="{%  url 'mentees' %}" method="post">
@@ -60,8 +61,7 @@
     </div>
     <br/>
 
-    <div class="container-fluid p-2">
-
+    <div>
         <!-- TOTAL MODAL -->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog modal-sm">
@@ -88,8 +88,8 @@
 
         <!--STUDENT TABLE-->
         <div class="table-responsive-md small" style="overflow-x:auto;">
-            <table id="editable_table" style="text-align:center;" class="table table-sm table-hover table-striped">
-                <thead >
+            <table id="editable_table" class="table table-sm table-hover table-striped" style="text-align:center;">
+                <thead>
                     <tr class="table-primary">
                         <th>
                             <center>SL NO</center>
@@ -231,7 +231,6 @@
                             <span id="swayam"></span>
                             
                         </td>
-
                         {% endfor %}
                     </tr>
 
