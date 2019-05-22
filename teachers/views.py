@@ -65,11 +65,12 @@ def upload_student(request):
 
     # GET Request
     hod = Teacher.objects.get(id=request.user.username)
-    if hod.is_hod == "true":
+    if not hod.is_hod:
         d['title'] = "Access Denied"
         error = ['</h2> <h3 class="text-danger">ACCESS DENIED!</h3><h2>',
                  'ONLY HODS CAN ACCESS THIS PAGE!'
                  ]
+        d['msg'] = error
         return render(request, 'teachers/message.html', d)
     else:
         d['title']= "Upload Student"

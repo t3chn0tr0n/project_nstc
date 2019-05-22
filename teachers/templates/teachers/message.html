@@ -4,7 +4,7 @@
   <div class="inner">
     <center>
       {% for x in msg %}
-        <h3>{{x}}</h3>
+        <h3>{{x | safe}}</h3>
       {% endfor %}
     </center>
   </div>
