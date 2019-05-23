@@ -150,7 +150,7 @@ def activate(request):
                     desig = "s" # s for student
                 except:
                     teach = Teacher.objects.get(id=tuser.uname)
-                    name = teach.name + teach
+                    name = teach.name
                     desig = "t" # t for teacher
 
                 user = User.objects.create_user(username=tuser.uname, first_name=name, last_name=desig, password=tuser.password, email=tuser.email)
