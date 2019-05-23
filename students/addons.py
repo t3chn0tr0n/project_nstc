@@ -65,7 +65,8 @@ def get_general_details(id):
         }
         if stud.is_lateral:
             details['dip_score'] = data.diploma_score
-    return details
+        return details
+    return {}
 
 
 def get_univ_details(id):
