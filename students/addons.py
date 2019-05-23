@@ -12,7 +12,7 @@ def get_idcard_details(id):
     try:
         stud = Student.objects.get(id=id)
         details = {
-            'name': stud.name + stud.middle_name + stud.surname,
+            'name': stud.name + " " + stud.middle_name + " " + stud.surname,
             'id': stud.id,
             'card_no': stud.id,
             'roll_no': stud.univ_roll_no,
