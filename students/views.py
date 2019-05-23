@@ -594,7 +594,10 @@ def profile(request):
     details.update(get_idcard_details(request.user.username))
     details.update(get_univ_details(request.user.username))
     details['email'] = Student.objects.get(id=request.user.username).email
-    details['mob_no'] = Details.objects.get(card_no=request.user.username).mobile_no
+    try:
+        details['mob_no'] = Details.objects.get(card_no=request.user.username).mobile_no
+    except:
+        details['mob_no'] = " "
     return render(request, 'students/student_profile.html', details)
 
 
