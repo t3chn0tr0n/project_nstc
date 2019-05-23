@@ -102,11 +102,11 @@ def general_details(request):
                 except ValueError:
                     error = ["land phone number can't contain characters!"]
             else:
-                land_phone = " "
+                land_phone = "N/A"
 
             if loc_guard in (' ', ''):
                 loc_guard = "N/A"
-            if loc_add == ' 'in (' ', ''):
+            if loc_add in (' ', ''):
                 loc_add = "N/A"
 
             # mobile no verification
