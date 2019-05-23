@@ -63,6 +63,8 @@ def get_general_details(id):
             'sc12_score': class12.score,
             'nav_sems': sem_for_nav_bar(id)
         }
+        if data.land_phone == " ":
+            details['land_phone'] = 'N/A'
         if stud.is_lateral:
             details['dip_score'] = data.diploma_score
         return details

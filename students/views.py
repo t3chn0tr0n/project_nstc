@@ -102,7 +102,7 @@ def general_details(request):
                 except ValueError:
                     error = ["land phone number can't contain characters!"]
             else:
-                land_phone = None
+                land_phone = " "
 
             # mobile no verification
             try:
