@@ -65,6 +65,10 @@ def get_general_details(id):
         }
         if data.land_phone == " ":
             details['land_phone'] = 'N/A'
+        if data.loc_guardian == " ":
+            details['loc_addoc_guard'] = 'N/A'
+        if data.loc_add:
+            details['loc_add'] = 'N/A'
         if stud.is_lateral:
             details['dip_score'] = data.diploma_score
         return details

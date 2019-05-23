@@ -85,7 +85,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label"> Date of Birth </label>
                 <div class="col-sm-4">
-                    <input required name="dob" type="date" class="form-control" {% if dob %} value="{{ dob }}" readonly {% endif %}/>
+                    <input required name="dob" class="form-control" {% if dob %} value="{{ dob }}" readonly {% else %} type="date" {% endif %}/>
                 </div>
 
                 <label class="col-sm-2 col-form-label"> Blood Group </label>

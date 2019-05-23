@@ -104,6 +104,11 @@ def general_details(request):
             else:
                 land_phone = " "
 
+            if loc_guard in (' ', ''):
+                loc_guard = "N/A"
+            if loc_add == ' 'in (' ', ''):
+                loc_add = "N/A"
+
             # mobile no verification
             try:
                 g_mob_no = int(g_mob_no)
