@@ -14,5 +14,5 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     re_path(r'^sem/([1-8])/$', views.sem_marks, name="sem_marks"),
     path('profile/update_phone/', views.change_phone, name="change_phone"),
-    path('certificate/', views.certificate, name="certificate")
+    path('certificate/', views.certificate, name="certificate"),
 ]
