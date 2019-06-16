@@ -75,8 +75,8 @@ class SemMarks(models.Model):
 
 class Subjects(models.Model): # A list of all subjects
     sem = models.IntegerField(default=0)
-    dept = models.CharField(default="", max_length=5) # M or B for mtech or btech
-    stream = models.CharField(default="", max_length=1)
+    dept = models.CharField(default="", max_length=5) 
+    stream = models.CharField(default="", max_length=1) # M or B for mtech or btech
     batch = models.CharField(default="",max_length=11) # BAT20162020
     sub1 = models.CharField(default="", max_length=8)
     sub2 = models.CharField(default="", max_length=8)
@@ -129,3 +129,9 @@ class Departments(models.Model): # A list of all departments, their HODs and Cou
     btech = models.BooleanField(default=True)
     mtech = models.BooleanField(default=False)
     diploma = models.BooleanField(default=False)
+
+
+class Batch_list(models.Model): # A list of all current batches, data entered when new student list is uploaded by HOD
+    dept =  models.CharField(default="", max_length=5)
+    stream = models.CharField(default="", max_length=1)
+    batch_name = models.CharField(default="",max_length=11) # BAT20162020
