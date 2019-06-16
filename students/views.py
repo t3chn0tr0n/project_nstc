@@ -608,7 +608,30 @@ def profile(request):
 
 # TODO:
 def change_email(request):
-    pass
+    if Teacher.objects.filter(id=request.user.username):
+        title = "Error"
+        error = ['Teachers have nothing to do with this page!']
+        return message(title, error, request)
+
+    if request.method == 'POST' and request.is_ajax():
+        email = request.POST['email'].strip()
+        email_len = len(email)
+        password = request.POST['password']
+        card_no = request.POST['card_no']
+        user = auth.authenticate(username=request.user.username, password=password)
+        try:
+            if user:
+                if '@' in email and ('.' in email.split('@')[1]):
+                    d = Student.objects.filter(id=card_no).update(email=email)
+                else:
+                    return HttpResponse("Email is invalid!!!Make sure that your Email Id is correct otherwise you will not receive any Email from the collage.")
+            else:
+                return HttpResponse("Invalid password!!!")             
+        except ValueError:
+            return HttpResponse("Failed to update email!!!Please contact to your mentor as soon as possible.")
+    return HttpResponse("1")
+
+
 
 
 def certificate(request):

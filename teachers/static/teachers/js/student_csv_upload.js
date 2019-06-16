@@ -183,7 +183,7 @@ $(document).ready(function () {
           }
           arr[i - 1] = st.trimRight();
         }
-
+        
         $.ajax({
           type: "POST",
           url: "upload_student/",
@@ -194,8 +194,8 @@ $(document).ready(function () {
             Batch: Batch,
             csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
           },
-          success: function () {
-            alert("Change is successfully saved!!");
+          success: function (e) {
+            alert(e);
             location.reload();
           }
           

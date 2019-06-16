@@ -54,8 +54,9 @@ def upload_student(request):
                 # 6. Stream does not exist
                 if not id or not ad or not n or not m or not s or not e:
                     raise "Error: Blank Field"
-                student.objects.create(id=id, admission_no=ad, name=n, middle_name=m, surname=s,
+                Student.objects.create(id=id, admission_no=ad, name=n, middle_name=m, surname=s,
                                        mentor=ment, email=e, dept=dept, is_lateral=Is_lat, batch=Batch, stream=Stream)
+            return HttpResponse("Update Successful!!");                       
         else:
             d['title'] = "Access Denied"
             error = ['</h3> <h2 class="text-danger">ACCESS DENIED!</h2>',
