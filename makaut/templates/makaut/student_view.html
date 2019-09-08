@@ -53,9 +53,8 @@
         <span style="float:right;" >
             <button class="btn btn-sm btn-outline-info" id="edit">Edit</button>
             <button class="btn btn-sm btn-outline-success" id="total" data-toggle="modal" data-target="#myModal">Total</button>
-            {% if i.total >= 100 %}
-                <a id="gen_cert" href="{% url 'demo' %}" c;lass="btn btn-sm btn-outline-danger" id="generate" target="_blank">Generate Certificate</a>
-            {% endif %}
+            
+            <a id="gen_cert" href="{% url 'demo' %}" class="btn btn-sm btn-outline-danger" id="generate" target="_blank">Certificate</a>
         </span>
         <br/>
     </div>

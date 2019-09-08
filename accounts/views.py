@@ -52,7 +52,7 @@ def signup(request):
             email = request.POST['email'].strip()
             password1 = request.POST['password1'].strip()
             password2 = request.POST['password2'].strip()
-            
+
             #-1. form validation
             #-2. check if the given user is a student or a teacher and has the valid email else STOP here.
             #-3. save data in local table (if not already there, in both user tables)
@@ -79,8 +79,8 @@ def signup(request):
                     flag_teach = False
                     error = "Unknown Id! Who are you exactly?? Go away..."
                     return render(request, 'accounts/signup.html', {'title':'signup error', 'error':error})
-            
-            # validate their email and if anything falls outs of place, DO NOT PROCEED further!!! 
+
+            # validate their email and if anything falls outs of place, DO NOT PROCEED further!!!
             if flag_stud or flag_teach:
                 if saved_email == email:
                     no_error = True
@@ -88,7 +88,7 @@ def signup(request):
                     error = "Please give the Email that we know! This is critical to verify that its you!"
                     return render(request, 'accounts/signup.html', {'title':'signup error', 'error':error})
             # else : Unknown user is already handled above!
-                    
+
             if password1 != password2:
                 error = "Passwords must match!"
 
@@ -102,25 +102,25 @@ def signup(request):
                 <br /> Please be patient! If this method fails repeatedly contact your mentor!!
                 """]
                 return message('signup error', msg, request)
-            
+
             # main show starts from here:
             # ===========================
             else:
                 token = addons.generate_url()
                 tuser = Temp_user.objects.create(uname=uid, password=make_password(password1), email=email, token=token)
                 receiver = [request.POST["email"]]
-                
+
                 # changing things in student/teacher table
                 if Student.objects.filter(id=tuser.uname).exists():
                     user = Student.objects.filter(id=tuser.uname).update(is_registered=True)
                 else:
                     user = Teacher.objects.filter(id=tuser.uname).update(is_registered=True)
-                
-                if addons.verification_mailto(receiver, token):                   
+
+                if addons.verification_mailto(receiver, token):
                     img = '<img src="' + addons.get_cute_image() + '" height="200px" width="200px" alt="a cute animal image">'
                     return render(request, 'accounts/resend.html', {'title':'email verification','case':'first_time', 'token':token, 'cute_image': img})
                 else:
-                    responce = ["ERROR! mail not sent"] 
+                    responce = ["ERROR! mail not sent"]
                 return message('signed up', responce, request)
             if error:
                 return render(request, 'accounts/signup.html', {'title':'signup error', 'error':error})
@@ -136,7 +136,7 @@ def activate(request):
 
     if Temp_user.objects.filter(token=key).exists():
         tuser = Temp_user.objects.get(token=key)
-        
+
         if tuser.verify_time(timezone.now()): # checking whether the link is valid!
             # check if token is a reset token and do reset if yes
             # reset token starts with "reset"
@@ -157,7 +157,7 @@ def activate(request):
                 user.password = tuser.password # Using this since django will re-hash the hashed password => Thus explicitly, re mentioning it!
                 user.is_active = True
                 user.save()
-                
+
                 # changing things in student/teacher table
                 if Student.objects.filter(id=tuser.uname).exists():
                     user = Student.objects.get(id=tuser.uname)
@@ -169,12 +169,12 @@ def activate(request):
                     user = Teacher.objects.get(id=tuser.uname)
                     user.is_verified=True
                 user.save()
-                
+
                 msg = [
-                "Welcome at NiT Student-Teacher Portal", 
+                "Welcome at NiT Student-Teacher Portal",
                 """Thanks for verifying your email! try <a href=""" + login + """>logging in! </a>"""
                 ]
-            
+
             else:
                 user = User.objects.get(username=tuser.uname)
                 user.set_password(tuser.password)
@@ -182,7 +182,7 @@ def activate(request):
                 msg = ["Walla! Your password has been reset!",
                 """try <a href=""" + login + """>logging in! </a>"""
                 ]
-            
+
             # Deleting from Temp_user
             Temp_user.objects.filter(uname=tuser.uname).delete()
 
@@ -217,7 +217,7 @@ def resend(request):
 
 def reset(request):
     if request.method == "POST":
-        error = ""  
+        error = ""
         msg = ""    # error fails loudly
         flag = 0    # flag is used to fail silently
         id = request.POST['id'].strip()
@@ -247,7 +247,7 @@ def reset(request):
             elif password1.isalpha():
                 error = "mix in some numbers with the password"
             elif not obj.email == email:
-                flag = 1  
+                flag = 1
         else:
             error = "Well, we don't know you!"
 
@@ -259,14 +259,14 @@ def reset(request):
                 Temp_user.objects.create(uname=obj.id, password=password1, email=obj.email, token=reset_token, time=timezone.now())
             receiver = [obj.email]
             if addons.reset_mailto(receiver, reset_token):
-                msg = ["If you entered correct ID Card No. and your registered email id", 
+                msg = ["If you entered correct ID Card No. and your registered email id",
                 "expect to receive an email to reset password!",
                 "</h3> <em> If you have forgotten your registered email, contact your HOD </em> <h3>",
                 ]
             else:
                 msg = ["Error sending mail... Try again.", "If problem persists, contact your HOD!"]
         else:
-            msg = ["If you entered correct Name, Id and your registered email id", 
+            msg = ["If you entered correct Name, Id and your registered email id",
                 "expect to receive an email to reset password!",
                 ]
 
@@ -296,7 +296,7 @@ def change_email():
     # STEP2: Verify the password
     # Step3: Send the verification link to email IF password is correct
     # Step4: Verify the email => validate_new_email()
-    
+
     if request.method == "POST":
         email = request.POST['email'].strip()
     # No GET request available for this page: Only way access this is by profile page!

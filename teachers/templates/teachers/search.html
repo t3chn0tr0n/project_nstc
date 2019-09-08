@@ -3,107 +3,60 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
   <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   {% load static %}
   <script src="{% static 'teachers/js/global_search.js' %}"></script>
-  {% comment %} <style>
-    input[type="text"]::placeholder {  
-      /* Firefox, Chrome, Opera */ 
-      text-align: center; 
-      font-size: 80%;
+  <style>
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 8px solid #3498db;
+      width: 50px;
+      height: 50px;
+      -webkit-animation: spin 10s linear infinite; /* Safari */
+      animation: spin 1s linear infinite;
     }
-    input[type="text"]:-ms-input-placeholder{  
-      /* IE */ 
-      text-align: center; 
-      font-size: 80%;
+
+    /* Safari */
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
     }
-    * {
-  box-sizing: border-box;
-}
 
-body {
-  font: 16px Arial;  
-}
-
-/*the container must be positioned relative:*/
-.autocomplete {
-  position: relative;
-  display: inline-block;
-}
-
-input {
-  border: 1px solid transparent;
-  background-color: #f1f1f1;
-  padding: 10px;
-  font-size: 16px;
-}
-
-input[type=text] {
-  background-color: #f1f1f1;
-  width: 250%;
-}
-
-input[type=submit] {
-  background-color: DodgerBlue;
-  color: #fff;
-  cursor: pointer;
-}
-
-.autocomplete-items {
-  position: absolute;
-  border: 1px solid #d4d4d4;
-  border-bottom: none;
-  border-top: none;
-  z-index: 99;
-  /*position the autocomplete items to be the same width as the container:*/
-  top: 100%;
-  left: 0;
-  right: 0;
-}
-
-.autocomplete-items div {
-  padding: 10px;
-  cursor: pointer;
-  background-color: #fff; 
-  border-bottom: 1px solid #d4d4d4; 
-}
-
-/*when hovering an item:*/
-.autocomplete-items div:hover {
-  background-color: #e9e9e9; 
-}
-
-/*when navigating through the items using the arrow keys:*/
-.autocomplete-active {
-  background-color: DodgerBlue !important; 
-  color: #ffffff; 
-}
-  </style> {% endcomment %}
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+</style>
 
   <div class="outer">
-      <div class="inner">
-          <center>
+      <div class="inner" >
+          <center id="inner">
             {% csrf_token %}
             <!-- Search Bar -->
             <img src="{% static 'teachers/img/search.png' %}" height="25%" width="25%"/>
             {% if is_principal %}
               <h1 class="text-primary"><b>GLOBAL SEARCH INDEX</b></h1><br />
+              <div class="autocomplete" width="25%">
               <input type="text" class="form-control form-control-lg border-primary" placeholder="Search any Student or Teacher" id="search">
-              <span class="text-secondary small"> You can search anybody (student or teacher) by <b> Name </b> or <b> Roll No. </b> or <b> ID CARD No. </b> or <b>Batch</b> (if student)</scan>
+              </div>
+              <span class="text-secondary small"> You can search anybody (student or teacher) by <b> Name </b> or <b> Roll No. </b> or <b> ID CARD No. </b> or <b>Batch</b> (if student)</span>
             {% elif is_hod %}
               <h1 class="text-primary"><b>DEPARTMENTAL SEARCH INDEX</b></h1><br />
-              <div>
+              <div class="autocomplete" width="15%">
               <input type="text" class="form-control form-control-lg border-primary" placeholder="Search any Student or Teacher of your department" id="search">
               </div>
-              <span class="text-secondary small"> Search any student or teacher of your department by <b> Name </b> or <b> Roll No. </b> or <b> ID CARD No. </b> or <b>Batch</b> (if student)</scan>
+              <span class="text-secondary small"> Search any student or teacher of your department by <b> Name </b> or <b> Roll No. </b> or <b> ID CARD No. </b> or <b>Batch</b> (if student)</span>
             {% else %}
               <h1 class="text-primary"><b>MENTEES SEARCH INDEX</b></h1><br />
               <div class="autocomplete" width="25%">
               <input type="text" class="form-control form-control-lg border-primary" placeholder="Search any of your Mentees" id="search">
-              <span class="text-secondary small"> You can search any of your Mentees by <b> Name </b> or <b> Roll No. </b> or <b> ID CARD No. </b> or <b>Batch</b>  (if student)</scan>
-            {% endif %}
               </div>
-            <!-- Search Result-->
-          </center>
+              <span class="text-secondary small"> You can search any of your Mentees by <b> Name </b> or <b> Roll No. </b> or <b> ID CARD No. </b> or <b>Batch</b>  (if student)</span>
+            {% endif %}
+            
+              
+          </center> 
       </div>
     </div>
   </div> 

@@ -7,6 +7,7 @@ from django.forms import ValidationError
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.template import Context, Template
 
 from accounts.views import message
 from students.addons import (
@@ -33,8 +34,9 @@ from teachers.models import Teacher
 def demo(request):
     # return render(request, 'teachers/int_marks_landing.html', {'fixed_footer': True})
     # return render(request, 'teachers/table.html')
-    return render(request, 'message.html', {'title': '404', 'error': True, 'fof': True})
-
+    # return render(request, 'message.html', {'title': '404', 'error': True, 'fof': True})
+    data = Template('''{% load static %} <center><img src="{% static 'img/cert.png' %}" alt="Certificate Unavailable!" /></center>''')
+    return HttpResponse(data.render(Context(request)))
 
 @login_required(login_url=reverse_lazy('login'))
 def general_details(request):
@@ -591,8 +593,6 @@ def change_phone(request):
     return HttpResponse("1")
 
 
-
-# TODO:
 @login_required(login_url=reverse_lazy('login'))
 def profile(request):
     details = get_page_details(request.user.username)
@@ -606,7 +606,6 @@ def profile(request):
     return render(request, 'students/student_profile.html', details)
 
 
-# TODO:
 def change_email(request):
     if Teacher.objects.filter(id=request.user.username):
         title = "Error"
@@ -631,8 +630,22 @@ def change_email(request):
             return HttpResponse("Failed to update email!!!Please contact to your mentor as soon as possible.")
     return HttpResponse("1")
 
-
-
-
 def certificate(request):
     pass
+
+def contact_mentor(request):
+    if Teacher.objects.filter(id=request.user.username):
+        title = "Error"
+        error = ['Teachers have nothing to do with this page!']
+        return message(title, error, request)
+    stud = Student.objects.get(id=request.user.username)    
+    teach = Teacher.objects.get(id='NIT/01/JYP')
+    d = {
+        'mname': teach.name,
+        'memail': teach.email,
+        'mno1': teach.phone_no_1,
+        'mno2': teach.phone_no_2,
+        'fixed_footer':True,
+        'title': 'Contact Mentor'
+    }
+    return render(request, 'students/contactMentor.html', d)

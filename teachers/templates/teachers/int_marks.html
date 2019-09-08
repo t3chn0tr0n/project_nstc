@@ -1,0 +1,111 @@
+<!-- Variables:
+
+  1. dept_list  : List of all departments -- Django -- Read "subject_marks_departments"
+  2. stream_list : get list of streams -- Ajax -- read the dept list and check for all available streams
+  3. batch_list : Live get of all batches for the dept -- Ajax -- read "subject_marks_batch_list"
+
+-->
+
+
+{% extends 'teachers/main.html/' %}
+{% block main_body %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+  crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+{% load static %}
+<h4>
+  <center class="text-info"> STUDENT'S INTERNAL MARKS UPLOAD PORTAL </center>
+</h4> <br />
+<div class="container">
+<form method="POST">
+  {% comment %}
+  <!-- action="{% url '' %}"--> {% endcomment %}
+  {% csrf_token %}
+  <div class="form-group row">
+
+    <div class="col-md-3 mt-1">
+      <select id="dept_list" name="dept_list" class="custom-select" required>
+        <option disabled selected>Select Department </option>
+        {% for x in dept_list %}
+        <option value="{{x}}">{{x}}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-3 mt-1">
+      <select id="stream_select" name="stream_list" class="custom-select" required>
+      <option disabled selected>Select Stream</option>
+      <!-- Data loaded by ajax -->
+      </select>
+    </div>
+    
+    <div class="col-md-3 mt-1">
+      <select id="batch_list" name="batch_list" class="custom-select" required>
+        <option disabled selected>Select Batch</option>
+        <!-- Data loaded by ajax -->
+      </select>
+    </div>
+
+    <div class="col-sm-5 mt-1">
+      <select id="sub_list" name="sub_list" class="custom-select" required>
+        <option disabled selected>Select Subject </option>
+        <!-- Data loaded by ajax -->
+      </select>
+    </div>
+  </div>
+  <div id="choice_div" class="form-group row">
+    <button type="button" class="col-md-2 mt-1 mr-2 btn btn-sm btn-success" onclick="showUploadDiv();"><i class="fas fa-file-csv"></i> Choose CSV File</button>
+    {% comment %} <button type="submit" class="col-md-2 mt-1 btn btn-sm btn-info">Upload Using Portal</button> {% endcomment %}
+  </div>
+  
+
+  <!-- CSV UPLOAD : Default state = hidden-->
+  <div id="upload_div" class="bg-light" style="display: none;">
+    <hr />
+    <div class="row mb-2">
+      <lable class="col-sm-3"> Choose the Id factor:</lable>
+      <div class=" col-sm-2 form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="id" id="inlineRadio1" value="class_roll" required>
+        <label class="form-check-label" for="inlineRadio1">Class Roll No</label>
+      </div>
+
+      <div class="col-sm-2 form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="id" id="inlineRadio2" value="univ_roll" required>
+        <label class="form-check-label" for="inlineRadio2">University Roll No</label>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <lable class="col-form-label col-sm-3">Enter Column number for Id: </lable>
+      <input class="form-control col-sm-2 mr-5" name="id_col" class="form-control" type="number"/>
+      <lable class="col-form-label col-sm-3">Enter Column number for Marks: </lable>
+      <input class="form-control col-sm-2" name="marks_col" class="form-control" type="number"/>
+    </div>
+    
+    <input class="form-control-file" type="file" name="csv_file" accept=".csv" required />
+    <div class="form-group row mt-2">
+      <button class="col-2 mr-1 mt-1 btn btn-sm btn-success" type="submit"><i class="fas fa-upload"></i> Upload File</button>
+      <input type="button" class="col-1 mt-1 btn btn-sm btn-danger" onclick="hideUploadDiv();" value="Cancel" />
+    </div>
+  </div>
+
+  <i class="text-info fas fa-exclamation-circle mt-3"></i>
+  <span class="text-danger small mt-2" style="padding-top: 0.5em;">
+    Uploading CSV will create a table, with details already filled from the CSV.
+    Please RECHECK BEFORE FINAL SUBMIT!
+  </span>
+</form>
+</div>
+<script>
+  function showUploadDiv() {
+    document.getElementById('upload_div').style.display = 'inline';
+    document.getElementById('choice_div').style.display = 'none';
+  }
+
+  function hideUploadDiv() {
+    document.getElementById('upload_div').style.display = 'none';
+    document.getElementById('choice_div').style.display = 'block';
+  }
+</script>
+{% endblock %}

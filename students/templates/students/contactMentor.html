@@ -1,0 +1,60 @@
+{% extends 'students/main.html/' %} 
+{% block body %}
+<style>
+.outer {
+    display: table;
+    position: absolute;
+    height: 80%;
+    width: 100%;
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.inner {
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+}
+</style>
+
+    <div class="outer">
+            <div class="middle">
+                <div class="inner">
+                        <center><h3 class="text-info">IN TOUCH WITH MENTOR </h3></center>
+                        <br />
+                        <div class="row bg-light m-5 p-5">
+                            <div class="col-sm-1 mx-auto"></div>
+                            {% load static %}
+                            <img class="col-sm-2 img-fluid rounded mx-auto d-block" src="{% static 'teachers/img/profile.jpg'%}" />
+                            <div class="col-sm-6 mx-auto p-0 text-secondary">
+                                <div class="row ml-2 pt-3">
+                                    <div>
+                                        <i class="fas fa-user-alt"></i> NAME : {{mname}}
+                                    </div>
+                                </div>
+                                <div class="row ml-2 pt-3">
+                                    <div>
+                                        <i class="fas fa-at"></i> EMAIL : {{memail}}
+                                    </div>
+                                </div>
+                                <div class="row ml-2 pt-3">
+                                    <div>
+                                        <i class="fas fa-phone"></i> PHONE : {{mno1}}
+                                    </div>
+                                </div>
+                                <div class="row ml-2 pt-3">
+                                    <div>
+                                        <i class="fab fa-whatsapp font-weight-bold"></i> WHATSAPP : {{mno2}}
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div> 
+
+{% endblock %}
