@@ -1,0 +1,87 @@
+{% extends 'teachers/main.html/' %}
+{% block main_body %}
+{% load static %}
+
+<center>
+<h3 class="text-primary p-2"><b> Your Profile </b></h3>
+</center>
+
+<div class="container">
+    <form>
+        {% csrf_token %}
+        <div class="row">
+                <!-- Left side -->
+                <div class="col-sm-4 mx-auto">
+                    <center>
+                    <img src="{% static 'teachers/img/profile.jpg'%}" class="img-fluid rounded" height="80%" width="80%" />
+                    <input name="dp" class="form-control-file form-control-sm m-0 mt-3 mb-2 " id="inputfile" type="file" name="csv_file"  accept=".png, .jpg, .jpeg, .gif" required style="display: inline;"/>
+                    <button class="btn btn-sm btn-outline-info m-2">Upload New File</button>
+                    </center>
+                </div>
+        
+                <!-- Right Side -->
+                <div class="col-sm bg-light rounded mx-auto p-3">
+                    <div class="row">
+                        <div class="col-sm-3 font-weight-bold text-dark">Id</div>
+                        <div class="col">{{id}}</div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3 font-weight-bold text-dark">Name</div>
+                        <div class="col">{{request.user.first_name}}</div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3 font-weight-bold text-dark">Department</div>
+                        <div class="col">{{dept}}</div>
+                    </div>
+                    <br />
+                    <div class="row"> <!-- Mobile 1 Reset-->
+                        <label class="col-sm-3 font-weight-bold text-dark col-form-label">
+                            Mobile No. - 1
+                        </label>
+                        <div class="col-sm-4 mb-2">
+                            <input class="form-control form-control-sm" id="mob_no1" name="mob_no1" value="{{ mob_no1 }}"/>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row"> <!-- Mobile 2 Reset-->
+                        <label class="col-sm-3 font-weight-bold text-dark col-form-label">
+                            Mobile No. - 2
+                        </label>
+                        <div class="col-sm-4 mb-2">
+                            <input class="form-control form-control-sm" id="mob_no2" name="mob_no2" value="{{ mob_no2 }}"/>
+                        </div>
+                    </div>
+                    <br />
+                    {% comment %}<div class="row"> <!-- Whatsapp No-->
+                        {% csrf_token %}
+                        <label class="col-sm-3 font-weight-bold text-dark col-form-label">
+                            Whatsapp No.
+                        </label>
+                        <div class="col-sm-2 mb-2">
+                            <input class="" id="whatsapp" name="whatsapp" type="radio" value="mobile 1" /> Mobile 1
+                        </div>
+                        <div class="col-sm-2 mb-2">
+                            <input class="" id="whatsapp" name="whatsapp" type="radio" value="mobile 2" /> Mobile 2
+                        </div>
+                    </div> {% endcomment %}
+                    <br />
+                    <div class="row"> <!-- Email Reset-->
+                        <label class="col-sm-3 col-form-label">
+                            <b> Registered Email: </b>
+                        </label>
+                        <div class="col-sm-5 mb-2">
+                            <input class="form-control form-control-sm" id="email" name="email" value="{{ email }}" />
+                        </div>
+                    </div>
+                    <br />
+                </div>
+        </div>
+        <br />
+        <center><button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save </button></center>
+    </form>
+    
+</div>
+
+{% endblock %}

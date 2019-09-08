@@ -1,0 +1,190 @@
+{% extends 'teachers/main.html/' %}
+{% block main_body %}
+{% load static %}
+
+    <!-- Id card details -->
+    <div class="jumbotron" style="padding:1.5rem; padding-bottom: 0.3rem; margin-bottom:0rem;">
+        <div class="form-group row">
+            <label class="col-sm-2">
+                <b> Name: </b>
+            </label>
+            <label class="col-sm-4"> {{stud_name}} </label>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2">
+                <b> Card No.: </b>
+            </label>
+            <label class="col-sm-4"> {{stud_card_no}} </label>
+
+            <label class="col-sm-2">
+                <b> Stream: </b>
+            </label>
+            <label class="col-sm-2"> {{stud_stream}} </label>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2">
+                <b> Department: </b>
+            </label>
+            <label class="col-sm-4"> {{stud_dept}} </label>
+
+            <label class="col-sm-2">
+                <b> Mentor: </b>
+            </label>
+            <label class="col-sm"> {{stud_mentor}} </label>
+        </div>
+    </div>
+    <br />
+    <!-- General Details -->
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Admission No.</label>
+        <div class="col-sm-4">
+            <input class="form-control" value="{{ admin_no }}" readonly disabled />
+        </div>
+
+        <label class="col-sm-2 col-form-label">Registration No.</label>
+        <div class="col-sm-4">
+            <input class="form-control" value="{{ reg_no }}" readonly disabled />
+        </div>
+    </div>
+    <br />
+    
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label"> Date of Birth </label>
+        <div class="col-sm-4">
+            <input class="form-control" value="{{ dob }}" readonly/>
+        </div>
+        <label class="col-sm-2 col-form-label"> Blood Group </label>
+        <div class="col-sm">
+            <input type="text" class="form-control" readonly value="{{blood_type}}" /> 
+        </div>
+    </div>
+
+    <!--HOUSE DETAILS: Permanent-->
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label"> Guardian Name </label>
+        <div class="col-sm-4">
+            <input class="form-control" value="{{guard}}" readonly />
+        </div>
+        <label class="col-sm-2 col-form-label"> Permanent Address </label>
+        <div class="col-sm">
+            <textarea class="form-control" readonly>{{perm_add}}</textarea>
+        </div>
+    </div>
+
+    <!--HOUSE DETAILS: Local-->
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label"> Local Guardian <span class="small">(if any)</span> </label>
+        <div class="col-sm-4">
+            <input class="form-control" value="{{loc_guard}}" readonly />
+        </div>
+        <label class="col-sm-2 col-form-label"> Local Address <span class="small">(if any)</span></label>
+        <div class="col-sm">
+            <textarea name="loc_add" class="form-control" readonly>{{loc_add}}</textarea>
+        </div>
+    </div>
+
+    <!-- contact nos -->
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Landline No.<span class="small">(if any)</span></label>
+        <div class="col-sm-4">
+            <input class="form-control" value="{{land_phone}}" readonly />
+        </div>
+
+        <label class="col-sm-2 col-form-label">Guardian Mobile</label>
+        <div class="col-sm">
+            <input class="form-control" value="{{ g_mob_no }}" readonly />
+        </div>
+    </div>
+
+    <!-- Student CONTACT DETAILS-->
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Mobile No.</label>
+        <div class="col-sm-4">
+            <input class="form-control" value="{{ mob_no }}" readonly/>
+        </div>
+        <label class="col-sm-1 col-form-label">Email</label>
+        <div class="col-sm">
+            <input readonly type="email" class="form-control" value="{{email}}" />
+        </div>
+    </div>
+
+    <!--SCHOOL DETAILS-->
+    <!-- Class X -->
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label"> School Name-X </label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" value="{{sc10_name}}" readonly/>
+        </div>
+
+        <label class="col-sm-2 col-form-label"> Medium of Education </label>
+        <div class="col-sm">
+            <input type="text" class="form-control" readonly value="{{sc10_med}}" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">score Attained(%)</label>
+        <div class="col-sm-4">
+            <input name="sc10_score" class="form-control" value="{{sc10_score}}" readonly/>
+        </div>
+        <label class="col-sm-2 col-form-label">Year of Passing</label>
+        <div class="col-sm">
+            <input name="sc10_year" class="form-control" value="{{sc10_year}}" readonly />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label"> School Address </label>
+        <div class="col-sm">
+            <textarea name="sc10_add" class="form-control" readonly>{{sc10_add}}</textarea>
+        </div>
+    </div>
+
+    <!--Class XII-->
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label"> School Name-XII </label>
+        <div class="col-sm-4">
+            <input type="text" name="sc12_name" class="form-control" value="{{sc12_name}}" readonly/>
+        </div>
+
+        <label class="col-sm-2 col-form-label"> Medium of Education </label>
+        <div class="col-sm">
+            <input type="text" class="form-control" readonly value="{{sc12_med}}" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">score Attained(%)</label>
+        <div class="col-sm-4">
+            <input name="sc12_score" class="form-control" value="{{sc12_score}}" readonly/>
+        </div>
+        <label class="col-sm-2 col-form-label">Year of Passing</label>
+        <div class="col-sm">
+            <input name="sc12_year" class="form-control" value="{{sc12_year}}" readonly/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label"> School Address </label>
+        <div class="col-sm-10">
+            <textarea name="sc12_add" class="form-control" readonly>{{sc12_add}}</textarea>
+        </div>
+    </div>
+
+    <!-- Diploma-->
+    {% if is_diploma %}
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Diploma Score (SGPA)</label>
+            <div class="col-sm-4">
+                <input name="dip_score" class="form-control" value="{{dip_score}}" readonly/>
+            </div>
+        </div>
+    {% endif %} 
+
+    <!-- Extracurricular Activities -->
+
+
+    <!-- Sem Marks -->
+
+{% endblock %}

@@ -70,6 +70,13 @@
                 <li>
                     <a href="#"><i class="fas fa-user-cog"> Your Profile</i></a>
                 </li>
+                
+                <!-- Manage HOD -->
+                {% if is_princi %}
+                <li>
+                    <a href="{% url 'princi_teacher_view' %}"><i class="fas fa-heading"> Manage HODs </i></a>
+                </li>
+                {% endif %}
             </ul>
             <br />
             
@@ -105,9 +112,9 @@
                         </li>
                     </ul>
                 </li>
-                <!-- Internal Marks-->
+                <!--Manage Mentors-->
                 <li>
-                    <a href="#"><i class="fas fa-users-cog"> Manage Mentors</i></a>
+                    {% comment %} <a href="{% url 'manage_teachers' %}"><i class="fas fa-users-cog"> Manage Mentors</i></a> {% endcomment %}
                 </li>
             </ul>
             {% endif %}

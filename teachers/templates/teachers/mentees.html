@@ -31,7 +31,7 @@
         <td>{{ x.name }}
           {% if x.middle_name != " " or x.middle_name != "" or x.middle_name != "NULL" %}&nbsp;{{ x.middle_name }}{% endif %}
           &nbsp;{{ x.surname}}
-        </td>
+        </td> 
         <td>{{ x.batch }}</td>
         <td><a class="btn btn-sm btn-outline-info" href="{% url 'view_student' x.id %}">view </a></td>
         </tr>

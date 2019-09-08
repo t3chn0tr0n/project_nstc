@@ -40,7 +40,7 @@
     </div>
 
     <!-- STICKY BUTTONS -->
-    <div class="bg-white sticky-top p-3" >
+    <div class="bg-white sticky-top p-3">
         <span style="float:left;">
             <form action="{%  url 'mentees' %}" method="post">
                 {% csrf_token %}
@@ -53,9 +53,9 @@
         <span style="float:right;" >
             <button class="btn btn-sm btn-outline-info" id="edit">Edit</button>
             <button class="btn btn-sm btn-outline-success" id="total" data-toggle="modal" data-target="#myModal">Total</button>
-            {% if i.total >= 100 %}
-                <a id="gen_cert" href="{% url 'demo' %}" c;lass="btn btn-sm btn-outline-danger" id="generate" target="_blank">Generate Certificate</a>
-            {% endif %}
+            {% comment %} {% if i.total >= 100 %} {% endcomment %}
+            <a id="gen_cert" href="{% url 'demo' %}" class="btn btn-sm btn-outline-danger" id="generate" target="_blank">Certificate</a>
+            {% comment %} {% endif %} {% endcomment %}
         </span>
         <br/>
     </div>

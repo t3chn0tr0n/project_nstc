@@ -42,5 +42,6 @@ def get_teach_details(request):
         'dept': teach.dept, 
         'rank': rank, 
         'is_hod': teach.is_hod,
+        'is_princi': teach.is_principal,
         }
     return d

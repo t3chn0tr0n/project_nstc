@@ -13,7 +13,7 @@ from students.models import Student
 @login_required(login_url=reverse_lazy('login'))
 def upload_student(request):
     if Student.objects.filter(id=request.user.username):
-        title = "404"
+        title = "ERROR"
         error = ['Students cannot view this page!']
         return message(title, error, request)
     d = get_teach_details(request)
@@ -80,38 +80,28 @@ def upload_student(request):
 @login_required(login_url=reverse_lazy('login'))
 def student_search(request):
     if Student.objects.filter(id=request.user.username):
-        title = "404"
+        title = "ERROR"
         error = ['Students cannot view this page!']
         return message(title, error, request)
     else:
         if request.method == "POST":
             pass
-        else:
-            ment = Teacher.objects.get(id=request.user.username)
-            if ment.is_hod:
-                rank = "HOD"
-                is_hod = True
-            else:
-                rank = "Mentor"
-                is_hod = False
-            return render(request, 'teachers/search.html', {'dept': ment.dept, 'title': "Upload Student", "rank": rank, 'is_hod': is_hod})
+        d = get_teach_details(request)
+        d['title'] = "Upload Student"
+        return render(request, 'teachers/student_view.html', d)
+        return render(request, 'teachers/search.html', d)
 
 
 def princi_teacher_view(request):
     teacher = Teacher.objects.all()
-    ment = Teacher.objects.get(id=request.user.username)
-    if ment.is_hod:
-        rank = "HOD"
-        is_hod = True
-    else:
-        rank = "Mentor"
-        is_hod = False
-    return render(request, 'teachers/princi_teacher_view.html', {'teacher':teacher, 'dept': ment.dept, 'title': "Upload Student", "rank": rank, 'is_hod': is_hod})
+    d = get_teach_details(request)
+    d['teacher'] = teacher
+    d['title'] =  "Manage HODs"
+    return render(request, 'teachers/princi_teacher_view.html', d)
 
 
 #TODO: only can be done by principal
 def assign_hod(request):
-
     if request.method == "POST" and request.is_ajax():
         mentor_id=request.POST.get('mentor_id')
         new_obj = Teacher.objects.get(id=mentor_id)
@@ -120,15 +110,9 @@ def assign_hod(request):
         old_hod.is_hod=False
         new_obj.save()
         old_hod.save()
-        return HttpResponse('l')
-    # ment = Teacher.objects.get(id=request.user.username)
-    # if ment.is_hod:
-    #     rank = "HOD"
-    #     is_hod = True
-    # else:
-    #     rank = "Mentor"
-    #     is_hod = False
-    return render(request, 'teachers/princi_teacher_view.html', {'dept': ment.dept, 'title': "Upload Student", "rank": rank, 'is_hod': is_hod})
+        return HttpResponse("CHANGES SAVED SUCCESSFULLY!")
+    else:
+        princi_teacher_view(request)
 
 
 def mentees_list(request):
@@ -152,3 +136,22 @@ def view_student(request, x, y, z):
     d = get_teach_details(request)
     id = x
     return render(request, 'teachers/mentees.html', d)
+
+
+def manage_teacher(request):
+    if Student.objects.filter(id=request.user.username):
+        title = "ERROR"
+        error = ['Students cannot view this page!']
+        return message(title, error, request)
+    d = get_teach_details(request)
+
+    hod = Teacher.objects.get(id=request.user.username)
+    if not hod.is_hod:
+        title = "ERROR"
+        error = ['Only HODs can access this page']
+        return message(title, error, request)
+
+    teachers = Teacher.objects.filter(dept=hod.dept)
+    d['title'] = 'Manage Teachers'
+    d['teacher'] = teachers
+    return render(request, 'teachers/hod_teacher_view.html', d)
