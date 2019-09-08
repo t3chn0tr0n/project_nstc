@@ -61,14 +61,17 @@
                 <li>
                     <a href="{% url 'mentees_list' %}"><i class="fas fa-users"> Mentees </i></a>
                 </li>
-                
+                <!--MAKAUT MAR-->
+                <li>
+                    <a href="{% url 'mentees' %}"><i class="fas fa-graduation-cap"> MAKAUT MAR</i></a>
+                </li>
                 <!-- Internal Marks-->
                 <li>
-                    <a href="#"><i class="fas fa-marker"> Internal Marks</i></a>
+                    <a href="{% url 'int_marks' %}"><i class="fas fa-marker"> Internal Marks</i></a>
                 </li>
                 <!--Profile-->
                 <li>
-                    <a href="#"><i class="fas fa-user-cog"> Your Profile</i></a>
+                    <a href="{% url 'teacher_profile' %}"><i class="fas fa-user-cog"> Your Profile</i></a>
                 </li>
                 
                 <!-- Manage HOD -->

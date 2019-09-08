@@ -54,8 +54,9 @@ def upload_student(request):
                 # 6. Stream does not exist
                 if not id or not ad or not n or not m or not s or not e:
                     raise "Error: Blank Field"
-                student.objects.create(id=id, admission_no=ad, name=n, middle_name=m, surname=s,
+                Student.objects.create(id=id, admission_no=ad, name=n, middle_name=m, surname=s,
                                        mentor=ment, email=e, dept=dept, is_lateral=Is_lat, batch=Batch, stream=Stream)
+            return HttpResponse("Update Successful!!");                       
         else:
             d['title'] = "Access Denied"
             error = ['</h3> <h2 class="text-danger">ACCESS DENIED!</h2>',
@@ -86,10 +87,15 @@ def student_search(request):
     else:
         if request.method == "POST":
             pass
-        d = get_teach_details(request)
-        d['title'] = "Upload Student"
-        return render(request, 'teachers/student_view.html', d)
-        return render(request, 'teachers/search.html', d)
+        else:
+            ment = Teacher.objects.get(id=request.user.username)    
+            if ment.is_hod:
+                rank = "HOD"
+                is_hod = True
+            else:
+                rank = "Mentor"
+                is_hod = False
+            return render(request, 'teachers/search.html', {'dept': ment.dept, 'title': "Upload Student", "rank": rank, 'is_hod': is_hod})
 
 
 def princi_teacher_view(request):
@@ -136,6 +142,7 @@ def view_student(request, x, y, z):
     d = get_teach_details(request)
     id = x
     return render(request, 'teachers/mentees.html', d)
+<<<<<<< HEAD
 
 
 def manage_teacher(request):
@@ -155,3 +162,69 @@ def manage_teacher(request):
     d['title'] = 'Manage Teachers'
     d['teacher'] = teachers
     return render(request, 'teachers/hod_teacher_view.html', d)
+=======
+#to view profile of hod,teacher,principal
+def profile(request):
+    d = get_teach_details(request)
+    teach = Teacher.objects.get(id=request.user.username)
+    d['mob_no1']=teach.phone_no_1
+    d['mob_no2']=teach.phone_no_2
+    d['email']=teach.email
+    return render(request, 'teachers/profile.html',d)
+
+def int_marks(request):
+    d = get_teach_details(request)
+    return render(request, 'teachers/int_marks.html',d)
+
+def change_profile(request):
+    if request.method == 'POST' and request.is_ajax():
+        email = request.POST['email']
+        mob1 = request.POST['mob1']
+        mob2 = request.POST['mob2']
+        teach_id = request.POST['id']
+        if (email !="" and mob1 !="" or mob2 != ""):
+            if '@' not in email:
+                return HttpResponse("Invalid Email!!")
+            d1 = Teacher.objects.filter(id=teach_id).update(email=email)
+            d2 = Teacher.objects.filter(id=teach_id).update(phone_no_1=mob1)
+            d3 = Teacher.objects.filter(id=teach_id).update(phone_no_2=mob2)
+            return HttpResponse("Update Successful!!")
+               
+    return HttpResponse("Something went worng!!!Please contact to your mentor as soon as possible.")
+
+def search_filter(request):
+    if request.method == "POST":
+        rslt=[]
+        srch = request.POST['srch'].upper()
+        ment = Teacher.objects.get(id=request.user.username)
+
+        if srch[0:4] == "NIT/":
+            if ment.is_principal:
+                student = Student.objects.all().filter(id__startswith=srch)
+            elif ment.is_hod:
+                student = Student.objects.filter(dept=ment.dept).filter(id__startswith=srch)
+            else:
+                student = Student.objects.filter(mentor=request.user.username).filter(id__startswith=srch)
+            for i in student:
+            # if(i.middle_name != "NULL"):
+            #     l.append(i.name+" "+i.middle_name+" "+i.surname+"$")
+            # else:
+            #     l.append(i.name+" "+i.surname+"$")
+                rslt.append(i.id+"$")
+        else:
+            if ment.is_principal:
+                student = Student.objects.all().filter(name__startswith=srch)
+            elif ment.is_hod:
+                student = Student.objects.filter(dept=ment.dept).filter(name__startswith=srch)
+            else:
+                student = Student.objects.filter(mentor=request.user.username).filter(name__startswith=srch)
+            for i in student:
+                if(i.middle_name != "NULL"):
+                    rslt.append(i.name+" "+i.middle_name+" "+i.surname+"$")
+                else:
+                    rslt.append(i.name+" "+i.surname+"$")
+              
+
+
+    return HttpResponse(rslt[:10])
+>>>>>>> d839aef8013119d1e58a5fed334de8b2b8616f6a

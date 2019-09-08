@@ -49,7 +49,7 @@
                                 <center>{{i.id}}</center>
                             </td>
                             <td>
-                                <p>{{ i.name }}{% if i.middle_name != " "%}&nbsp{{ i.middle_name }}{% endif %}&nbsp{{ i.surname }}</p>
+                                <p>{{ i.name }}{% if i.middle_name != "NULL"%}&nbsp{{ i.middle_name }}{% endif %}&nbsp{{ i.surname }}</p>
                             </td>
                             <td><button class="btn btn-sm btn-outline-primary" value="{{i.id}}" name="student_id">View</button></td>
                             <input type="hidden" value="{{ i.mentor }}" name="mentor_id">

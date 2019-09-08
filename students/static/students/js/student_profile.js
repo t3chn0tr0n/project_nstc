@@ -27,7 +27,7 @@ function cancel(div_id_1, div_id_2, id) {
   $("#mob_no_submit").html("");
 }
 
-function check_phone() {
+function check_phn() {
   var password = document.getElementById('password').value;
   var mob = document.getElementById('mob_no').value;
   //console.log(password);
