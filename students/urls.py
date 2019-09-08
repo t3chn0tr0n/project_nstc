@@ -3,10 +3,11 @@ from django.urls import include, path, re_path
 from . import views
 
 urlpatterns = [
-    re_path(r'^demo/$', views.demo),
+    path('demo/', views.demo, name="demo"),
     path('details/', views.general_details, name='details'),
     path('univ_details/', views.univ_details, name='univ_details'),
-    path('extracurricular_activity/', views.extracurricular_activities, name='extracurricular'),
+    path('extracurricular_activity/',
+         views.extracurricular_activities, name='extracurricular'),
     path('ea_form1/', views.ea_form1, name='ea_form1'),
     path('ea_form2/', views.ea_form2, name='ea_form2'),
     path('ea_form3/', views.ea_form3, name='ea_form3'),
