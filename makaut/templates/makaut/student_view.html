@@ -36,7 +36,7 @@
     
     <div class="pt-2">
         <span class="small"> For best view in small screens, use 'desktop view'. <br/>
-        <i class="text-info"><b><i class="fas fa-info-circle"></i>&nbsp;Please Close the Dashboard while viewing this page. </b> Hint: Click on the 4-bar button on top left.</i> </span>
+        <i class="text-info"><b><i class="fas fa-info-circle"></i>&nbsp;Please Close the Dashboard while viewing this page. </b> Hint: The table is scrollable side wise.</i> </span>
     </div>
 
     <!-- STICKY BUTTONS -->
@@ -87,7 +87,7 @@
         </div>
 
         <!--STUDENT TABLE-->
-        <div class="table-responsive-md small" style="overflow-x:auto;">
+        <div class="table-responsive small">
             <table id="editable_table" class="table table-sm table-hover table-striped" style="text-align:center;">
                 
                 <thead>
@@ -158,72 +158,72 @@
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" name="moocs_12_s1" value="{{ i.moocs_for_12 }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" name="moocs_12_s1" value="{{ i.moocs_for_12 }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                             <span class="m-5"> </span>
-                            <input type="number" value="{{ i.moocs_for_8 }}" name="moocs_8_s1" min="0" max="20" class="s1 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.moocs_for_8 }}" name="moocs_8_s1" min="0" max="20" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem2 %}
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" class="s2 sems form-control" value="{{ i.moocs_for_12 }}" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" class="s2 sems form-control form-control-sm" value="{{ i.moocs_for_12 }}" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.moocs_for_8 }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.moocs_for_8 }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.moocs_for_12 }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.moocs_for_12 }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.moocs_for_8 }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.moocs_for_8 }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.moocs_for_12 }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.moocs_for_12 }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.moocs_for_8 }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.moocs_for_8 }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.moocs_for_12 }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.moocs_for_12 }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.moocs_for_8 }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.moocs_for_8 }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.moocs_for_12 }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.moocs_for_12 }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.moocs_for_8 }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.moocs_for_8 }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.moocs_for_12 }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.moocs_for_12 }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.moocs_for_8 }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.moocs_for_8 }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.moocs_for_12 }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.moocs_for_12 }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.moocs_for_8 }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.moocs_for_8 }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -263,72 +263,72 @@
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s1 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem2 %}
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
                         <td>
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_organizer }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.tech_fest_participant }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -349,42 +349,42 @@
                         <td>10</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor %} {% for i in sem2 %}
                         <td>
-                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
-                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
-                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
-                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
-                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
                         <td>
-                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="10" value="{{ i.rural_reporting }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -402,42 +402,42 @@
                         <td>10</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor %} {% for i in sem2 %}
                         <td>
-                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
-                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
-                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
-                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
-                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
-                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
                         <td>
-                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.tree_planting }}" min="0" max="10" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -455,42 +455,42 @@
                         <td>40</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor %} {% for i in sem2 %}
                         <td>
-                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
-                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
-                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
-                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
-                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
                         <td>
-                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="40" value="{{ i.part_relief_camps }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -508,42 +508,42 @@
                         <td>20</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor %} {% for i in sem2 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.part_tech_quiz }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -583,9 +583,9 @@
                             
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s1 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem2 %}
@@ -593,9 +593,9 @@
                             
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
@@ -603,9 +603,9 @@
                             
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
@@ -613,9 +613,9 @@
                             
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
@@ -623,9 +623,9 @@
                             
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
@@ -633,9 +633,9 @@
                             
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
@@ -643,9 +643,9 @@
                             
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
@@ -653,9 +653,9 @@
                             
                             <br/>
                             <hr />
-                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_editing }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.public_writting }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -678,42 +678,42 @@
                         <td>20</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor %} {% for i in sem2 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.publication }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -731,42 +731,42 @@
                         <td>30</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" min="0" max="20" class="s1 sems form-control" value="{{ i.research_publications }}" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" class="s1 sems form-control form-control-sm" value="{{ i.research_publications }}" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor%} {% for i in sem2 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.research_publications }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.research_publications }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.research_publications }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.research_publications }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.research_publications }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.research_publications }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.research_publications }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.research_publications }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.research_publications }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.research_publications }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.research_publications }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.research_publications }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.research_publications }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.research_publications }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -784,42 +784,42 @@
                         <td>60</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" min="0" max="20" class="s1 sems form-control" value="{{ i.innovative_projects }}" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" class="s1 sems form-control form-control-sm" value="{{ i.innovative_projects }}" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor%} {% for i in sem2 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.innovative_projects }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.innovative_projects }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.innovative_projects }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.innovative_projects }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.innovative_projects }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.innovative_projects }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.innovative_projects }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.innovative_projects }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.innovative_projects }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.innovative_projects }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.innovative_projects }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.innovative_projects }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.innovative_projects }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.innovative_projects }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -848,58 +848,58 @@
                         </td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s1 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem2 %}
                         <td>
-                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
-                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
-                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
-                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
-                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
-                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
                         <td>
-                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" value="{{ i.blodd_donation }}" min="0" max="20" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.blood_organization }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -950,120 +950,120 @@
                         <td>
                             <br/>
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s1 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s1 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" value="{{ i.sports_state }}" disabled min="0" max="20" class="s1 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" value="{{ i.sports_state }}" disabled min="0" max="20" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s1 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                         </td>
 
                         {% endfor%} {% for i in sem2 %}
                         <td>
                             <br/>
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s2 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s2 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_state }}" class="s2 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_state }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s2 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
                             <br/>
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s3 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s3 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_state }}" class="s3 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_state }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s3 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
                             <br/>
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s4 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s4 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_state }}" class="s4 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_state }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s4 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
                             <br/>
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s5 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s5 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_state }}" class="s5 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_state }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s5 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
                             <br/>
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s6 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s6 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_state }}" class="s6 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_state }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s6 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
                             <br/>
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s7 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s7 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_state }}" class="s7 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_state }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s7 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
                         <td>
                             <br/>
                             <span class="m-5"> </span>
-                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.sports_college }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s8 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_university }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s8 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_district }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" disabled min="0" max="20" value="{{ i.sports_state }}" class="s8 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" disabled min="0" max="20" value="{{ i.sports_state }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                             <span class="m-5"> </span>
-                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s8 sems form-control" style="width:70px;heigth:10px " />
+                            <input type="number" value="{{ i.sports_national }}" disabled min="0" max="20" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -1083,42 +1083,42 @@
                         <td>20</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor%} {% for i in sem2 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.cultural_programme }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
                         {% endfor %} {% for i in total %}
                         <td>
@@ -1135,42 +1135,42 @@
                         <td>20</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor%} {% for i in sem2 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.member_prof_society }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -1188,42 +1188,42 @@
                         <td>20</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor%} {% for i in sem2 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.student_chapter }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -1241,42 +1241,42 @@
                         <td>20</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor%} {% for i in sem2 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem3 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem4 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem6 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem7 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in sem8 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.industry_visit }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor %} {% for i in total %}
@@ -1300,7 +1300,7 @@
                             type="number"
                             min="0"
                             max="20"
-                            class="s1 sems form-control"
+                            class="s1 sems form-control form-control-sm"
                             value="{{ i.photography }}"
                             style="width:70px;heigth:10px;"
                             disabled
@@ -1314,7 +1314,7 @@
                             min="0"
                             max="20"
                             value="{{ i.photography }}"
-                            class="s2 sems form-control"
+                            class="s2 sems form-control form-control-sm"
                             style="width:70px;heigth:10px "
                             disabled
                             />
@@ -1327,7 +1327,7 @@
                             min="0"
                             max="20"
                             value="{{ i.photography }}"
-                            class="s3 sems form-control"
+                            class="s3 sems form-control form-control-sm"
                             style="width:70px;heigth:10px "
                             disabled
                             />
@@ -1340,7 +1340,7 @@
                             min="0"
                             max="20"
                             value="{{ i.photography }}"
-                            class="s4 sems form-control"
+                            class="s4 sems form-control form-control-sm"
                             style="width:70px;heigth:10px "
                             disabled
                             />
@@ -1353,7 +1353,7 @@
                             min="0"
                             max="20"
                             value="{{ i.photography }}"
-                            class="s5 sems form-control"
+                            class="s5 sems form-control form-control-sm"
                             style="width:70px;heigth:10px "
                             disabled
                             />
@@ -1366,7 +1366,7 @@
                             min="0"
                             max="20"
                             value="{{ i.photography }}"
-                            class="s6 sems form-control"
+                            class="s6 sems form-control form-control-sm"
                             style="width:70px;heigth:10px "
                             disabled
                             />
@@ -1379,7 +1379,7 @@
                             min="0"
                             max="20"
                             value="{{ i.photography }}"
-                            class="s7 sems form-control"
+                            class="s7 sems form-control form-control-sm"
                             style="width:70px;heigth:10px "
                             disabled
                             />
@@ -1392,7 +1392,7 @@
                             min="0"
                             max="20"
                             value="{{ i.photography }}"
-                            class="s8 sems form-control"
+                            class="s8 sems form-control form-control-sm"
                             style="width:70px;heigth:10px "
                             disabled
                             />
@@ -1415,42 +1415,42 @@
                                 <td>10</td>
                                 {% for i in sem1 %}
                                 <td>
-                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                                 </td>
 
                                 {% endfor%} {% for i in sem2 %}
                                 <td>
-                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                                 </td>
 
                                 {% endfor%} {% for i in sem3 %}
                                 <td>
-                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                                 </td>
 
                                 {% endfor%} {% for i in sem4 %}
                                 <td>
-                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                                 </td>
 
                                 {% endfor%} {% for i in sem5 %}
                                 <td>
-                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                                 </td>
 
                                 {% endfor%} {% for i in sem6 %}
                                 <td>
-                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                                 </td>
 
                                 {% endfor%} {% for i in sem7 %}
                                 <td>
-                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                                 </td>
 
                                 {% endfor%} {% for i in sem8 %}
                                 <td>
-                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                                    <input type="number" min="0" max="20" value="{{ i.yoga_camp }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                                 </td>
 
                                 {% endfor%} {% for i in total %}
@@ -1468,42 +1468,42 @@
                         <td>20</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor %} {% for i in sem2 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem3 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem4 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem6 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem7 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem8 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.entrepreneur }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in total %}
@@ -1521,42 +1521,42 @@
                         <td>20</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor %} {% for i in sem2 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem3 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem4 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem6 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem7 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem8 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.adventure_sports }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in total %}
@@ -1574,42 +1574,42 @@
                         <td>30</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor %} {% for i in sem2 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem3 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem4 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem6 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem7 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem8 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.training_privileged }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in total %}
@@ -1627,42 +1627,42 @@
                         <td>20</td>
                         {% for i in sem1 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s1 sems form-control" style="width:70px;heigth:10px;" disabled />
+                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s1 sems form-control form-control-sm" style="width:70px;heigth:10px;" disabled />
                         </td>
 
                         {% endfor %} {% for i in sem2 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s2 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s2 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem3 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s3 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s3 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem4 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s4 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s4 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem5 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s5 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s5 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem6 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s6 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s6 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem7 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s7 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s7 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in sem8 %}
                         <td>
-                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s8 sems form-control" style="width:70px;heigth:10px " disabled />
+                            <input type="number" min="0" max="20" value="{{ i.com_service }}" class="s8 sems form-control form-control-sm" style="width:70px;heigth:10px " disabled />
                         </td>
 
                         {% endfor%} {% for i in total %}
