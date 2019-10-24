@@ -197,7 +197,7 @@
         <div class="form-group row">
             <label class="col-sm-3 col-form-label"><b> Papers Published </b></label>
             <div class="col-sm-6">
-                <textarea id="papers_pub" title="Papers Published" class="form-control" rows="1" placeholder="Use commas to seperate different Contests [PLEASE DON'T USE ENTER]">{{tech_contst}}</textarea>
+                <textarea id="papers_pub" title="Papers Published" class="form-control" rows="1" placeholder="Use commas to seperate different Contests [PLEASE DON'T USE ENTER]">{{papers_pub}}</textarea>
             </div>
         </div>
 
@@ -223,11 +223,11 @@
         <hr /><br />
     </form>
 
-    <!-- form3: Table 1 Seminer/Workshop Attainded-->
+    <!-- form3: Table 1 Seminars/Workshop attended-->
     <div class="container">
-        <!-- Table 1: Seminer/Workshop Attainded -->
+        <!-- Table 1: Seminars/Workshop attended -->
         <div class="row">
-            <label class="col-sm-3 col-form-label "> <b> Seminers/Workshops Attended </b> </label>
+            <label class="col-sm-3 col-form-label "> <b> Seminars/Workshops Attended </b> </label>
             <form id="form3" method="POST">
                 {%csrf_token%}
                 <table class="table table-borderless">

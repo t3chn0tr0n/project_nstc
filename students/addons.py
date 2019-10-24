@@ -1,11 +1,11 @@
-from builtins import object
-
-from .models import (Class10, Class12, Contributions, Details, Counselings,
-                     ExtracurricularActivity, FormFills, SeminarsWorkshops, Student)
-
 import datetime
+
 from subject_and_marks.models import SemMarks, Subjects
 from teachers.models import Teacher
+
+from .models import (Class10, Class12, Contributions, Counselings, Details,
+                     ExtracurricularActivity, FormFills, SeminarsWorkshops,
+                     Student)
 
 
 def get_idcard_details(id):
@@ -143,7 +143,7 @@ def get_sem_details(id, sem):
         all_subs = []
         sems_marks = sem_details.sems()
         for x in range(1, 12):
-            if sems_marks[str(x)][0] == None:
+            if sems_marks[str(x)][0] is None:
                 pass
             else:
                 x = str(x)
@@ -159,7 +159,7 @@ def get_sem_details(id, sem):
             'highest_score': sem_details.max_score_in_class,
             'tut_class': sem_details.no_of_tutorial_class,
             'attendance': sem_details.attendance,
-            'disc_action': sem_details.disciplinary_action,
+            'disc_action': "No" if sem_details.disciplinary_action == "False" else sem_details.disciplinary_action,
             'f_school': sem_details.no_of_fschool_class,
             'slc': sem_details.scl_activities,
             'sgpa': sem_details.sgpa,
@@ -250,6 +250,7 @@ def get_page_details(id):
     forms = FormFills.objects.get(student=id)
     sems = forms.sem_fills_easy()
     stud = Student.objects.get(id=id)
+
     class page:
         def __init__(self, name, link, filled, sem=None, sem_no=None):
             self.name = name
@@ -257,14 +258,17 @@ def get_page_details(id):
             self.filled = filled
             self.sem = sem
             self.sem_no = sem_no
+
     def true2yes(var):
         if var:
             return 'yes'
         else:
             return 'no'
     pages_details = [
-        page('General Details', 'details', true2yes(forms.is_gen_details_filled)),
-        page('University Details', None, true2yes(forms.is_univ_details_filled)),
+        page('General Details', 'details',
+             true2yes(forms.is_gen_details_filled)),
+        page('University Details', None, true2yes(
+            forms.is_univ_details_filled)),
         page('Extracurricular Details', 'extracurricular', 'na'),
         # Add Choose Elective page
     ]
@@ -273,7 +277,8 @@ def get_page_details(id):
         if (stud.is_lateral and x in (1, 2)) or (stud.stream == 'D' and x in (7, 8)) or (stud.stream == 'M' and x in range(5, 9)):
             continue
         if str(x) in sems:
-            pages_details.append(page(name=('Sem ' + str(x)), link='sem_marks', filled=sems[str(x)], sem=True, sem_no=x))
+            pages_details.append(page(name=(
+                'Sem ' + str(x)), link='sem_marks', filled=sems[str(x)], sem=True, sem_no=x))
     details = {'pages': pages_details, 'nav_sems': sem_for_nav_bar(id)}
 
     return details
@@ -298,8 +303,8 @@ def extra_curricular(id):
         d['onln_tst'] = ea.online_test
         d['gate'] = ea.gate_exam
         d['cat'] = ea.cat_exam
-        d['swrswti_puja'] = ea.saraswati_puja
-        d['vswkrma_puja'] = ea.vishwakarma_puja
+        d['swrswti_puja'] = "Yes" if ea.saraswati_puja else "No"
+        d['vswkrma_puja'] = "Yes" if ea.vishwakarma_puja else "No"
     if SeminarsWorkshops.objects.filter(attendee=id).exists():
         sw = SeminarsWorkshops.objects.filter(attendee=id)
         l = []

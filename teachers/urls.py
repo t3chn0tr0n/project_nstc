@@ -14,5 +14,5 @@ urlpatterns = [
     path('int_marks/', int_marks, name="int_marks"),
     path('teacher_profile/change_profile/', change_profile, name="change_profile"),
     path('search/search_filter/', search_filter, name="search_filter"),
-
+    path('manage_teacher', manage_teacher, name="manage_teacher"),
 ]

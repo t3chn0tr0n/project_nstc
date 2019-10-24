@@ -303,8 +303,7 @@ def sem_marks(request, sem):
                     SemMarks.objects.create(**details, **marks)
                     form_fill_sem(stud.id, sem)
         except:
-            error = ["Internal Server Error!",
-                     "Cause: Student not found or database integrity errors"]
+            error = ["Something went wrong. Please try again!"]
 
         if error:
             return render(request, 'message.html', {'title': 'ERROR', 'error': True,  'messages': error})
