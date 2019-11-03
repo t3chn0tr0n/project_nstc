@@ -26,7 +26,7 @@ function reg_selected() {
 }
 
 $(document).ready(function() {
-  document.getElementById("upload_db").disabled = true;
+  // document.getElementById("#upload_db").disabled = true;
   document.getElementById("cancel").disabled = true;
 
   $("#viewfile").click(function() {
@@ -101,7 +101,6 @@ $(document).ready(function() {
               for (row = row; row < therows.length; row++) {
                 var columns = therows[row].split(",");
                 var colcount = columns.length;
-                console.log(columns);
                 if (colcount == 1) {
                   continue;
                 }

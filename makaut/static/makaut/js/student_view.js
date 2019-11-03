@@ -1,15 +1,26 @@
 $(document).ready(function() {
     var student_id = document.getElementById("student_id").innerHTML;
     var new_entry = document.getElementById("new_entry").value;
-
+   
     if (new_entry == 1) {
         window.location.reload(false);
     }
 
     $('#edit').on('click', function() {
         var elements = document.getElementsByClassName("sems");
-        if ($('#edit').text() === "Save") {
+        if ($('#edit').text() === "Save") 
+        {
+
+            document.getElementById('rslt').style.display = 'block';
+            $('#myModal').modal('show');
+            var element = document.getElementById("cont");
+            var x = document.getElementById('cap_total');
+            x.style.display = "none";
+            var para = document.createElement("div");
+            para.className = "loader";
+            element.appendChild(para); 
             total = new Array();
+            document.getElementById('rslt').innerHTML =('');
             var array_s1 = $('.s1').map(function() {
                 if (($(this).val()) == '') {
                     return (0);
@@ -99,77 +110,6 @@ $(document).ready(function() {
                 all_total = all_total + total[i];
             }
             total[22] = all_total;
-
-            //console.log(total[0]);
-            document.getElementById('swayam').innerHTML = total[0];
-            document.getElementById('moocs').style.display = "none";
-
-            document.getElementById('td').innerHTML = total[1];
-            document.getElementById('tf').style.display = "none";
-
-            document.getElementById('rrt').innerHTML = total[2];
-            document.getElementById('rr').style.display = "none";
-
-            document.getElementById('ttp').innerHTML = total[3];
-            document.getElementById('tp').style.display = "none";
-
-            document.getElementById('tpc').innerHTML = total[4];
-            document.getElementById('pc').style.display = "none";
-
-            document.getElementById('pd').innerHTML = total[5];
-            document.getElementById('tpd').style.display = "none";
-
-            document.getElementById('pl').innerHTML = total[6];
-            document.getElementById('tpl').style.display = "none";
-
-            document.getElementById('nb').innerHTML = total[7];
-            document.getElementById('tnb').style.display = "none";
-
-            document.getElementById('rp').innerHTML = total[8];
-            document.getElementById('trp').style.display = "none";
-
-            document.getElementById('ip').innerHTML = total[9];
-            document.getElementById('tip').style.display = "none";
-
-            document.getElementById('bd').innerHTML = total[10];
-            document.getElementById('tbd').style.display = "none";
-
-            document.getElementById('ps').innerHTML = total[11];
-            document.getElementById('tps').style.display = "none";
-
-            document.getElementById('cp').innerHTML = total[12];
-            document.getElementById('tcp').style.display = "none";
-
-            document.getElementById('mp').innerHTML = total[13];
-            document.getElementById('tmp').style.display = "none";
-
-            document.getElementById('sp').innerHTML = total[14];
-            document.getElementById('tsp').style.display = "none";
-
-            document.getElementById('rr').innerHTML = total[15];
-            document.getElementById('trr').style.display = "none";
-
-            document.getElementById('pc').innerHTML = total[16];
-            document.getElementById('tpc').style.display = "none";
-
-            document.getElementById('yc').innerHTML = total[17];
-            document.getElementById('tyc').style.display = "none";
-
-            document.getElementById('se').innerHTML = total[18];
-            document.getElementById('tse').style.display = "none";
-
-            document.getElementById('ac').innerHTML = total[19];
-            document.getElementById('tac').style.display = "none";
-
-            document.getElementById('ta').innerHTML = total[20];
-            document.getElementById('tta').style.display = "none";
-
-            document.getElementById('ca').innerHTML = total[21];
-            document.getElementById('tca').style.display = "none";
-
-            //for total
-            document.getElementById('all_total').innerHTML = all_total;
-            document.getElementById('tall_total').style.display = "none";
             $.ajax({
                 type: "POST",
                 url: "update/",
@@ -186,22 +126,171 @@ $(document).ready(function() {
                     'total': JSON.stringify(total),
                     'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
                 },
-                success: function() {
-                    alert("Change is successfully saved!!");
+                success: function(s) {
+                    setTimeout(function() {
+                        $(".loader").remove();
+                      }, 0000);
+                    if(s.success=='1')
+                    {
+                        
+                        document.getElementById('swayam').innerHTML = total[0];
+                        document.getElementById('moocs').style.display = "none";
+            
+                        document.getElementById('td').innerHTML = total[1];
+                        document.getElementById('tf').style.display = "none";
+            
+                        document.getElementById('rrt').innerHTML = total[2];
+                        document.getElementById('rr').style.display = "none";
+            
+                        document.getElementById('ttp').innerHTML = total[3];
+                        document.getElementById('tp').style.display = "none";
+            
+                        document.getElementById('tpc').innerHTML = total[4];
+                        document.getElementById('pc').style.display = "none";
+            
+                        document.getElementById('pd').innerHTML = total[5];
+                        document.getElementById('tpd').style.display = "none";
+            
+                        document.getElementById('pl').innerHTML = total[6];
+                        document.getElementById('tpl').style.display = "none";
+            
+                        document.getElementById('nb').innerHTML = total[7];
+                        document.getElementById('tnb').style.display = "none";
+            
+                        document.getElementById('rp').innerHTML = total[8];
+                        document.getElementById('trp').style.display = "none";
+            
+                        document.getElementById('ip').innerHTML = total[9];
+                        document.getElementById('tip').style.display = "none";
+            
+                        document.getElementById('bd').innerHTML = total[10];
+                        document.getElementById('tbd').style.display = "none";
+            
+                        document.getElementById('ps').innerHTML = total[11];
+                        document.getElementById('tps').style.display = "none";
+            
+                        document.getElementById('cp').innerHTML = total[12];
+                        document.getElementById('tcp').style.display = "none";
+            
+                        document.getElementById('mp').innerHTML = total[13];
+                        document.getElementById('tmp').style.display = "none";
+            
+                        document.getElementById('sp').innerHTML = total[14];
+                        document.getElementById('tsp').style.display = "none";
+            
+                        document.getElementById('rr').innerHTML = total[15];
+                        document.getElementById('trr').style.display = "none";
+            
+                        document.getElementById('pc').innerHTML = total[16];
+                        document.getElementById('tpc').style.display = "none";
+            
+                        document.getElementById('yc').innerHTML = total[17];
+                        document.getElementById('tyc').style.display = "none";
+            
+                        document.getElementById('se').innerHTML = total[18];
+                        document.getElementById('tse').style.display = "none";
+            
+                        document.getElementById('ac').innerHTML = total[19];
+                        document.getElementById('tac').style.display = "none";
+            
+                        document.getElementById('ta').innerHTML = total[20];
+                        document.getElementById('tta').style.display = "none";
+            
+                        document.getElementById('ca').innerHTML = total[21];
+                        document.getElementById('tca').style.display = "none";
+            
+                        // //for total
+                        document.getElementById('all_total').innerHTML = all_total;
+                        document.getElementById('tall_total').style.display = "none";
+                            
+                    
+                        document.getElementById('rslt').innerHTML = ('Change is done <b class="text-success">successfully!!</b><br>');
+                        for (var i = 0; i < elements.length; i++) {
+                            //console.log(i);   
+                            elements[i].disabled = true;
+                        }
+
+                        if(s.cert == '1')
+                        {
+                            if($('#gen_cert').length == 0)
+                            {
+                                var elem = document.getElementById('fuctional_buttons');
+                                var button = document.createElement('button');
+                                button.setAttribute("id", "gen_cert");
+                                button.setAttribute("onClick","to_generate_certificate()");
+                                button.className = ('btn btn-sm btn-outline-danger');
+                                button.innerText = "Certificate";
+                                elem.appendChild(button); 
+                            }      
+                        }
+                        else
+                        {
+                            if($('#gen_cert').length != 0)
+                            {
+                                var elem = document.getElementById('gen_cert');
+                                elem.parentNode.removeChild(elem);
+                            }
+                        }
+                        $('#edit').text("Edit");
+                         
+                    }
+                    else
+                    {
+                        document.getElementById('rslt').innerHTML =('<b class="text-danger"><i class="fas fa-exclamation-triangle"></i> ERROR</b><br>'+s+'. ');
+                        
+                    }
+                    
+                    
                 }
             });
-
-            for (var i = 0; i < elements.length; i++) {
-                //console.log(i);
-                elements[i].disabled = true;
-            }
-            $('#edit').text("Edit");
-        } else {
-            for (var i = 0; i < elements.length; i++) {
-                //elements[i].style.backgroundColor="red";
-                elements[i].disabled = false;
-            }
-            $('#edit').text("Save");
         }
+        for (var i = 0; i < elements.length; i++) {
+                    elements[i].disabled = false;
+                }
+                $('#edit').text("Save");
+                
+                
     });
+    $('#total').on('click', function() {
+        document.getElementById('rslt').style.display = 'none';
+        document.getElementById('cap_total').style.display = 'block';
+    });
+
+    
+
 });
+
+function to_generate_certificate()
+{
+    var conf = confirm("Are you sure you want to generate certificate of this student? Make sure cannot edit any details once the certificate has been generated.");
+    if (conf == false)
+    {
+        return;
+    }
+    else
+    {
+        var id = document.getElementById("student_id").innerHTML;
+        $.ajax({
+                type: "POST",
+                url: "gen_certificate/",
+                data: {
+                    'student_id': id,
+                    'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+                },
+            success: function(s) {
+                var elem = document.getElementById('fuctional_buttons');
+                // elem.parentNode.removeChild(elem);
+                document.getElementById('edit').remove();
+                document.getElementById('gen_cert').remove();
+                var aTag = document.createElement('a');
+                aTag.setAttribute("href", "certificate/"+id.trim());
+                aTag.setAttribute("target","_blank");
+                aTag.className = ('btn btn-sm btn-outline-info');
+                aTag.innerText = "View Certificate";
+                elem.appendChild(aTag); 
+            }
+    });
+    }
+    
+
+}

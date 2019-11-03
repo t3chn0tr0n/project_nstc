@@ -1,6 +1,10 @@
 {% extends 'students/main.html/' %} 
 {% block body %}
-    {% load static %} <center>
-    <img src = "{% static 'makaut/img/cert.png' %}" />
+    {% load static %} 
+    <center>
+    <div class="container">
+        <img src="/media/certificates/student_certificate/{{cert_name}}" class="img-fluid rounded" alt="Certificate Unavailable!" />
+    </div>
+    <a href="/media/certificates/student_certificate/{{cert_name}}" download>Download</a>
     </center>
 {% endblock %}

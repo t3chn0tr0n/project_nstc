@@ -1,0 +1,32 @@
+{% extends 'teachers/main.html/' %} 
+{% block main_body %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+{% load static %}
+
+<form method='POST'>
+
+    <div id="choice_div" class="form-group row">
+        {% csrf_token %}
+        <input type='hidden' name='catagory' value='Teacher'/>
+        <button type="submit" class="col-md-2 mt-1 mr-2 btn btn-sm btn-success" ><i class="fas fa-file-csv"></i> Download Teachers Information</button>
+    </div>
+
+    
+</form>
+<form method='POST'>
+
+    <div id="choice_div" class="form-group row">
+        {% csrf_token %}
+        <input type='hidden' name='catagory' value='Student'/>
+        <button type="submit" class="col-md-2 mt-1 mr-2 btn btn-sm btn-success" ><i class="fas fa-file-csv"></i> Download Student Information</button>
+    </div>
+
+    <i class="text-info fas fa-exclamation-circle mt-3"></i>
+    <span class="text-danger small mt-2" style="padding-top: 0.5em;">
+        HOD's of every deparment can download the information of  Students/Teachers of respective deparment
+    </span>
+</form>
+  
+{% endblock %}

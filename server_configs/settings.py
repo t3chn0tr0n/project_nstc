@@ -109,6 +109,10 @@ STATICFILES_DIRS = [
     global_statics,
 ]
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 # Email settings (Emails are used for a/c varification)
 
 EMAIL_USE_TLS = True

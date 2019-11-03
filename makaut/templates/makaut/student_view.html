@@ -1,5 +1,28 @@
 {% extends 'teachers/main.html' %} {% block main_body %} {% load static %}
 <script src="{% static 'makaut/js/student_view.js' %}"></script>
+<style>
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 4px solid #54B948;
+      width: 35px;
+      height: 35px;
+      -webkit-animation: spin 10s linear infinite; /* Safari */
+      animation: spin 1s linear infinite;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+</style>
 <div>
     <input type="hidden" value="{{ new_entry }}" id="new_entry">
     <!--STUDENT INFROMATION-->
@@ -50,13 +73,24 @@
                 <input type="hidden" value="{{ new_entry }}" id="new_entry">
             </form>
         </span>
-        <span style="float:right;" >
-            <button class="btn btn-sm btn-outline-info" id="edit">Edit</button>
+        <span style="float:right;" id="fuctional_buttons">
+            
+            {% for x in info_student %}
+            {% if certificate == False and total_marks >= 100 %}
+                <button class="btn btn-sm btn-outline-info" id="edit">Edit</button>
+                <button class="btn btn-sm btn-outline-success" id="total" data-toggle="modal" data-target="#myModal">Total</button>
+                <button id="gen_cert" onClick="to_generate_certificate()" class="btn btn-sm btn-outline-danger">Certificate</button>
+            {% elif certificate == False and total_marks <= 100%}
+                <button class="btn btn-sm btn-outline-info" id="edit">Edit</button>
+                <button class="btn btn-sm btn-outline-success" id="total" data-toggle="modal" data-target="#myModal">Total</button>
+            {% else %}
             <button class="btn btn-sm btn-outline-success" id="total" data-toggle="modal" data-target="#myModal">Total</button>
-            {% comment %} {% if i.total >= 100 %} {% endcomment %}
-            <a id="gen_cert" href="{% url 'demo' %}" class="btn btn-sm btn-outline-danger" id="generate" target="_blank">Certificate</a>
-            {% comment %} {% endif %} {% endcomment %}
+            <a href="certificate/{{x.id}}" class="btn btn-sm btn-outline-info"  target="_blank">View Certificate</a>
+            {% endif %}
+            {% endfor %}
+            
         </span>
+        <input type="hidden" name="stid" value="{{card_no}}">
         <br/>
     </div>
     <br/>
@@ -71,13 +105,14 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        {% for i in total %}
                         <p>
-                            <center>
-                                <h1> <span id="all_total">{{i.total}}</span> <span id="tall_total"></span> </h1>
+                            <center id="cont">
+
+                                <p id="rslt"></p>
+                                <h1 id="cap_total"> <span id="all_total">{{total_marks}}</span> <span id="tall_total"></span> </h1>
+                                
                             </center>
                         </p>
-                        {% endfor %}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

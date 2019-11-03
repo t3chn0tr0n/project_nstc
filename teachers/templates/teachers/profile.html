@@ -13,16 +13,22 @@
 
 <div class="container">
     
-        {% csrf_token %}
         <div class="row">
                 <!-- Left side -->
-                <div class="col-sm-4 mx-auto">
-                    <center>
-                    <img src="{% static 'teachers/img/profile.jpg'%}" class="img-fluid rounded" height="80%" width="80%" />
-                    <input name="dp" class="form-control-file form-control-sm m-0 mt-3 mb-2 " id="inputfile" type="file" name="csv_file"  accept=".png, .jpg, .jpeg, .gif" required style="display: inline;"/>
-                    <button class="btn btn-sm btn-outline-info m-2">Upload New File</button>
-                    </center>
-                </div>
+                <form action="upload_profile_pic/" method="POST" enctype="multipart/form-data" > 
+                    {% csrf_token %}
+                    <div class="col-sm-4 mx-auto">
+                        <center>
+                        {% if profile_pic == 'blank'%}
+                        <img src="{% static 'teachers/img/profile.jpg'%}" class="img-fluid rounded" height="80%" width="80%" />
+                        {% else %}
+                        <img src="{{profile_pic}}" class="img-fluid rounded" height="100%" width="100%" />
+                        {% endif %}
+                        <input class="form-control-file form-control-sm m-0 mt-3 mb-2 " id="inputfile" type="file" name="profile_pic"  accept=".png, .jpg, .jpeg" required style="display: inline;"/>
+                        <button class="btn btn-sm btn-outline-info m-2">Upload New File</button>
+                        </center>
+                    </div>
+                </form>            
         
                 <!-- Right Side -->
                 <div class="col-sm bg-light rounded mx-auto p-3">

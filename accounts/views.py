@@ -316,4 +316,4 @@ def index(request):
     if Student.objects.filter(id=user).exists():
         return redirect('profile')
     else:
-        return redirect('upload_student')
+        return redirect('search')

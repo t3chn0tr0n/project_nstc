@@ -1,13 +1,20 @@
+import csv
 import json
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy
-from django.http import HttpResponse
+import os
 
-from .models import *
+from django.contrib.auth.decorators import login_required
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+
+from students.addons import (extra_curricular, get_general_details,
+                             get_idcard_details, get_univ_details)
+from students.models import Batch, Student
+
 from .addons import get_teach_details
-from students.models import Student
-from students.addons import get_general_details, extra_curricular, get_univ_details, get_idcard_details
+from .models import *
+
 
 # TODO: Handle errors gracefully!
 @login_required(login_url=reverse_lazy('login'))
@@ -31,7 +38,12 @@ def upload_student(request):
                 Stream = "M"
             else:
                 Stream = "D"
-            Batch = request.POST['Batch']
+            batch = request.POST['Batch']
+            bat = Batch.objects.filter(id=batch)
+            if bat is None:
+                Batch.objects.create(
+                    id=batch, batch=batch[3:7] + '-' + batch[7:])
+
             arr = [str(i) for i in json.loads(request.POST['arr'])]
             dept = Teacher.objects.get(id=request.user.username).dept
             for i in arr:
@@ -181,7 +193,8 @@ def view_student(request, x, y, z):
 
     d['no_sem'] = False
     d['lat_sems'] = (1, 2)  # constant
-    d['available'] = [1, 2, 3, 4]  # call a function here that gives available sems
+    # call a function here that gives available sems
+    d['available'] = [1, 2, 3, 4]
     d['not_available'] = [5, 6]
     d['invalid_sems'] = [7, 8]
 
@@ -215,11 +228,34 @@ def profile(request):
         return render(request, 'message.html', d)
 
     d = get_teach_details(request)
+
     teach = Teacher.objects.get(id=request.user.username)
     d['mob_no1'] = teach.phone_no_1
     d['mob_no2'] = teach.phone_no_2
     d['email'] = teach.email
+    # print(len(teach.image)){% static 'teachers/img/profile.jpg'%}
+    if teach.image is None:
+        d['profile_pic'] = "blank"
+    else:
+        d['profile_pic'] = teach.image
     return render(request, 'teachers/profile.html', d)
+
+
+@login_required(login_url=reverse_lazy('login'))
+def upload_profile_pic(request):
+    upload_file = request.FILES['profile_pic']
+    teach = Teacher.objects.get(id=request.user.username)
+    d = get_teach_details(request)
+    # if teach.image != None:
+    #     print(type(teach.image))
+    #     #print(os.path.exists(teach.image[1:]))
+    #     print(os.path.exists("media/"+upload_file.name))
+    fs = FileSystemStorage()
+    name = fs.save(upload_file.name, upload_file)
+    url = fs.url(name)
+    teach.image = url
+    teach.save()
+    return redirect(profile)
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -290,8 +326,84 @@ def search_filter(request):
                     mentor=request.user.username).filter(name__startswith=srch)
             for i in student:
                 if(i.middle_name != "NULL"):
-                    rslt.append(i.name + " " + i.middle_name + " " + i.surname + "$")
+                    rslt.append(i.name + " " + i.middle_name +
+                                " " + i.surname + "$")
                 else:
                     rslt.append(i.name + " " + i.surname + "$")
 
     return HttpResponse(rslt[:10])
+# download student and teacher
+
+
+@login_required(login_url=reverse_lazy('login'))
+def download_student(request):
+    d = get_teach_details(request)
+    if request.method == 'POST':
+        response = HttpResponse(content_type='text/csv')
+        if request.POST.get('catagory') == 'Teacher':
+            response['Content-Disposition'] = 'attachment; filename="teachers.csv"'
+            writer = csv.writer(response)
+            writer.writerow(['ID', 'FIRST NAME', 'MIDDLE NAME', 'LAST NAME',
+                             'DEPARTMENT', 'EMAIL', 'PHONE NO 1', 'PHONE NO 2'])
+            teach_obj = Teacher.objects.filter(dept=d['dept'])
+            for i in teach_obj:
+                nm = i.name.split(' ')
+                if len(nm) == 2:
+                    writer.writerow(
+                        [i.id, nm[0], '', nm[1], i.dept, i.email, i.phone_no_1, i.phone_no_2, ])
+                else:
+                    writer.writerow(
+                        [i.id, nm[0], nm[1], nm[2], i.dept, i.email, i.phone_no_1, i.phone_no_2, ])
+        else:
+            response['Content-Disposition'] = 'attachment; filename="students.csv"'
+            writer = csv.writer(response)
+            writer.writerow(['ID', 'FIRST NAME', 'MIDDLE NAME', 'LAST NAME', 'DEPARTMENT',
+                             'UNIV_ROLL_NO', 'REGISTRATION_NO', 'ADMISSION_NO', 'BATCH', 'EMAIL'])
+            student_obj = Student.objects.filter(dept=d['dept'])
+            for i in student_obj:
+                writer.writerow([i.id, i.name, i.middle_name, i.surname, i.dept,
+                                 i.univ_roll_no, i.registration_no, i.admission_no, i.batch, i.email])
+
+        return response
+    return render(request, 'teachers/download_student.html', d)
+
+
+@login_required(login_url=reverse_lazy('login'))
+def manage_mentor(request):
+    d = get_teach_details(request)
+    batch = Batch.objects.all()
+    mentor = Teacher.objects.filter(dept=d['dept'])
+    d['batch'] = batch
+    d['mentor'] = mentor
+    return render(request, 'teachers/manage_mentor.html', d)
+
+
+@login_required(login_url=reverse_lazy('login'))
+def mentor_student_show(request):
+    if request.method == 'POST' and request.is_ajax():
+        std_id_str = ''
+        # student_ids = [i for i in json.loads(request.POST['info'])]
+        batch_id = request.POST['batch_id']
+        mentor_id = request.POST['mentor_id']
+        student = Student.objects.filter(
+            mentor=mentor_id).filter(batch=batch_id)
+        # print(student)
+        for i in student:
+            std_id_str = std_id_str + i.id + ','
+        l = len(std_id_str)
+        return HttpResponse(std_id_str[:l-1])
+    return render(request, 'teachers/manage_mentor.html')
+
+
+@login_required(login_url=reverse_lazy('login'))
+def mentor_change(request):
+    if request.method == 'POST' and request.is_ajax():
+        try:
+            batch_id = request.POST['batch_id']
+            mentor_id = request.POST['mentor_id']
+            student_ids = [i for i in json.loads(request.POST['info'])]
+            for i in student_ids:
+                Student.objects.filter(id=i).update(mentor=mentor_id)
+            return HttpResponse("Changes has been successfully saved!!")
+        except:
+            return HttpResponse("Error! Something is wrong. Please upload data carefully!!")

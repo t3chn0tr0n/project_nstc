@@ -40,6 +40,9 @@
                             <th>
                                 <center>View Chart</center>
                             </th>
+                             <th>
+                                <center>Certificate</center>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,6 +55,13 @@
                                 <p>{{ i.name }}{% if i.middle_name != "NULL"%}&nbsp{{ i.middle_name }}{% endif %}&nbsp{{ i.surname }}</p>
                             </td>
                             <td><button class="btn btn-sm btn-outline-primary" value="{{i.id}}" name="student_id">View</button></td>
+                            <td>
+                            {% if i.has_certificate == True %}
+                            <i class="text-success fas fa-check-circle">&nbsp;yes</i>
+                            {% else %}
+                            <i class="text-danger fas fa-times-circle">&nbsp;no</i>
+                            {% endif %}
+                            </td>
                             <input type="hidden" value="{{ i.mentor }}" name="mentor_id">
                         </tr>
                         {% endfor %}

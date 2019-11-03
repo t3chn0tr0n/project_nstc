@@ -21,7 +21,8 @@ class Student(models.Model):
     is_verified = models.BooleanField(default=False)
     email = models.EmailField(max_length=70)
     is_lateral = models.BooleanField(default=False)
-
+    has_certificate = models.BooleanField(default=False)
+    certificate = models.CharField(default=" ", max_length=20, null=True)
 
 class Details(models.Model):
     card_no = models.CharField(default=" ", max_length=15, primary_key=True)
@@ -39,6 +40,10 @@ class Details(models.Model):
     # returns a dictionary object of student, ready to be serialized
     def student_details_data(self):
         pass
+
+class Batch(models.Model):
+    id = models.CharField(default=" ", max_length=15, primary_key=True)
+    batch = models.CharField(default="", max_length=15,null=False)
 
 
 class ExtracurricularActivity(models.Model):
