@@ -1,21 +1,24 @@
-import json
 import csv
 import io
-from PIL import ImageFont, ImageDraw, Image
-from django.shortcuts import render, redirect
-from django.http import *
-from django.contrib.auth.models import User
-from django.contrib import auth
-from django.core.exceptions import *
-from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy
+import json
 
-from .models import *
+from django.contrib import auth
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.exceptions import *
+from django.http import *
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from PIL import Image, ImageDraw, ImageFont
+
 from accounts.views import message
 from students.addons import get_idcard_details
 from students.models import Student
+from teachers.addons import get_teach_details
 from teachers.models import Teacher
-from teachers.addons import (get_teach_details)
+
+from .models import *
+
 
 @login_required(login_url=reverse_lazy('login'))
 def student_report(request):
@@ -44,11 +47,13 @@ def student_report(request):
 
         # sem1_list=sem1.values()
         # to check wether the student in new or not
+        total_marks = 0
+        certificate = ''
         for i in total_table:
             total_marks = i.total
 
         for cert in std:
-            certificate = cert.has_certificate    
+            certificate = cert.has_certificate
         new_entry = 0
         if len(sem1) == 0:
             p1 = semester_1.objects.create(student_id=student_id)
@@ -70,11 +75,10 @@ def student_report(request):
             p_total = total.objects.create(student_id=student_id)
             new_entry = 1
         details = get_idcard_details(student_id)
-        d =  get_teach_details(request)
-        print(certificate)
+        d = get_teach_details(request)
         a = {
-            'certificate' : certificate,
-            'total_marks' : int(total_marks),
+            'certificate': certificate,
+            'total_marks': int(total_marks),
             'info_student': std,
             'mentor': mentor_id,
             'check': "0",
@@ -92,7 +96,7 @@ def student_report(request):
         a.update(details)
         a.update(d)
         return render(request, 'makaut/student_view.html', a)
-    else: # GET request redirects
+    else:  # GET request redirects
         return mentees(request)
 
 
@@ -105,11 +109,12 @@ def mentees(request):
     mentor_id = request.user.username
     ment = Teacher.objects.get(id=mentor_id)
     student_obj = Student.objects.filter(mentor=mentor_id)
-    d =  get_teach_details(request)
+    d = get_teach_details(request)
     d['mentor'] = mentor_id
     d['info'] = student_obj[:]
     d['check'] = "0"
     return render(request, 'makaut/mentees.html', d)
+
 
 @login_required(login_url=reverse_lazy('login'))
 def update(request):
@@ -117,9 +122,10 @@ def update(request):
         title = "404"
         error = ['Students cannot view this page!']
         return message(title, error, request)
-    
+
     if request.method == 'POST' and request.is_ajax():
-        (sem1_total,sem2_total, sem3_total,sem4_total,sem5_total,sem6_total,sem7_total,sem8_total) = (0,0,0,0,0,0,0,0)
+        (sem1_total, sem2_total, sem3_total, sem4_total, sem5_total,
+         sem6_total, sem7_total, sem8_total) = (0, 0, 0, 0, 0, 0, 0, 0)
         student_id = request.POST['student_id'].strip()
         sem1 = [int(i) for i in json.loads(request.POST['sem1'])]
         sem2 = [int(i) for i in json.loads(request.POST['sem2'])]
@@ -155,9 +161,9 @@ def update(request):
         for i in sem7:
             sem7_total = sem7_total + i
         for i in sem8:
-            sem8_total = sem8_total + i                            
+            sem8_total = sem8_total + i
         if(sem1_total+sem2_total <= 30 and sem3_total+sem4_total <= 30 and sem5_total+sem6_total <= 30 and sem7_total+sem8_total <= 30):
-        # total
+            # total
             total_obj.moocs = total_rq[0]
             total_obj.tech_fest = total_rq[1]
             total_obj.rural_reporting = total_rq[2]
@@ -214,7 +220,7 @@ def update(request):
             SEM1.adventure_sports = sem1[27]
             SEM1.training_privileged = sem1[28]
             SEM1.com_service = sem1[29]
-            
+
             # SEM2
             SEM2.moocs_for_12 = sem2[0]
             SEM2.moocs_for_8 = sem2[1]
@@ -449,10 +455,10 @@ def update(request):
             SEM8.save()
             total_obj.save()
             if(total_rq[22] >= 100):
-                cert = 1;
+                cert = 1
             else:
-                cert = 0;    
-            return JsonResponse({'success':'1','cert':cert })
+                cert = 0
+            return JsonResponse({'success': '1', 'cert': cert})
         else:
             return HttpResponse("A student cannot get more than 30 marks in a year.")
     # d =  get_teach_details(request)
@@ -461,23 +467,25 @@ def update(request):
     # return render(request, 'makaut/mentees.html', d)
     return HttpResponse("Change is done successfully!!!")
 
+
 @login_required(login_url=reverse_lazy('login'))
 def certificate(request, x, y, z):
     student_id = x
     cert_name = ''
-    info ={}
+    info = {}
     teach = Teacher.objects.get(id=request.user.username)
-    #print(student_id)
-    #print(mentor_id)
-    img=Image.open(r'C:\Users\SWARNAVA\Desktop\project_nstc\media\certificates\original.png')
+    # print(student_id)
+    # print(mentor_id)
+    img = Image.open(
+        r'C:\Users\SWARNAVA\Desktop\project_nstc\media\certificates\original.png')
     std = Student.objects.filter(id=student_id)
     if(True):
         total_table = total.objects.filter(student_id=student_id)
         for i in std:
             if i.middle_name != 'NULL':
-                std_name = i.name +" "+i.middle_name +" "+ i.surname
+                std_name = i.name + " "+i.middle_name + " " + i.surname
             else:
-                std_name = i.name +" "+ i.surname
+                std_name = i.name + " " + i.surname
             univ_roll_no = i.univ_roll_no
             batch = i.batch[3:7]+"-"+i.batch[7:11]
             for k in total_table:
@@ -489,26 +497,30 @@ def certificate(request, x, y, z):
         font = ImageFont.truetype('arial.ttf', 20)
         font1 = ImageFont.truetype('arial.ttf', 16)
         draw = ImageDraw.Draw(img)
-        draw.text(xy=(400,250),text=std_name,fill=(0,0,0),font=font)
-        draw.text(xy=(330,295),text=univ_roll_no,fill=(0,0,0),font=font)
-        draw.text(xy=(750,295),text=batch,fill=(0,0,0),font=font)
-        draw.text(xy=(320,335),text=stream,fill=(0,0,0),font=font)
-        draw.text(xy=(860,425),text=str(total_mar),fill=(0,0,0),font=font)
-        draw.text(xy=(140,558),text=teach_name,fill=(89,89,89),font=font1)
-        draw.text(xy=(200,579),text=dept,fill=(89,89,89),font=font1)
-        draw.text(xy=(430,560),text="U-ID: "+student_id ,fill=(89,89,89),font=font)
+        draw.text(xy=(400, 250), text=std_name, fill=(0, 0, 0), font=font)
+        draw.text(xy=(330, 295), text=univ_roll_no, fill=(0, 0, 0), font=font)
+        draw.text(xy=(750, 295), text=batch, fill=(0, 0, 0), font=font)
+        draw.text(xy=(320, 335), text=stream, fill=(0, 0, 0), font=font)
+        draw.text(xy=(860, 425), text=str(
+            total_mar), fill=(0, 0, 0), font=font)
+        draw.text(xy=(140, 558), text=teach_name,
+                  fill=(89, 89, 89), font=font1)
+        draw.text(xy=(200, 579), text=dept, fill=(89, 89, 89), font=font1)
+        draw.text(xy=(430, 560), text="U-ID: " +
+                  student_id, fill=(89, 89, 89), font=font)
         for i in student_id:
             if i != '/':
                 cert_name = cert_name + i
             else:
                 cert_name = cert_name + '_'
-        img.save(r'C:\Users\SWARNAVA\Desktop\project_nstc\media\certificates\student_certificate\{}.png'.format(cert_name))
+        img.save(
+            r'C:\Users\SWARNAVA\Desktop\project_nstc\media\certificates\student_certificate\{}.png'.format(cert_name))
         info['cert_name'] = cert_name + '.png'
         # std.certificate = cert_name + '.png'
         # std.has_certificate = True
         # std.save()
     else:
-        # info['cert_name'] = std.certificate  
+        # info['cert_name'] = std.certificate
         pass
     return render(request, "makaut/certificate.html/", info)
 
@@ -516,25 +528,27 @@ def certificate(request, x, y, z):
     # return render(request, 'teachers/table.html')
     # return render(request, 'message.html', {'title': '404', 'error': True, 'fof': True})
     # data = Template('''{% load static %} <center>hello world<img src="{% static 'img/cert.png' %}" alt="Certificate Unavailable!" /></center>''')
-    # return HttpResponse(data.render(Context(request)))    
+    # return HttpResponse(data.render(Context(request)))
+
 
 @login_required(login_url=reverse_lazy('login'))
 def gen_certificate(request):
     if request.method == "POST":
         student_id = request.POST.get('student_id',  '').strip()
         std = Student.objects.filter(id=student_id)
-        info ={}
+        info = {}
         for i in std:
             if(i.has_certificate == False):
                 cert_name = ''
                 teach = Teacher.objects.get(id=request.user.username)
-                img=Image.open(r'C:\Users\SWARNAVA\Desktop\project_nstc\media\certificates\original.png')
+                img = Image.open(
+                    r'C:\Users\SWARNAVA\Desktop\project_nstc\media\certificates\original.png')
                 total_table = total.objects.filter(student_id=student_id)
-               
+
                 if i.middle_name != 'NULL':
-                    std_name = i.name +" "+i.middle_name +" "+ i.surname
+                    std_name = i.name + " "+i.middle_name + " " + i.surname
                 else:
-                    std_name = i.name +" "+ i.surname
+                    std_name = i.name + " " + i.surname
                 univ_roll_no = i.univ_roll_no
                 batch = i.batch[3:7]+"-"+i.batch[7:11]
                 for k in total_table:
@@ -546,30 +560,36 @@ def gen_certificate(request):
                 font = ImageFont.truetype('arial.ttf', 20)
                 font1 = ImageFont.truetype('arial.ttf', 16)
                 draw = ImageDraw.Draw(img)
-                draw.text(xy=(400,250),text=std_name,fill=(0,0,0),font=font)
-                draw.text(xy=(330,295),text=univ_roll_no,fill=(0,0,0),font=font)
-                draw.text(xy=(750,295),text=batch,fill=(0,0,0),font=font)
-                draw.text(xy=(320,335),text=stream,fill=(0,0,0),font=font)
-                draw.text(xy=(860,425),text=str(total_mar),fill=(0,0,0),font=font)
-                draw.text(xy=(140,558),text=teach_name,fill=(89,89,89),font=font1)
-                draw.text(xy=(200,579),text=dept,fill=(89,89,89),font=font1)
-                draw.text(xy=(430,560),text="U-ID: "+student_id ,fill=(89,89,89),font=font)
+                draw.text(xy=(400, 250), text=std_name,
+                          fill=(0, 0, 0), font=font)
+                draw.text(xy=(330, 295), text=univ_roll_no,
+                          fill=(0, 0, 0), font=font)
+                draw.text(xy=(750, 295), text=batch, fill=(0, 0, 0), font=font)
+                draw.text(xy=(320, 335), text=stream,
+                          fill=(0, 0, 0), font=font)
+                draw.text(xy=(860, 425), text=str(
+                    total_mar), fill=(0, 0, 0), font=font)
+                draw.text(xy=(140, 558), text=teach_name,
+                          fill=(89, 89, 89), font=font1)
+                draw.text(xy=(200, 579), text=dept,
+                          fill=(89, 89, 89), font=font1)
+                draw.text(xy=(430, 560), text="U-ID: " +
+                          student_id, fill=(89, 89, 89), font=font)
                 for j in student_id:
                     print(j)
                     if j != '/':
                         cert_name = cert_name + j
                     else:
                         cert_name = cert_name + '_'
-                print(cert_name)        
-                img.save(r'C:\Users\SWARNAVA\Desktop\project_nstc\media\certificates\student_certificate\{}.png'.format(cert_name))
+                print(cert_name)
+                img.save(
+                    r'C:\Users\SWARNAVA\Desktop\project_nstc\media\certificates\student_certificate\{}.png'.format(cert_name))
                 info['cert_name'] = cert_name + '.png'
                 info['status'] = "done"
                 i.certificate = cert_name + '.png'
                 i.has_certificate = True
                 i.save()
             else:
-                info['cert_name'] = i.certificate  
+                info['cert_name'] = i.certificate
                 info['status'] = "student has certificate"
         return JsonResponse(info)
-
-
