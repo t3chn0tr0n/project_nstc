@@ -1,37 +1,18 @@
-{% extends 'teachers/main.html/' %} 
-{% block main_body %}
+  {% extends 'teachers/main.html/' %} 
+  {% block main_body %}
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
   <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   {% load static %}
   <script src="{% static 'teachers/js/global_search.js' %}"></script>
-  <style>
-    .loader {
-      border: 8px solid #f3f3f3;
-      border-radius: 50%;
-      border-top: 8px solid #3498db;
-      width: 50px;
-      height: 50px;
-      -webkit-animation: spin 10s linear infinite; /* Safari */
-      animation: spin 1s linear infinite;
-    }
-
-    /* Safari */
-    @-webkit-keyframes spin {
-      0% { -webkit-transform: rotate(0deg); }
-      100% { -webkit-transform: rotate(360deg); }
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-</style>
+  
+  
 
   <div class="outer">
       <div class="inner" >
-          <center id="inner">
+      
+          <center id="innr">
             {% csrf_token %}
             <!-- Search Bar -->
             <img src="{% static 'teachers/img/search.png' %}" height="25%" width="25%"/>
@@ -59,5 +40,4 @@
           </center> 
       </div>
     </div>
-  </div> 
 {% endblock %}

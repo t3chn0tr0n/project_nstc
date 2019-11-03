@@ -5,6 +5,31 @@
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
   {% load static %}
   <script src="{% static 'teachers/js/student_csv_upload.js' %}"></script>
+  <style>
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 4px solid #54B948;
+      width: 35px;
+      height: 35px;
+      -webkit-animation: spin 10s linear infinite; /* Safari */
+      animation: spin 1s linear infinite;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    
+  
+</style>
   {% csrf_token %}
   <center>
     <h3 class="text-info">Upload Student CSV</h3>
@@ -157,6 +182,8 @@
             <h5 id="modal_title" class="modal-title">Please recheck!</h5>
           </div>
           <div id="modal_body" class="modal-body">
+              <p> duplicacy check : <div class='loader'></div></p>
+              <p> no error : <div class='loader'></div></p>
               <p id="for_student_upload">You are trying to save this data into database! This Action is <b class="text-danger"> irreversible!</b></p>
           </div>
           <div class="modal-footer">
@@ -166,5 +193,7 @@
         </div>
       </div>
   </div>
+ 
+
 <br /> <br />
 {% endblock %}

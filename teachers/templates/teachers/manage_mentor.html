@@ -1,0 +1,76 @@
+{% extends 'teachers/main.html/' %} 
+{% block main_body %}
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  {% load static %}
+  <script src="{% static 'teachers/js/manage_mentor.js' %}"></script>
+  <style>
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 4px solid #54B948;
+      width: 35px;
+      height: 35px;
+      -webkit-animation: spin 10s linear infinite; /* Safari */
+      animation: spin 1s linear infinite;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+</style>
+
+<div class="container">
+    <div class="jumbotron" style="padding:1.5rem; padding-bottom: 0.3rem; margin-bottom:0rem;">
+        <div class="form-group row">
+            <label  class="col-sm-2">
+                <b> Batch.: </b>
+            </label>
+            <label class="col-sm-2">
+                <select id="batch" class="custom-select" required>
+                    <option disabled selected>Select Batch</option>
+                    <!-- Data loaded by ajax -->
+                    {% for  i in batch%}
+                    <option value="{{i.id}}">{{i.batch}}</option>
+                    {% endfor %}
+                </select>
+            </label>
+
+            <label class="col-sm-2">
+                <b> Mentor.: </b>
+            </label>
+            <label class="col-sm-2"> 
+                <select id="mentor_select" class="custom-select" required>
+                      <option disabled selected>Select Mentor</option>
+                    {% for  i in mentor%}
+                      <option value="{{i.id}}">{{i.name}}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label class="col-sm-4"> 
+                 <button class="btn btn-sm btn-outline-info" id="show">Show</button>
+            </label>
+        </div>
+        
+    </div>
+    <div class="form-group">
+    <div  id="content">
+      <label for="comment"><b></b></label>
+      <textarea class="form-control" id="txtarea" rows="5" id="comment" disabled="true"></textarea>
+      <br>
+      <span style="float:right;" id="fuctional_buttons">  
+        
+      </span>
+      </div>
+    </div>
+</div>
+{% endblock %}

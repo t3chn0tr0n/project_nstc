@@ -30,13 +30,6 @@ from teachers.models import Teacher
 
 
 # Test Ground for new templates - Contains unchecked code - comment it out if it causes error
-@login_required(login_url=reverse_lazy('login'))
-def demo(request):
-    # return render(request, 'teachers/int_marks_landing.html', {'fixed_footer': True})
-    # return render(request, 'teachers/table.html')
-    # return render(request, 'message.html', {'title': '404', 'error': True, 'fof': True})
-    data = Template('''{% load static %} <center><img src="{% static 'img/cert.png' %}" alt="Certificate Unavailable!" /></center>''')
-    return HttpResponse(data.render(Context(request)))
 
 @login_required(login_url=reverse_lazy('login'))
 def general_details(request):

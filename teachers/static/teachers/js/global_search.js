@@ -36,8 +36,7 @@ function autocomplete(inp, arr) {
           arr[i].substr(0, val.length) +
           "</strong>" +
           arr[i].substr(val.length) +
-          "</span>"; //.substr(0, val.length)
-        // b.innerHTML += arr[i].substr(val.length);
+          "</span>";
         /*insert a input field that will hold the current array item's value:*/
         b.innerHTML +=
           "<input type='hidden' value='" +
@@ -114,9 +113,6 @@ function autocomplete(inp, arr) {
   });
 }
 
-/*An array containing all the country names in the world:*/
-
-/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
 $(document).ready(function() {
   $("input").keyup(function() {
     var srch = document.getElementById("search").value;
@@ -125,7 +121,7 @@ $(document).ready(function() {
       if (loading == 0) {
         var para = document.createElement("div");
         para.className = "loader";
-        var element = document.getElementById("inner");
+        var element = document.getElementById("innr");
         element.appendChild(para);
         loading = 1;
       }
@@ -143,9 +139,7 @@ $(document).ready(function() {
             $(".loader").remove();
           }, 0000);
 
-          //console.log(ids);
           ids = ids.split("$");
-          //console.log(ids);
           autocomplete(document.getElementById("search"), ids);
         }
       });

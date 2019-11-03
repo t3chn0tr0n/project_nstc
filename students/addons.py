@@ -11,8 +11,12 @@ from teachers.models import Teacher
 def get_idcard_details(id):
     try:
         stud = Student.objects.get(id=id)
+        if stud.middle_name == 'NULL':
+            mid_name = ''
+        else:
+            mid_name = stud.middle_name   
         details = {
-            'name': stud.name + " " + stud.middle_name + " " + stud.surname,
+            'name': stud.name + " " + mid_name + " " + stud.surname,
             'id': stud.id,
             'card_no': stud.id,
             'roll_no': stud.univ_roll_no,
