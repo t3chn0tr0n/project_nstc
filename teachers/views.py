@@ -298,8 +298,8 @@ def search_filter(request):
     if request.method == "POST":
         rslt = []
         srch = request.POST['srch'].upper()
+        print(srch)
         ment = Teacher.objects.get(id=request.user.username)
-
         if srch[0:4] == "NIT/":
             if ment.is_principal:
                 student = Student.objects.all().filter(id__startswith=srch)
@@ -309,12 +309,6 @@ def search_filter(request):
             else:
                 student = Student.objects.filter(
                     mentor=request.user.username).filter(id__startswith=srch)
-            for i in student:
-                # if(i.middle_name != "NULL"):
-                #     l.append(i.name+" "+i.middle_name+" "+i.surname+"$")
-                # else:
-                #     l.append(i.name+" "+i.surname+"$")
-                rslt.append(i.id + "$")
         else:
             if ment.is_principal:
                 student = Student.objects.all().filter(name__startswith=srch)
@@ -324,13 +318,14 @@ def search_filter(request):
             else:
                 student = Student.objects.filter(
                     mentor=request.user.username).filter(name__startswith=srch)
+        print(student)
+        if student:
             for i in student:
-                if(i.middle_name != "NULL"):
-                    rslt.append(i.name + " " + i.middle_name +
-                                " " + i.surname + "$")
+                if(i.middle_name != "NULL" or i.middle_name is None):
+                    name = i.name + " " + i.middle_name + " " + i.surname
                 else:
-                    rslt.append(i.name + " " + i.surname + "$")
-
+                    name = i.name + " " + i.surname
+                rslt.append(i.id + "$" + name + "$")
     return HttpResponse(rslt[:10])
 # download student and teacher
 

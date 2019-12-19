@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
+<script>
+    function toggleAdd(subject) {
+        button = document.getElementById(subject+'add');
+        state = document.getElementById(subject+'elec1').checked;
+        if( state == true){
+            button.hidden = false;
+        } else {
+            button.hidden = true;
+        }
+    }
+</script>
+
+<body>
+    <center>
+        <h2>SUBJECT LIST</h2>
+    </center>
+
+    <div class="container bg-light p-5">
+        <form>
+            <div class="row">
+                <label class="col-sm-2 col-form-label mb-1">Batch</label>
+                <div class="col-sm-2">
+                    <input name="batch" id="batch" class="form-control" type="text" placeholder="eg. BAT20162020" />
+                </div>
+                <label class="col-sm-1"></label>
+                <label class="col-form-label col-sm-2">Stream of students</label>
+                <div class="col-sm-2">
+                    <select class="form-control" id="stream" required>
+                        <option selected disabled value="">Select stream</option>
+                        <option value="B-TECH">B-TECH</option>
+                        <option value="M-TECH">M-TECH</option>
+                        <option value="DEPLOMA">DEPLOMA</option>
+                    </select>
+                </div>
+                <label class="col-sm-1"></label>
+                <label class="col-form-label col-sm-1">Dept.</label>
+                <div class="col-sm-1">
+                    <span class="form-control bg-light text-secondary"> {{dept}} </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 form-label" for="sem">Semester</label>
+                <div class="col-sm-2">
+                    <input class="form-control" name="sem" id="sem" type="number" min=1 max=8 />
+                </div>
+            </div>
+            <br />
+            <h4>Select Subjects</h4>
+            <div class="border border-primary rounded p-2">
+                <div class="form-row border-primary border-bottom rounded pb-2">
+                    <span class="col-sm-2"> <b>Subject 1</b></span>
+                    <label class="col-sm-3">Elective Paper?</label>
+                    <div class="custom-control custom-radio custom-control-inline col-sm-1 m-md-0 ml-4">
+                        <input type="radio" id="sub1elec1" name="sub1elec" class="custom-control-input" value="t"
+                            onchange="toggleAdd('sub1');" />
+                        <label class="custom-control-label" for="sub1elec1">Yes</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline col-sm-1 m-md-0 ml-4">
+                        <input type="radio" id="sub1elec2" name="sub1elec" class="custom-control-input" value="f"
+                            checked="checked" onchange="toggleAdd('sub1');" />
+                        <label class="custom-control-label" for="sub1elec2">No</label>
+                    </div>
+                    <input id="sub1add" class="btn btn-sm btn-primary col-sm-2" value="Add Elective subject"
+                        onclick="alert('hello');" hidden/>
+                </div>
+
+                <div class="form-row">
+                    <span class="col-sm-2 mt-4"> </span>
+                    <div class="form-group col-sm-3">
+                        <label for="sub1name" class="small text-secondary">Subject Name</label>
+                        <input name="sub1name" id="sub1name" class="form-control" />
+                    </div>
+
+                    <div class="form-group col-sm-2">
+                        <label for="sub1code" class="small text-secondary">Subject Code</label>
+                        <input name="sub1code" id="sub1code" class="form-control" />
+                    </div>
+
+                    <div class="form-group col-sm-1">
+                        <label for="sub1cred" class="small text-secondary">Credits</label>
+                        <input name="sub1cred" id="sub1cred" class="form-control" />
+                    </div>
+
+                    <div class="col-sm mt-sm-4 p-md-2">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="sub1top1" name="sub1top" class="custom-control-input" value="t"
+                                checked="checked">
+                            <label class="custom-control-label" for="sub1top1">Theory</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="sub1top2" name="sub1top" class="custom-control-input" value="f">
+                            <label class="custom-control-label" for="sub1top2">Practical</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </form>
+    </div>
+
+</body>
+
+</html>

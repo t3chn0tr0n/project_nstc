@@ -22,9 +22,11 @@ function autocomplete(inp, arr) {
     /*append the DIV element as a child of the autocomplete container:*/
     this.parentNode.appendChild(a);
     /*for each item in the array...*/
-    for (i = 0; i < arr.length; i++) {
+    for (i = 0; i < arr.length-2; i+= 2) {
+      console.log(arr[i+1]);
       /*check if the item starts with the same letters as the text field value:*/
-      if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+      if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase() || arr[i + 1].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+        console.log("Hello");
         /*create a DIV element for each matching element:*/
         b = document.createElement("DIV");
         b.setAttribute("class", "border rounded row p-2");
@@ -32,16 +34,18 @@ function autocomplete(inp, arr) {
         b.setAttribute("align", "left");
         /*make the matching letters bold:*/
         b.innerHTML =
-          "<span class='col-10 mx-auto'><strong class='text-primary mt-1'>" +
+          "<span class='col-10 mx-auto small'><strong class='text-primary mt-1'>" +
           arr[i].substr(0, val.length) +
           "</strong>" +
-          arr[i].substr(val.length) +
+          arr[i].substr(val.length) + "&nbsp;&nbsp;&nbsp;" +
+          arr[i + 1].toUpperCase() + 
           "</span>";
+          
         /*insert a input field that will hold the current array item's value:*/
         b.innerHTML +=
           "<input type='hidden' value='" +
-          arr[i] +
-          "'> <span class='col-2 mx-auto'><a href='#'class='btn btn-sm btn-outline-primary mt-1'>view</a></span>" +
+          arr[i] + 
+          "'> <span class='col-2 mx-auto'>"+"<a href='view_student/" + arr[i] + "'class='btn btn-sm btn-outline-primary mt-1'>view</a></span>" +
           "   ";
         /*execute a function when someone clicks on the item value (DIV element):*/
         b.addEventListener("click", function(e) {
@@ -140,6 +144,7 @@ $(document).ready(function() {
           }, 0000);
 
           ids = ids.split("$");
+          console.log(ids);
           autocomplete(document.getElementById("search"), ids);
         }
       });

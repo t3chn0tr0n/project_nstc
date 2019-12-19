@@ -300,13 +300,13 @@ def extra_curricular(id):
         d['apti_condt'] = ea.aptitude_conduct
         d['apti_attnd'] = ea.aptitude_attend
         d['mck_intrvw'] = ea.mock_interview
-        d['iv1_date'] = ea.industry_visit_1_date
+        d['iv1_date'] = str(ea.industry_visit_1_date)
         d['iv1_place'] = ea.industry_visit_1
-        d['iv2_date'] = ea.industry_visit_2_date
+        d['iv2_date'] = str(ea.industry_visit_2_date)
         d['iv2_place'] = ea.industry_visit_2
-        d['onln_tst'] = ea.online_test
-        d['gate'] = ea.gate_exam
-        d['cat'] = ea.cat_exam
+        d['onln_tst'] = "Yes" if ea.online_test else "No"
+        d['gate'] = "Yes" if ea.gate_exam else "No"
+        d['cat'] = "Yes" if ea.cat_exam else "No"
         d['swrswti_puja'] = "Yes" if ea.saraswati_puja else "No"
         d['vswkrma_puja'] = "Yes" if ea.vishwakarma_puja else "No"
     if SeminarsWorkshops.objects.filter(attendee=id).exists():
@@ -381,26 +381,31 @@ def sem_for_nav_bar(id):
     return l
 
 
+# TODO: FIXME: ========================= append to a new list instead of deleting =================
 def comma_separated_add(model_obj, input_obj):
-    '''
-    ... This function helps to add comma seperated fields, doing various integrity checks.
-    ... Param 1: The object of the model
-    ... Param 2: The variable storing the input
-    ... Returns: A sting with all modifications(if at all!)
-    '''
+    """
+    This function: helps to add comma seperated fields, doing various integrity checks.
+    :params:
+     * Param 1: The object of the model
+     * Param 2: The variable storing the input
+    :returns:
+     * a sting with all modifications(if at all!)
+    """
+    combo = model_obj
     if input_obj:
-        if input_obj[-1] in (',', '\n',):
+        if input_obj[-1] in (',', '\n'):
             input_obj = input_obj[:-1]
-        model_obj = model_obj.split(', ')
+        model_obj = model_obj.split(',')
         input_obj = input_obj.split(',')
-        if model_obj[0] in (' ', ''):
-            model_obj.pop(0)
-        for x in input_obj:
-            x = x.strip()
-            if x not in model_obj:
-                model_obj.append(x)
-        model_obj = ', '.join(model_obj)
-    return model_obj
+        combo = model_obj + input_obj
+        combo = list(set(combo))
+        for i in range(len(combo)):
+            combo[i] = combo[i].strip()
+            combo[i] = combo[i].strip('\n')
+            if not combo[i]:
+                del combo[i]
+        combo = ', '.join(combo)
+    return combo
 
 
 def yes_to_true(var):
