@@ -1,18 +1,18 @@
 // Form 1
 $(document).ready(function() {
   $("#submit1").on("click", function() {
-    var sftskl_condt = document.getElementById("sftskl_condt").value;
-    var sftskl_attnd = document.getElementById("sftskl_attnd").value;
-    var apti_condt = document.getElementById("apti_condt").value;
-    var apti_attnd = document.getElementById("apti_attnd").value;
-    var mck_intrvw = document.getElementById("mck_intrvw").value;
-    var iv1_date = document.getElementById("iv1_date").value;
-    var iv1_place = document.getElementById("iv1_place").value;
-    var iv2_date = document.getElementById("iv2_date").value;
-    var iv2_place = document.getElementById("iv2_place").value;
-    var onln_tst = document.getElementById("onln_tst").value;
-    var gate = document.getElementById("gate").value;
-    var cat = document.getElementById("cat").value;
+    try{ var sftskl_condt = document.getElementById("sftskl_condt").value; } catch (e) { var sftskl_condt = null; }
+    try{ var sftskl_attnd = document.getElementById("sftskl_attnd").value; } catch (e) { var sftskl_attnd = null; }
+    try{ var apti_condt = document.getElementById("apti_condt").value; } catch (e) { var apti_condt = null; }
+    try{ var apti_attnd = document.getElementById("apti_attnd").value; } catch (e) { var apti_attnd = null; }
+    try{ var mck_intrvw = document.getElementById("mck_intrvw").value; } catch (e) { var mck_intrvw = null; }
+    try{ var iv1_date = document.getElementById("iv1_date").value; } catch (e) { var iv1_date = null; }
+    try{ var iv1_place = document.getElementById("iv1_place").value; } catch (e) { var iv1_place = null; }
+    try{ var iv2_date = document.getElementById("iv2_date").value; } catch (e) {  var iv2_date = null; }
+    try{ var iv2_place = document.getElementById("iv2_place").value; } catch (e) { var iv2_place = null; }
+    try{ var onln_tst = document.getElementById("onln_tst").value; } catch (e) {  var onln_tst = null; }
+    try{ var gate = document.getElementById("gate").value; } catch (e) { var gate = null; }
+    try{ var cat = document.getElementById("cat").value; } catch (e) { var cat = null; }
     $.ajax({
       type: "POST",
       url: "/ea_form1/",
@@ -50,16 +50,16 @@ $(document).ready(function() {
 // Form 2
 $(document).ready(function() {
   $("#submit2").on("click", function() {
-    var swrswti_puja = document.getElementById("swrswti_puja").value;
-    var vswkrma_puja = document.getElementById("vswkrma_puja").value;
-    var contribs = document.getElementById("contribs").value;
-    var ann_mag_pap_pub = document.getElementById("ann_mag_pap_pub").value;
-    var ann_mag_evnts = document.getElementById("ann_mag_evnts").value;
-    var wall_mag_evnts = document.getElementById("wall_mag_evnts").value;
-    var wall_mag_pap_pub = document.getElementById("wall_mag_pap_pub").value;
-    var pap_pub = document.getElementById("papers_pub").value;
-    var tech_contst = document.getElementById("tech_contst").value;
-    var awrds = document.getElementById("awrds").value;
+    try{ var swrswti_puja = document.getElementById("swrswti_puja").value; } catch (e) { var swrswti_puja = null; }
+    try{ var vswkrma_puja = document.getElementById("vswkrma_puja").value; } catch (e) { var vswkrma_puja = null; }
+    try{ var contribs = document.getElementById("contribs").value; } catch (e) { var contribs = null; }
+    try{ var ann_mag_pap_pub = document.getElementById("ann_mag_pap_pub").value; } catch (e) {var ann_mag_pap_pub = null; } 
+    try{ var ann_mag_evnts = document.getElementById("ann_mag_evnts").value; } catch (e) { var ann_mag_evnts = null; } 
+    try{ var wall_mag_evnts = document.getElementById("wall_mag_evnts").value; } catch (e) { var wall_mag_evnts = null; } 
+    try{ var wall_mag_pap_pub = document.getElementById("wall_mag_pap_pub").value; } catch (e) { var wall_mag_pap_pub = null; }
+    try{ var pap_pub = document.getElementById("papers_pub").value; } catch (e) { var pap_pub = null; } 
+    try{ var tech_contst = document.getElementById("tech_contst").value; } catch (e) { tech_contst = null; } 
+    try{ var awrds = document.getElementById("awrds").value; } catch (e) { var awrds =  null; }
     $.ajax({
       type: "POST",
       url: "/ea_form2/",

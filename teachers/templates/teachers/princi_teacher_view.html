@@ -1,0 +1,54 @@
+{% extends 'teachers/main.html/' %}
+{% block main_body %}
+{% load static %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="{% static 'teachers/js/princi_teacher_view.js' %}"></script>
+<center>
+<h3 class="text-primary p-2"><b> MAKAUT MAR 100 POINTS </b></h3>
+</center>
+{% csrf_token %}
+<div class="table-responsive-sm">
+    <table id="tableMain" class="table table-striped table-bordered" style="font-size:small;">
+        <thead>
+            <tr>
+                <th>
+                    <center>Teacher ID</center>
+                </th>
+                <th>
+                    <center>Name</center>
+                </th>
+                <th>
+                    <center>Department</center>
+                </th>
+                <th>
+                    <center>Assign HOD</center>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <br><br> 
+            {% for i in teacher %}
+            <tr>
+                <td>
+                    <center>{{i.id}}</center>
+                </td>
+                <td>
+                    <p>{{ i.name }}{% if i.middle_name != " "%}&nbsp{{ i.middle_name }}{% endif %}&nbsp{{ i.surname }}</p>
+                </td>
+                <td>
+                    <p>{{i.dept}}</p>
+                </td>
+                {% if not i.is_hod %}
+                    <td><div><center><button class="btn btn-sm btn-outline-primary" id="asng_hod{{ forloop.counter }}" onclick="assign_hod('mentor_id{{ forloop.counter }}','rmv_hod{{ forloop.counter }}')" name="">Assign HOD</button></center></div></td>
+                {% else %}
+                    <td><center><b>HOD OF THE DEPARTMENT<b></center></td>
+                {% endif %}
+                <input type="hidden" id="mentor_id{{ forloop.counter }}" value="{{i.id}}">
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

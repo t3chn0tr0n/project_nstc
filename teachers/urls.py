@@ -23,7 +23,7 @@ urlpatterns = [
     path('teacher_profile/upload_profile_pic/',
          upload_profile_pic, name="upload_profile_pic"),
     path('search/search_filter/', search_filter, name="search_filter"),
-
+    path('manage_teacher', manage_teacher, name="manage_teacher"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

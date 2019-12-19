@@ -1,35 +1,29 @@
-from builtins import ValueError
 import json
+from builtins import ValueError
+
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.api import success
 from django.forms import ValidationError
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.urls import reverse_lazy
 from django.template import Context, Template
+from django.urls import reverse_lazy
 
 from accounts.views import message
-from students.addons import (
-    get_univ_details,
-    form_fill_sem,
-    is_prev_sems_filled,
-    any_sem_yet,
-    get_idcard_details,
-    get_general_details,
-    get_sem_details,
-    get_page_details,
-    comma_separated_add,
-    yes_to_true,
-    extra_curricular
-)
-from .models import (Class10, Class12, FormFills, Details, Student, Counselings,
-                     ExtracurricularActivity, SeminarsWorkshops, Contributions)
+from students.addons import (any_sem_yet, comma_separated_add,
+                             extra_curricular, form_fill_sem,
+                             get_general_details, get_idcard_details,
+                             get_page_details, get_sem_details,
+                             get_univ_details, is_prev_sems_filled,
+                             yes_to_true)
 from subject_and_marks.models import SemMarks, Subjects
 from teachers.models import Teacher
 
+from .models import (Class10, Class12, Contributions, Counselings, Details,
+                     ExtracurricularActivity, FormFills, SeminarsWorkshops,
+                     Student)
 
-# Test Ground for new templates - Contains unchecked code - comment it out if it causes error
 
 @login_required(login_url=reverse_lazy('login'))
 def general_details(request):
@@ -296,8 +290,7 @@ def sem_marks(request, sem):
                     SemMarks.objects.create(**details, **marks)
                     form_fill_sem(stud.id, sem)
         except:
-            error = ["Internal Server Error!",
-                     "Cause: Student not found or database integrity errors"]
+            error = ["Something went wrong. Please try again!"]
 
         if error:
             return render(request, 'message.html', {'title': 'ERROR', 'error': True,  'messages': error})
@@ -355,55 +348,55 @@ def ea_form1(request):
     if ExtracurricularActivity.objects.filter(student=request.user.username).exists():
         ea = ExtracurricularActivity.objects.get(student=request.user.username)
 
-        if not ea.soft_skill_conduct and not ea.soft_skill_attend and sftskl_condt and sftskl_attnd:
-            ea.update(soft_skill_conduct=sftskl_condt,
-                      soft_skill_attend=sftskl_attnd)
-            ea.save
+        if not ea.soft_skill_conduct and not ea.soft_skill_attend and sftskl_condt and sftskl_attnd and sftskl_condt >= sftskl_attnd:
+            ea.soft_skill_conduct = sftskl_condt
+            ea.soft_skill_attend = sftskl_attnd
+            ea.save()
         else:
             msg = True
 
-        if not ea.aptitude_conduct and not ea.aptitude_attend and apti_condt and apti_attnd:
-            ea.update(aptitude_conduct=sftskl_condt,
-                      aptitude_attend=sftskl_attnd)
-            ea.save
+        if not ea.aptitude_conduct and not ea.aptitude_attend and apti_condt and apti_attnd and apti_condt >= apti_attnd:
+            ea.aptitude_conduct = sftskl_condt
+            ea.aptitude_attend = sftskl_attnd
+            ea.save()
         else:
             msg = True
 
         if not ea.mock_interview and mck_intrvw == 'yes':
-            ea.update(mock_interview=True)
-            ea.save
+            ea.mock_interview = True
+            ea.save()
         else:
             msg = True
 
         if not ea.industry_visit_1 and not ea.industry_visit_1_date and iv1_date and iv1_place:
-            ea.update(industry_visit_1=iv1_place,
-                      industry_visit_1_date=iv1_date)
-            ea.save
+            ea.industry_visit_1 = iv1_place
+            ea.industry_visit_1_date = iv1_date
+            ea.save()
         else:
             msg = True
 
         if not ea.industry_visit_2 and not ea.industry_visit_2_date and iv2_date and iv2_place:
-            ea.update(industry_visit_2=iv2_place,
-                      industry_visit_2_date=iv2_date)
-            ea.save
+            ea.industry_visit_2 = iv2_place
+            ea.industry_visit_2_date = iv2_date
+            ea.save()
         else:
             msg = True
 
         if not ea.online_test and onln_tst == 'yes':
-            ea.update(online_test=True)
-            ea.save
+            ea.online_test = True
+            ea.save()
         else:
             msg = True
 
         if not ea.gate_exam and gate == 'yes':
-            ea.update(gate_exam=True)
-            ea.save
+            ea.gate_exam = True
+            ea.save()
         else:
             msg = True
 
         if not ea.cat_exam and cat == 'yes':
-            ea.update(cat_exam=True)
-            ea.save
+            ea.cat_exam = True
+            ea.save()
         else:
             msg = True
     else:

@@ -24,7 +24,7 @@
     <!-- HEADER -->
     <div class="container-fluid">
         <div class="row bg-light pt-3 pb-1">
-            <div  class="col-1 text-info toggleButton pl-4 pr-4">
+            <div class="col-1 text-info toggleButton pl-4 pr-4">
                 <a id="sidebarCollapse">
                     <h5 style="display:inline;">&nbsp;&nbsp;<abbr title="Toggle Side Bar"class="initialism"><i class="fas fa-align-justify"></i></abbr></h5>
                 </a>
@@ -73,6 +73,13 @@
                 <li>
                     <a href="{% url 'teacher_profile' %}"><i class="fas fa-user-cog"> Your Profile</i></a>
                 </li>
+                
+                <!-- Manage HOD -->
+                {% if is_princi %}
+                <li>
+                    <a href="{% url 'princi_teacher_view' %}"><i class="fas fa-heading"> Manage HODs </i></a>
+                </li>
+                {% endif %}
             </ul>
             <br />
             
@@ -108,7 +115,7 @@
                         </li>
                     </ul>
                 </li>
-                <!-- Internal Marks-->
+                <!--Manage Mentors-->
                 <li>
                     <a href="{% url 'manage_mentor' %}"><i class="fas fa-users-cog"> Manage Mentors</i></a>
                 </li>

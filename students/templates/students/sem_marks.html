@@ -158,7 +158,11 @@
                 sem {{x}}
             </button>
             {% else %}
-                {% if lat and x == 1 or x == 2%}
+                {% if lat and x == 1 %}
+                    <a class="btn btn-outline-secondary disabled btn-sm">
+                    sem {{ x }}
+                    </a>
+                {% elif lat and x == 2%}
                     <a class="btn btn-outline-secondary disabled btn-sm">
                     sem {{ x }}
                     </a>

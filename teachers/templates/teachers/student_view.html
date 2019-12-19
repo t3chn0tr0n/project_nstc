@@ -1,0 +1,726 @@
+{% extends 'teachers/main.html/' %}
+{% block main_body %}
+{% load static %}
+<script src="{% static 'teachers/js/student_view.js' %}"></script>
+
+<!-- Modal -->
+<div class="modal" id="sem1" tabindex="-1" role="dialog" aria-labelledby="sem1Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sem1">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore dolorem autem, at quo enim similique rerum facilis nostrum magnam cumque?
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group">
+          
+          {% for x in available %}
+              {% if lat and x in lat_sems %}
+                <span class="btn btn-sm btn-primary disabled">
+                  Sem {{x}}
+                </span>
+              {% else %}
+                <button id=sem{{x}} class="btn btn-sm btn-primary" data-toggle="modal" data-target="#sem{{x}}">
+                  Sem {{x}}
+                </button>
+              {% endif %}
+            {% endfor %}
+  
+            {% for x in not_available %}
+            <span class="btn btn-sm btn-outline-primary  disabled">
+              Sem {{x}}
+            </span>
+            {% endfor %}
+  
+            {% for x in invalid_sems %}
+            <span class="btn btn-sm btn-outline-secondary  disabled">
+              Sem {{x}}
+            </span>
+            {% endfor %}
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Id card details -->
+<div class="jumbotron" style="padding:1.5rem; padding-bottom: 0.3rem; margin-bottom:0rem;">
+  <div class="form-group row">
+    <div class="col">
+      <h2>Student Profile of:</h2>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2">
+      <b> Name: </b>
+    </label>
+    <label class="col-sm-4"> {{name}} </label>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-sm-2">
+      <b> Card No.: </b>
+    </label>
+    <label class="col-sm-4"> {{id}} </label>
+    <label class="col-sm-2">
+      <b> Class Roll No: </b>
+    </label>
+    <label class="col-sm-4"> {{roll_no}} </label>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2">
+      <b> Stream: </b>
+    </label>
+    <label class="col-sm-4"> {{stream}} </label>
+    <label class="col-sm-2">
+      <b> Department: </b>
+    </label>
+    <label class="col-sm-4"> {{dept}} </label>
+  </div>
+  
+  <div class="form-group row">
+    <label class="col-sm-2">
+      <b> Mentor: </b>
+    </label>
+    <label class="col-sm-4"> {{mentor}} </label>
+  </div>
+</div>
+<br />
+
+{% if gen_details %}
+
+<!-- General Details -->
+<div class="bg-light p-3 rounded">
+  
+  <center>
+    <h4 class="mb-0">General Details</h4>
+  </center>
+  {% if gen_edit %} 
+    <button id="edt" class="btn btn-sm btn-outline-success" style="float: right;" onclick="editable();"><i class="fas fa-user-edit"></i> Edit Details</button>
+    <br />
+  {% endif %}
+    <br />
+  <form id="generalDetailsForm" method="POST" action="#">
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Admission No.</label>
+      <div class="col-sm-4">
+        <input class="form-control" name="admin_no" value="{{ admin_no }}" required />
+      </div>
+
+      <label class="col-sm-2 col-form-label">Registration No.</label>
+      <div class="col-sm-4">
+        <input class="form-control" name="reg_no" value="{{ reg_no }}" required />
+      </div>
+    </div>
+    <br />
+
+    <!-- DOB and Blood group -->
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label"> Date of Birth </label>
+      <div class="col-sm-4">
+        <input name="dob" class="form-control" type="date" value="{{ dob }}" required />
+      </div>
+      <label class="col-sm-2 col-form-label"> Blood Group </label>
+      <div class="col-sm">
+        <select id="blood_type" name="blood_type" class="custom-select" required>
+          <option {% if blood_type == "A+" %} selected {% endif %} value="A+">A+</option>
+          <option {% if blood_type == "B+" %} selected {% endif %} value="B+">B+</option>
+          <option {% if blood_type == "AB+" %} selected {% endif %} value="AB+">AB+</option>
+          <option {% if blood_type == "O+" %} selected {% endif %} value="O+">O+</option>
+          <option {% if blood_type == "A-" %} selected {% endif %} value="A-">A-</option>
+          <option {% if blood_type == "B-" %} selected {% endif %} value="B-">B-</option>
+          <option {% if blood_type == "AB-" %} selected {% endif %} value="AB-">AB-</option>
+          <option {% if blood_type == "O-" %} selected {% endif %} value="O-">O-</option>
+          <option {% if blood_type == "OH" %} selected {% endif %} value="OH">H/H or OH</option>
+        </select>
+      </div>
+    </div>
+
+    <!--HOUSE DETAILS: Permanent-->
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label"> Guardian Name </label>
+      <div class="col-sm-4">
+        <input name="guard" class="form-control" value="{{guard}}" required />
+      </div>
+      <label class="col-sm-2 col-form-label"> Permanent Address </label>
+      <div class="col-sm">
+        <textarea name="perm_add" class="form-control" required>{{perm_add}}</textarea>
+      </div>
+    </div>
+
+    <!--HOUSE DETAILS: Local-->
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label"> Local Guardian <span class="small"></span></label>
+      <div class="col-sm-4">
+        <input name="loc_guard" class="form-control" value="{{loc_guard}}" required />
+      </div>
+      <label class="col-sm-2 col-form-label"> Local Address <span class="small"></span></label>
+      <div class="col-sm">
+        <textarea name="loc_add" class="form-control" required>{{loc_add}}</textarea>
+      </div>
+    </div>
+
+    <!-- contact nos -->
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Landline No.<span class="small"></span></label>
+      <div class="col-sm-4">
+        <input name="land_phone" class="form-control" value="{{land_phone}}" required />
+      </div>
+
+      <label class="col-sm-2 col-form-label">Guardian Mobile</label>
+      <div class="col-sm">
+        <input name="g_mob_no" class="form-control" value="{{g_mob_no}}" required />
+      </div>
+    </div>
+
+    <!-- Student CONTACT DETAILS-->
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Mobile No.</label>
+      <div class="col-sm-4">
+        <input name="mob_no" class="form-control" value="{{ mob_no }}" required />
+      </div>
+      <label class="col-sm-2 col-form-label">Email</label>
+      <div class="col-sm">
+        <input name="email" type="email" class="form-control" value="{{email}}" required />
+      </div>
+    </div>
+
+    <!--SCHOOL DETAILS-->
+    <!-- Class X -->
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label"> School Name-X </label>
+      <div class="col-sm-4">
+        <input name="sc10_name" type="text" class="form-control" value="{{sc10_name}}" required />
+      </div>
+
+      <label class="col-sm-2 col-form-label"> Medium of Education </label>
+      <div class="col-sm">
+        <input name="sc10_med" type="text" class="form-control" value="{{sc10_med}}" required />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">score Attained(%)</label>
+      <div class="col-sm-4">
+        <input name="sc10_score" class="form-control" value="{{sc10_score}}" required />
+      </div>
+      <label class="col-sm-2 col-form-label">Year of Passing</label>
+      <div class="col-sm">
+        <input name="sc10_year" class="form-control" value="{{sc10_year}}" required />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label"> School Address </label>
+      <div class="col-sm">
+        <textarea name="sc10_add" class="form-control" required>{{sc10_add}}</textarea>
+      </div>
+    </div>
+
+    <!--Class XII-->
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label"> School Name-XII </label>
+      <div class="col-sm-4">
+        <input type="text" name="sc12_name" class="form-control" value="{{sc12_name}}" required />
+      </div>
+
+      <label class="col-sm-2 col-form-label"> Medium of Education </label>
+      <div class="col-sm">
+        <input name="sc12_med" type="text" class="form-control" value="{{sc12_med}}" required />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">score Attained(%)</label>
+      <div class="col-sm-4">
+        <input name="sc12_score" class="form-control" value="{{sc12_score}}" required />
+      </div>
+      <label class="col-sm-2 col-form-label">Year of Passing</label>
+      <div class="col-sm">
+        <input name="sc12_year" class="form-control" value="{{sc12_year}}" required />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label"> School Address </label>
+      <div class="col-sm-10">
+        <textarea name="sc12_add" class="form-control" required>{{sc12_add}}</textarea>
+      </div>
+    </div>
+
+    <!-- Diploma-->
+    {% if is_diploma %}
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label"> Diploma Score (SGPA)</label>
+      <div class="col-sm-4">
+        <input name="dip_score" class="form-control" value="{{dip_score}}" required />
+      </div>
+    </div>
+    {% endif %}
+    {% if gen_edit %} 
+      <div id="upload-1" style="float: right;">
+        <input class="btn btn-success btn-sm" onclick="toggle('upload-1', 'confirm-1');" value="Upload Changes"
+          type="button" />
+        <input class="btn btn-danger btn-sm ml-2" value="RESET" type="reset" />
+        <br />
+      </div>
+      
+      <div id="confirm-1" hidden style="float: right;">
+        <input class="btn btn-success btn-sm ml-2" value="CONFIRM" type="submit" />
+        <input class="btn btn-danger btn-sm" onclick="toggle('confirm-1', 'upload-1');" value="CANCEL" type="button" />
+        <br />
+      </div>
+    {% endif %}
+  </form>
+</div>
+<hr />
+<script>
+  $("#generalDetailsForm :input").prop('disabled', true);
+</script>
+
+<!--=============================================================================================-->
+
+<!-- Extracurricular Activities -->
+<div class="bg-light p-3 rounded">
+  <center>
+    <h4 class="mb-0">Extracurricular Activities</h4>
+    <span class="small text-secondary"><i class="fas fa-info-circle"></i> Blank field signifies student has not filled
+      the form
+      yet!</span><br /><br />
+  </center>
+  {% if ext_acts %}
+  <!-- form1 -->
+  <!--Softskill-->
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label"> <b> Soft Skill Class </b> </label>
+    <div class="col-sm-3 mb-1">
+      <label class="sr-only"> Classes Conducted </label>
+      <input id="sftskl_condt" class="form-control" value="Conducted: {{sftskl_condt}}" disabled readonly />
+    </div>
+    <div class="col-sm-3">
+      <label class="sr-only"> Classes Attended </label>
+      <input id="sftskl_attnd" class="form-control" value="Attended: {{sftskl_attnd}}" disabled readonly />
+    </div>
+  </div>
+  <!--Aptitude-->
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label"> <b> Aptitude Class </b> </label>
+    <div class="col-sm-3 mb-1">
+      <label class="sr-only"> Classes Conducted </label>
+      <input id="apti_condt" class="form-control" value="Conducted: {{apti_condt}}" disabled readonly />
+    </div>
+    <div class="col-sm-3">
+      <label class="sr-only"> Classes Attended </label>
+      <input id="apti_attnd" class="form-control" value="Attended: {{apti_attnd}}" disabled readonly />
+    </div>
+  </div>
+  <!--Moock Interview-->
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label"> <b> Mock Interview </b> </label>
+    <div class="col-sm-3">
+      <input class="form-control" value="Attended: {{mck_intrvw}}" disabled readonly />
+    </div>
+    <div class="col-sm-1">
+      <span class="small text-secondary">(Yes/No)</span>
+    </div>
+  </div>
+  <!-- Industrial Visit-1 -->
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label mt-1"><b> Industrial Visit-1 </b></label>
+    <div class="col-sm-3">
+      <label class="sr-only">Date of visit</label>
+      <input id="iv1_date" class="form-control mt-1" value="Date: {{iv1_date}}" disabled readonly />
+    </div>
+    <div class="col-sm-4">
+      <label class="sr-only">Name of the Institution</label>
+      <input id="iv1_place" class="form-control mt-1" value="Institution: {{iv1_place}}" disabled readonly />
+    </div>
+  </div>
+  <!-- Industrial Visit-2 -->
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label"><b> Industrial Visit-2 </b></label>
+    <div class="col-sm-3">
+      <label class="sr-only">Date of visit</label>
+      <input id="iv2_date" class="form-control mt-1" value="Date: {{iv2_date}}" disabled readonly />
+    </div>
+    <div class="col-sm-4">
+      <label class="sr-only">Name of the Institution</label>
+      <input id="iv2_place" class="form-control mt-1" value="Institution: {{iv2_place}}" disabled readonly />
+    </div>
+  </div>
+  <div class="form-group row">
+    <span class="col-sm form-text text-muted font-weight-bold"> Did he/she gave/will give these exams? </span>
+  </div>
+  <!-- Online Test -->
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label"><b> Online Test </b></label>
+    <div class="col-sm-3">
+      <input class="form-control mt-1" value="{% if onln_tst %} Yes {% else %} No {% endif %}" disabled readonly />
+    </div>
+    <div class="col-sm-1">
+      <span class="small text-secondary">(Yes/No)</span>
+    </div>
+  </div>
+  <!-- GATE Exam -->
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label"><b> GATE Exam </b></label>
+    <div class="col-sm-3">
+      <input class="form-control mt-1" value="{% if gate %} Yes {% else %} No {% endif %}" disabled readonly />
+    </div>
+    <div class="col-sm-1">
+      <span class="small text-secondary">(Yes/No)</span>
+    </div>
+  </div>
+  <!-- CAT/MAT/JEMAT Exam -->
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label"><b> CAT/MAT/JEMAT Exam </b></label>
+    <div class="col-sm-3">
+      <input class="form-control mt-1" value="{% if cat %} Yes {% else %} No {% endif %}" disabled readonly />
+    </div>
+    <div class="col-sm-1">
+      <span class="small text-secondary">(Yes/No)</span>
+    </div>
+  </div>
+  <hr />
+  </form>
+
+  <!-- form2 -->
+  <div>
+    {%csrf_token%}
+    <!-- Swaraswati Puja -->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label "> <b> Swaraswati Puja Participation </b> </label>
+      <div class="col-sm-3">
+        <input class="form-control mt-1" value="{{swrswti_puja}}" disabled readonly />
+      </div>
+      <div class="col-sm-1">
+        <span class="small text-secondary">(Yes/No)</span>
+      </div>
+    </div>
+
+    <!-- Viswakarma Puja -->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label "> <b> Viswa Karma Puja Participation </b> </label>
+      <div class="col-sm-3">
+        <input class="form-control mt-1" value="{{vswkrma_puja}}" disabled readonly />
+      </div>
+      <div class="col-sm-1">
+        <span class="small text-secondary">(Yes/No)</span>
+      </div>
+    </div>
+
+    <!-- Contributions -->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label"><b> Contributions Made To: </b></label>
+      <div class="col-sm-6 ">
+        <textarea id="contribs" class="form-control" rows="1" value={{contribs}} disabled readonly></textarea>
+      </div>
+    </div>
+
+    <!-- Annual Magazine -->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label"> <b> Annual Magazine </b> </label>
+      <div class="col-sm-3">
+        <label class="sr-only"> Paper Publications </label>
+        <textarea id="ann_mag_pap_pub" class="form-control mb-1" rows="2" cols="10" disabled
+          readonly>{{ ann_mag_pap_pub }}</textarea>
+      </div>
+      <div class="col-sm-3">
+        <label class="sr-only"> Events & Topics </label>
+        <textarea id="ann_mag_evnts" class="form-control mb-1" rows="2" cols="10" disabled
+          readonly>{{ ann_mag_evnts }}</textarea>
+      </div>
+    </div>
+
+    <!-- Wall Magazine -->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label"> <b> Wall Magazine </b> </label>
+      <div class="col-sm-3">
+        <label class="sr-only"> Paper Publications </label>
+        <textarea id="wall_mag_pap_pub" class="form-control mb-1" rows="2" cols="10" disabled
+          readonly>{{wall_mag_pap_pub}}</textarea>
+      </div>
+      <div class="col-sm-3">
+        <label class="sr-only"> Events & Topics </label>
+        <textarea id="wall_mag_evnts" class="form-control mb-1" rows="2" cols="10" disabled
+          readonly>{{wall_mag_evnts}}</textarea>
+      </div>
+    </div>
+
+    <!-- Paper Publications-->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label"><b> Papers Published </b></label>
+      <div class="col-sm-6">
+        <textarea id="papers_pub" class="form-control" rows="1" disabled readonly>{{papers_pub}}</textarea>
+      </div>
+    </div>
+
+    <!-- Technical Contest -->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label"><b> Technical Contests </b></label>
+      <div class="col-sm-6">
+        <textarea id="tech_contst" class="form-control" rows="1" disabled readonly>{{tech_contst}}</textarea>
+      </div>
+    </div>
+
+    <!-- Awards -->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label"><b> Academic/Technical Awards </b></label>
+      <div class="col-sm-6">
+        <textarea id="awrds" class="form-control" rows="1" disabled readonly>{{awrds}}</textarea>
+      </div>
+    </div>
+    <hr /><br />
+  </div>
+
+  <!-- form3: Table 1 Seminar/Workshop attended-->
+  <div>
+    <!-- Table 1: Seminar/Workshop attended -->
+    <div class="row">
+      <label class="col-sm-3 col-form-label "> <b> Seminars/Workshops Attended </b> </label>
+      <div class="col-sm">
+        <br />
+        {% if wrk_shp  %}
+        <span class="mt-5 pt-5">{{wrk_shp}}</span>
+        <table class="table table-borderless">
+          <tr>
+            <th width="10%">Sl. No.</th>
+            <th width="40%">Name/Topic</th>
+            <th width="20%">Date</th>
+            <th width="30%">Organization</th>
+          </tr>
+          <tbody id="wrk_shp_form_body" border="0">
+            {% for x in wrk_shp_list %}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td><span class="text-secondary">{{x.name}}</span></td>
+              <td><span class="text-secondary">{{x.date}}</span></td>
+              <td><span class="text-secondary">{{x.org}}</span></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        No Seminars/Workshops have been attended by this student yet!
+        {% endif %}
+      </div>
+    </div>
+    <br />
+    <hr /><br />
+  </div>
+
+  <!-- form4: Table 2 Counseling -->
+  <div class="container">
+    <div class="row">
+      <label class="col-sm-3 col-form-label"> <b> Date of Counseling With Comments </b> </label>
+      <div class="col-sm">
+        <br />
+        {% if counslng_count %}
+        <span class="mt-5 pt-5">{{counslng_count}}</span>
+        <table class="table table-borderless">
+          <tr>
+            <th width="15%">Sl. No.</th>
+            <th width="20%">Date</th>
+            <th>Discussion Topic</th>
+          </tr>
+          <tbody id="counslng_form_body" border="0">
+            {% for x in counslng_list %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td><span class="text-secondary">{{x.date}}</span></td>
+              <td><span class="text-secondary">{{x.topic}}</span></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        No Counselling has been made by this student with his/her mentor yet!
+        {% endif %}
+      </div>
+    </div>
+    <br />
+  </div>
+  {% else %}
+  <center class="mb-4 mt-4"> <span class="alert alert-danger"> Extracurricular Activities' Details not filled by student
+    </span> </center>
+  {% endif %}
+</div>
+<hr />
+
+{% else %}
+<br />
+<center> <span class="alert alert-danger small"><i class="fas fa-exclamation-triangle"></i> Details not filled
+    by student </span> </center>
+<br />
+{% endif %}
+
+<!--=============================================================================================-->
+
+<!-- Sem Marks -->
+{% if not no_sem %}
+<div class="bg-light p-3 rounded">
+  <center>
+    <h4 class="mb-0">Semester Results</h4>
+    <br />
+    <span class="small text-secondary">Click the button to view that semester result</span>
+  </center>
+
+  <!-- Sem-Buttons -->
+  <div class="row">
+    <div class="mx-auto">
+      <div class="btn-group">
+
+        {% for x in available %}
+        {% if lat and x in lat_sems %}
+        <span class="btn btn-sm btn-primary disabled">
+          Sem {{x}}
+        </span>
+        {% else %}
+        
+        <button id=sem{{x}} class="btn btn-sm btn-primary" data-target="#carouselExampleIndicators" data-slide-to="{{forloop.counter}}">
+          Sem {{x}}
+        </button>
+        {% endif %}
+        {% endfor %}
+
+        {% for x in not_available %}
+        <span class="btn btn-sm btn-outline-primary  disabled">
+          Sem {{x}}
+        </span>
+        {% endfor %}
+
+        {% for x in invalid_sems %}
+        <span class="btn btn-sm btn-outline-secondary  disabled">
+          Sem {{x}}
+        </span>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <center><br /><span class="text-danger"><i class="fas fa-exclamation-triangle"></i> <em>TO BE IMPLEMENTED</em></span></center>
+  <br />
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+    {% for sem in sem_marks %}
+    <div class="carousel-item">
+      <div class="bg-white p-5 ml-3 mr-3 rounded">
+        <h3> Semester {{sem.no}}</h3>
+        <hr />
+        
+        <div class="row">
+          <div class="col-sm-3 mx-auto">
+            <b>Highest Score in Class</b>
+          </div>
+          <div class="col-sm-3 mx-auto">
+            <input class="form-control form-control-sm w-50" value="{{ sem.highest_score }}" disabled readonly />
+          </div>
+          <div class="col-sm-2 mx-auto">
+            <b>Attendance (%) </b>
+          </div>
+          <div class="col-sm-3 mx-auto">
+            <input class="form-control form-control-sm w-50" value="{{ sem.attendance }}" disabled readonly />
+          </div>
+        </div>
+        <br />
+
+        <div class="row">
+          <div class="col-sm-3 mx-auto">
+            <b>No. of Tutorial Class</b>
+          </div>
+          <div class="col-sm-3 mx-auto">
+            <input class="form-control form-control-sm w-50" value="{{ sem.tut_class }}" disabled readonly />
+          </div>
+          <div class="col-sm-2 mx-auto">
+            <b>No. of F. School</b>
+          </div>
+          <div class="col-sm-3 mx-auto">
+            <input class="form-control form-control-sm w-50" value="{{ sem.f_school }}" disabled readonly />
+          </div>
+        </div>
+        <br />
+
+        <div class="row">
+          <div class="col-sm-3 mx-auto">
+            <b>SLC activities</b>
+          </div>
+          <div class="col-sm-3 mx-auto">
+            <input class="form-control form-control-sm w-50" value="{{ sem.slc }}" disabled readonly />
+          </div>
+          <div class="col-sm-2 mx-auto">
+            <b>Disciplinary action</b>
+          </div>
+          <div class="col-sm-3 mx-auto">
+            <input class="form-control form-control-sm w-50" value="{{ sem.disc_action }}" disabled readonly />
+          </div>
+        </div>
+        <br />
+
+        <div class="row">
+          <div class="col-sm-3 mx-auto">
+            <b>SGPA</b>
+          </div>
+          <div class="col-sm-3 mx-auto">
+            <input class="form-control form-control-sm w-50" value="{{ sem.sgpa }}" disabled readonly />
+          </div>
+          <div class="col-sm-2 mx-auto">
+          </div>
+          <div class="col-sm-3 mx-auto">
+          </div>
+        </div>
+        <br />
+
+        <div class="row table-responsive">
+          <div class="col-11">
+            <table class="table table-sm table-bordered table-hover">
+              <thead class="bg-secondary text-light">
+                <tr>
+                  <th scope="col" width="15%">Sl. No.</th>
+                  <th scope="col" width="45%">Subject</th>
+                  <th scope="col" width="20%">Internals</th>
+                  <th scope="col" width="20%">Final Marks</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for sub in sem.subs %}
+                <tr>
+                  <td>{{ sub.slno }}y55</td>
+                  <td><b> {{ sub.name }} sdasdas</b></td>
+
+                  <td>
+                    {% if sub.internal %}
+                    {{ sub.internal }}
+                    {% else %}
+                    <span class="small"> N/A </span>
+                    {% endif %}
+                  </td>
+
+                  <td>
+                    {{ sub.marks }}12
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% else %}
+<center class="mb-4 mt-4"> <span class="alert alert-danger small"><i class="fas fa-exclamation-circle"></i> Semester
+    Details not filled/No Semester yet!</span> </center>
+{% endif %}
+
+{% endblock %}

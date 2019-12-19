@@ -54,7 +54,7 @@
             <label class="col-sm-3 col-form-label mt-1"><b> Industrial Visit-1 </b></label>
             <div class="col-sm-3">
                 <label class="sr-only">Date of visit</label>
-                <input id="iv1_date" type="date" class="form-control mt-1" title="Date of visit" {% if iv1_date %} value={{iv1_date}} disabled readonly {% endif %}/>
+                <input id="iv1_date" class="form-control mt-1" title="Date of visit" {% if iv1_date %} value={{iv1_date}} disabled readonly {% else %} type="date" {% endif %}/>
             </div>
             <div class="col-sm-4">
                 <label class="sr-only">Name of the Institution</label>
@@ -66,7 +66,7 @@
             <label class="col-sm-3 col-form-label"><b> Industrial Visit-2 </b></label>
             <div class="col-sm-3">
                 <label class="sr-only">Date of visit</label>
-                <input id="iv2_date" title="Date of visit" type="date" class="form-control mt-1" title="Date of visit" {% if iv2_date %} value={{iv2_date}} disabled readonly {% endif %}/>
+                <input id="iv2_date" title="Date of visit" class="form-control mt-1" title="Date of visit" {% if iv2_date %} value={{iv2_date}} disabled readonly {% else %} type="date" {% endif %}/>
             </div>
             <div class="col-sm-4">
                 <label class="sr-only">Name of the Institution</label>
@@ -127,7 +127,7 @@
     </form>
 
     <!-- form2 -->
-    <form id="form2" id="form2" class="container">
+    <form id="form2" class="container">
         {%csrf_token%}
         <!-- Swaraswati Puja -->
         <div class="form-group row">
@@ -197,7 +197,7 @@
         <div class="form-group row">
             <label class="col-sm-3 col-form-label"><b> Papers Published </b></label>
             <div class="col-sm-6">
-                <textarea id="papers_pub" title="Papers Published" class="form-control" rows="1" placeholder="Use commas to seperate different Contests [PLEASE DON'T USE ENTER]">{{tech_contst}}</textarea>
+                <textarea id="papers_pub" title="Papers Published" class="form-control" rows="1" placeholder="Use commas to seperate different Contests [PLEASE DON'T USE ENTER]">{{papers_pub}}</textarea>
             </div>
         </div>
 
@@ -223,11 +223,11 @@
         <hr /><br />
     </form>
 
-    <!-- form3: Table 1 Seminer/Workshop Attainded-->
+    <!-- form3: Table 1 Seminars/Workshop attended-->
     <div class="container">
-        <!-- Table 1: Seminer/Workshop Attainded -->
+        <!-- Table 1: Seminars/Workshop attended -->
         <div class="row">
-            <label class="col-sm-3 col-form-label "> <b> Seminers/Workshops Attended </b> </label>
+            <label class="col-sm-3 col-form-label "> <b> Seminars/Workshops Attended </b> </label>
             <form id="form3" method="POST">
                 {%csrf_token%}
                 <table class="table table-borderless">
@@ -272,6 +272,7 @@
         <div class="row">
             <label class="col-sm-3 col-form-label "> <b> Date of Counseling With Comments </b> </label>
             <form id="form3" method="POST">
+                <span class="text-danger">‼ To be implemented ‼</span><br />
                 {%csrf_token%}
                 <table class="table table-borderless">
                     <tr>

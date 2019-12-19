@@ -5,6 +5,9 @@
 <center>
 <h3 class="text-primary p-2"><b> Your Profile </b></h3>
 </center>
+
+<div class="container">
+    <form>
 {% load static %}
 <script src="{% static 'teachers/js/change_profile.js' %}"></script>
 
@@ -62,7 +65,7 @@
                         </div>
                     </div>
                     <br />
-                    {% comment %} <div class="row"> <!-- Whatsapp No-->
+                    {% comment %}<div class="row"> <!-- Whatsapp No-->
                         {% csrf_token %}
                         <label class="col-sm-3 font-weight-bold text-dark col-form-label">
                             Whatsapp No.
@@ -87,8 +90,8 @@
                 </div>
         </div>
         <br />
-        <center><button onclick="change()" class="btn btn-success"><i class="far fa-save"></i> Save </button></center>
-    
+        <center><button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save </button></center>
+    </form>
     
 </div>
 
