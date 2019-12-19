@@ -220,7 +220,7 @@ def search_filter(request):
         rslt=[]
         srch = request.POST['srch'].upper()
         ment = Teacher.objects.get(id=request.user.username)
-
+        student = Student.objects.all().filter(id__startswith=srch)
         if srch[0:4] == "NIT/":
             if ment.is_principal:
                 student = Student.objects.all().filter(id__startswith=srch)
@@ -229,10 +229,6 @@ def search_filter(request):
             else:
                 student = Student.objects.filter(mentor=request.user.username).filter(id__startswith=srch)
             for i in student:
-            # if(i.middle_name != "NULL"):
-            #     l.append(i.name+" "+i.middle_name+" "+i.surname+"$")
-            # else:
-            #     l.append(i.name+" "+i.surname+"$")
                 rslt.append(i.id+"$")
         else:
             if ment.is_principal:
@@ -246,7 +242,7 @@ def search_filter(request):
                     rslt.append(i.name+" "+i.middle_name+" "+i.surname+"$")
                 else:
                     rslt.append(i.name+" "+i.surname+"$")
-              
+        
 
 
     return HttpResponse(rslt[:10])

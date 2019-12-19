@@ -44,6 +44,7 @@ def student_report(request):
 
         # sem1_list=sem1.values()
         # to check wether the student in new or not
+        total_marks = 0
         for i in total_table:
             total_marks = i.total
 
