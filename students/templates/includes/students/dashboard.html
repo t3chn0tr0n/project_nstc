@@ -9,6 +9,11 @@
       <ul class="navbar-nav mr-auto">
 
         <li class="nav-item">
+          <a class="nav-link" href="{% url 'profile' %}">Profile
+          </a>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link" href="{% url 'details' %}">General Details
           </a>
         </li>
@@ -36,7 +41,7 @@
 
           </div>
         </li>
-        {% comment %} 
+        {% comment %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'certificate' %}">Certificates</a>
         </li> {% endcomment %}
@@ -45,6 +50,9 @@
           <a class="nav-link" href="{% url 'contact_mentor' %}">Contact Mentor</a>
         </li>
 
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'upload_documents' %}">Upload Documents</a>
+        </li>
       </ul>
 
       <form id="logout" method="POST" action="{% url 'logout' %}">

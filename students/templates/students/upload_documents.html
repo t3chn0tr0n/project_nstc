@@ -1,0 +1,29 @@
+{% extends 'students/main.html/' %} {% block body %}
+
+<div class="container">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
+    {% load static %}
+    <script src="{% static 'students/js/student_profile.js'%}"></script>
+    <div class="container">
+        <div>
+                <form method="POST" action="{% url 'upload_documents' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">
+                            <b> Upload File: </b>
+                        </label>
+                        <div class="col-sm-4 mb-2">
+                            <input class="form-control" id="" name="" required />
+                        </div>
+                        <div id="mob_no_change" class="col-sm-1 col-form-label" style="display: inline;">
+                            <input type="file" name="myfile" id="myfile" class="btn btn-outline-info btn-sm"/>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-outline-info btn-sm" id="upload" value="upload" />
+                </form>
+        </div>
+    </div>
+</div>
+
+{% endblock body%}

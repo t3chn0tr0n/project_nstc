@@ -123,7 +123,6 @@
             <!-- Phone reset-->
             {% if mob_no != " " %}
                 <div>
-                {% csrf_token %}
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">
                             <b> Registered Mobile: </b>
@@ -142,6 +141,8 @@
                     details, contact your Mentor or HOD.</span>
             {% endif %}
             </div>
+
+    
 
         <!-- Page lists-->
         <table class="table table-bordered table-hover table-responsive-sm mb-5">

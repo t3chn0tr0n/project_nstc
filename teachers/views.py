@@ -250,6 +250,7 @@ def upload_profile_pic(request):
     name = fs.save(upload_file.name, upload_file)
     url = fs.url(name)
     teach.image = url
+    print(teach.image)
     teach.save()
     return redirect(profile)
 
