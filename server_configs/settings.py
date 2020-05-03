@@ -10,7 +10,7 @@ SECRET_KEY = 'mpn@rt2shr#-hs_7ow+(=%=%#+-c-m6u7q0ibaaiswz&%+9s%3'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.2.5', 'localhost']
 
 
 # Application definition

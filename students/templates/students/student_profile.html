@@ -1,189 +1,211 @@
 {% extends 'students/main.html/' %} {% block body %}
 <div class="container">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-        crossorigin="anonymous">
     {% load static %}
     <script src="{% static 'students/js/student_profile.js'%}"></script>
-    <div class="container">
-        <center>
-            <h1 class="mt-2 mb-4">Student Profile</h1>
-        </center>
+    <center>
+        <h1 class="mt-2 mb-4">Student Profile</h1>
+    </center>
 
-        <!-- FIXED DETAILS -->
-        <div class="jumbotron" style="padding:1.5rem; padding-bottom: 0.3rem; margin-bottom:0rem;">
-            <div class="form-group row">
-                <label class="col-sm-2">
-                    <b>Name: </b>
-                </label>
-                <label class="col-sm-4"> {{name}} </label>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2">
-                    <b>Card No.: </b>
-                </label>
-                <label class="col-sm-4" id="card_no"> {{card_no}} </label>
-
-                <label class="col-sm-2">
-                    <b> Stream: </b>
-                </label>
-                <label class="col-sm"> {{stream}} </label>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2">
-                    <b> Department: </b>
-                </label>
-                <label class="col-sm-4"> {{dept}} </label>
-
-                <label class="col-sm-2">
-                    <b> Mentor: </b>
-                </label>
-                <label class="col-sm"> {{mentor}} </label>
-            </div>
+    <!-- FIXED DETAILS -->
+    <div class="jumbotron" style="padding:1.5rem; padding-bottom: 0.3rem; margin-bottom:0rem;">
+        <div class="form-group row">
+            <label class="col-sm-2">
+                <b>Name: </b>
+            </label>
+            <label class="col-sm-4"> {{name}} </label>
         </div>
+        <div class="form-group row">
+            <label class="col-sm-2">
+                <b>Card No.: </b>
+            </label>
+            <label class="col-sm-4" id="card_no"> {{card_no}} </label>
 
-        <!-- University Details -->
-        <div class="bg-light mt-4 mb-5 p-3">
-            <form method="POST" action="{% url 'univ_details' %}" target="{% url 'univ_details' %}">
-                {% if not reg_no and not admin_no %}
-                <span class="text-danger">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <b>Please fill University Details as soon as you get it!</b> <br /> <br />
-                </span>
-                {% endif %}
-                {% csrf_token %}
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Admission No.</label>
-                    <div class="col-sm-4">
-                        <input name="admin_no" class="form-control" {% if admin_no %} value="{{ admin_no }}" readonly
-                            disabled {% else %} placeholder="Enter once issued" required {% endif %} />
-                    </div>
+            <label class="col-sm-2">
+                <b> Stream: </b>
+            </label>
+            <label class="col-sm"> {{stream}} </label>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2">
+                <b> Department: </b>
+            </label>
+            <label class="col-sm-4"> {{dept}} </label>
 
-                    <label class="col-sm-2 col-form-label">Registration No.</label>
-                    <div class="col-sm-4">
-                        <input name="reg_no" class="form-control" {% if reg_no %} value="{{ reg_no }}" readonly disabled {%
+            <label class="col-sm-2">
+                <b> Mentor: </b>
+            </label>
+            <label class="col-sm"> {{mentor}} </label>
+        </div>
+    </div>
+
+    <!-- University Details -->
+    <div class="bg-light mt-4 mb-5 p-3">
+        <form method="POST" action="{% url 'univ_details' %}" target="{% url 'univ_details' %}">
+            {% if not reg_no and not admin_no %}
+            <span class="text-danger">
+                <i class="fas fa-exclamation-circle"></i>
+                <b>Please fill University Details as soon as you get it!</b> <br /> <br />
+            </span>
+            {% endif %}
+            {% csrf_token %}
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Admission No.</label>
+                <div class="col-sm-4">
+                    <input name="admin_no" class="form-control" {% if admin_no %} value="{{ admin_no }}" readonly
+                        disabled {% else %} placeholder="Enter once issued" required {% endif %} />
+                </div>
+
+                <label class="col-sm-2 col-form-label">Registration No.</label>
+                <div class="col-sm-4">
+                    <input name="reg_no" class="form-control" {% if reg_no %} value="{{ reg_no }}" readonly disabled {%
                             else %} placeholder="Enter once issued" required {% endif %} />
-                    </div>
                 </div>
+            </div>
 
-                <!-- submit button -->
-                {% if not reg_no and not admin_no %}
-                <div align="right">
-                    <button id="submit1" type="submit" class="btn btn-success btn-sm"> Submit changes </button>
-                    <br />
-                    <span class="font-italic small text-danger">[Note: Please RE-CHECK before submitting]</span>
-                </div>
-                {% endif %}
-            </form>
+            <!-- submit button -->
+            {% if not reg_no and not admin_no %}
+            <div align="right">
+                <button id="submit1" type="submit" class="btn btn-success btn-sm"> Submit changes </button>
+                <br />
+                <span class="font-italic small text-danger">[Note: Please RE-CHECK before submitting]</span>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- email, password and phone no.-->
+    <div class="bg-light mt-4 mb-5 p-3">
+        <!-- Email reset -->
+
+        {% comment %} action="{% url 'change_email' %} {% endcomment %}
+        {% csrf_token %}
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">
+                <b> Registered Email: </b>
+            </label>
+
+            <div class="col-sm-4 mb-2">
+                <input class="form-control" id="email" name="email" value="{{ email }}" disabled required />
+            </div>
+
+            <div id="email_change" class="col-sm col-form-label" style="display: inline;">
+                <input type="button" class="btn btn-outline-info btn-sm"
+                    onclick="change('email_change', 'email_submit', 'email');" value="Change it" />
+            </div>
+
+            <div id="email_submit" class="col-sm p-0" style="display: none;">
+                <lable class="col-1 col-form-label small text-secondary" style="display: inline;">Password:</lable>
+                <input type="password" name="password" id="pass_email"
+                    class="col-md-4 form-control form-control-sm mb-1" style="display: inline;" required />
+                <button type="submit" class="btn btn-success btn-sm small" onclick="check_email()"
+                    style="display: inline;">Submit</button>
+                <input type="button" class="btn btn-danger btn-sm"
+                    onclick="cancel('email_change', 'email_submit', 'email');" value="Cancel" />
+            </div>
         </div>
 
-        <!-- email, password and phone no.-->
-        <div class="bg-light mt-4 mb-5 p-3">
-            <!-- Email reset -->
-            
-            {% comment %} action="{% url 'change_email' %} {% endcomment %}
-                {% csrf_token %}
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">
-                        <b> Registered Email: </b>
-                    </label>
+        <!-- Password reset-->
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">
+                <b> Password: </b>
+            </label>
+            <div class="col-sm-4 mb-2">
+                <input class="form-control" value="xxxxxxxx" type="password" disabled readonly />
+            </div>
+            <div class="col-lg-1 col-sm-2 col-form-label">
+                <a href="{% url 'reset' %}" class="btn btn-outline-info btn-sm">Change it</a>
+            </div>
+        </div>
 
-                    <div class="col-sm-4 mb-2">
-                        <input class="form-control" id="email" name="email" value="{{ email }}" disabled required />
-                    </div>
-
-                    <div id="email_change" class="col-sm col-form-label" style="display: inline;">
-                        <input type="button" class="btn btn-outline-info btn-sm" onclick="change('email_change', 'email_submit', 'email');"
-                            value="Change it" />
-                    </div>
-
-                    <div id="email_submit" class="col-sm p-0" style="display: none;">  
-                        <lable class="col-1 col-form-label small text-secondary" style="display: inline;">Password:</lable>
-                        <input type="password" name="password" id="pass_email" class="col-md-4 form-control form-control-sm mb-1" style="display: inline;" required />
-                        <button type="submit" class="btn btn-success btn-sm small" onclick="check_email()" style="display: inline;">Submit</button>
-                        <input type="button" class="btn btn-danger btn-sm"  onclick="cancel('email_change', 'email_submit', 'email');"
-                            value="Cancel" />
-                    </div>
-
-                </div>
-            
-            
-            <!-- Password reset-->
+        <!-- Phone reset-->
+        {% if mob_no != " " %}
+        <div>
+            {% csrf_token %}
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">
-                    <b> Password: </b>
+                    <b> Registered Mobile: </b>
                 </label>
                 <div class="col-sm-4 mb-2">
-                    <input class="form-control" value="xxxxxxxx" type="password" disabled readonly />
+                    <input class="form-control" id="mob_no" name="mob_no" maxlength="40" minlength="10"
+                        data-bv-stringlength-message="The full name must be more than 10 and less than 40 characters"
+                        value="{{ mob_no }}" disabled required />
                 </div>
-                <div class="col-lg-1 col-sm-2 col-form-label">
-                    <a href="{% url 'reset' %}" class="btn btn-outline-info btn-sm">Change it</a>
+                <div id="mob_no_change" class="col-sm-1 col-form-label" style="display: inline;">
+                    <input type="button" class="btn btn-outline-info btn-sm"
+                        onclick="change('mob_no_change', 'mob_no_submit', 'mob_no');" value="Change it" />
                 </div>
+                <div id="mob_no_submit" class="col-sm p-0" style="display: none;"></div>
             </div>
+        </div>
+        <span class="small text-secondary"> <i class="fas fa-exclamation-circle text-info"></i> To change any other
+            details, contact your Mentor or HOD.</span>
+        {% endif %}
+    </div>
 
-            <!-- Phone reset-->
-            {% if mob_no != " " %}
-                <div>
-                {% csrf_token %}
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">
-                            <b> Registered Mobile: </b>
-                        </label>
-                        <div class="col-sm-4 mb-2">
-                            <input class="form-control" id="mob_no" name="mob_no" maxlength="40" minlength="10" data-bv-stringlength-message="The full name must be more than 10 and less than 40 characters" value="{{ mob_no }}" disabled required />
-                        </div>
-                        <div id="mob_no_change" class="col-sm-1 col-form-label" style="display: inline;">
-                            <input type="button" class="btn btn-outline-info btn-sm" onclick="change('mob_no_change', 'mob_no_submit', 'mob_no');"
-                                value="Change it" />
-                        </div>
-                        <div id="mob_no_submit" class="col-sm p-0" style="display: none;"></div>
-                    </div>
-                </div>
-                <span class="small text-secondary"> <i class="fas fa-exclamation-circle text-info"></i> To change any other
-                    details, contact your Mentor or HOD.</span>
-            {% endif %}
-            </div>
+    <!-- Certificates Status -->
+    <div class="bg-light mt-4 mb-5 p-3">
+        
+        <div class="clearfix">
+            <h3 class="float-left">Your Certificates Status</h3> 
+            <button class="btn btn-sm btn-outline-info float-right"><i class="fas fa-plus"></i> Add new certificate</button>
+        </div>
+        <br />
+        <h5><i class="far fa-thumbs-up text-success"></i> Approved Certificates</h5>
+        <span class="p-5 small text-secondary">No Certificates approved yet, try uploading one first!</span>
+        <hr />
+        
+        <h5><i class="far fa-pause-circle text-secondary"></i> Certificates Pending Approval</h5>
+        <span class="p-5 small text-success">No Certificates pending for approval :)</span>
+        <hr />
+        
+        <h5><i class="far fa-thumbs-down text-danger"></i> Certificates Rejected</h5>
+        <span class="p-5 small text-success">None rejected. You are awesome ;D</span>
+        <hr />
+    </div>
 
-        <!-- Page lists-->
-        <table class="table table-bordered table-hover table-responsive-sm mb-5">
-            <thead>
-                <tr>
-                    <th style="width: 1%">Sl.No.</th>
-                    <th style="width: 50%">Page Name</th>
-                    <th style="width: 1%">Is Filled?</th>
-                    <th style="width: 10%">Link</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for x in pages %}
-                <tr>
-                    <td scope="row">{{ forloop.counter }}</td>
-                    {% if not x.pass %}
-                    <td> {{ x.name }}</td>
-                    {% endif %}
+    <!-- Page lists-->
+    <table class="table table-bordered table-hover table-responsive-sm mb-5 bg-light">
+        <thead>
+            <tr>
+                <th style="width: 1%">Sl.No.</th>
+                <th style="width: 50%">Page Name</th>
+                <th style="width: 1%">Is Filled?</th>
+                <th style="width: 10%">Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for x in pages %}
+            <tr>
+                <td scope="row">{{ forloop.counter }}</td>
+                {% if not x.pass %}
+                <td> {{ x.name }}</td>
+                {% endif %}
 
-                    {% if x.filled == 'yes' %}
-                    <td><i class="text-success fas fa-check-circle">&nbsp;yes</i></td>
-                    {% elif x.filled == 'na' %}
-                    <td><center><i class="text-secondary fas fa-check-circle">&nbsp;</i> </center></td>
+                {% if x.filled == 'yes' %}
+                <td><i class="text-success fas fa-check-circle">&nbsp;yes</i></td>
+                {% elif x.filled == 'na' %}
+                <td>
+                    <center><i class="text-secondary fas fa-check-circle">&nbsp;</i> </center>
+                </td>
+                {% else %}
+                <td><i class="text-danger fas fa-times-circle">&nbsp;no</i></td>
+                {% endif %}
+                <td>
+                    {% if x.sem %}
+                    <a href="{% url x.link x.sem_no %}" target="_blank">link</a>
                     {% else %}
-                    <td><i class="text-danger fas fa-times-circle">&nbsp;no</i></td>
+                    {% if x.link is not None %}
+                    <a href="{% url x.link %}" target="_blank">link</a>
+                    {% else %}
+                    N/A
                     {% endif %}
-                    <td>
-                        {% if x.sem %}
-                        <a href="{% url x.link x.sem_no %}" target="_blank">link</a>
-                        {% else %}
-                        {% if x.link is not None %}
-                        <a href="{% url x.link %}" target="_blank">link</a>
-                        {% else %}
-                            N/A
-                        {% endif %}
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
 
-            <!--
+        <!--
                     List of pages:
                     ==============
                     1. General Details
@@ -198,12 +220,11 @@
                     10. Semester 8 Marks
                     11. Choose Elective
                 -->
-        </table>
-        <div class="small">
-            {% comment %} href="{% url 'feedback'%}" {% endcomment %}
-            <a href="#"> Please rate this website and give feedback! </a>
-            <span class="text-secondary"> It is important to improve the user experience. </secondary>
-        </div>
+    </table>
+    <div class="small">
+        {% comment %} href="{% url 'feedback'%}" {% endcomment %}
+        <a href="#"> Please rate this website and give feedback! </a>
+        <span class="text-secondary"> It is important to improve the user experience. </secondary>
     </div>
 </div>
 {% endblock body%}

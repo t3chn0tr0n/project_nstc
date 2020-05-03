@@ -635,3 +635,16 @@ def contact_mentor(request):
         'title': 'Contact Mentor'
     }
     return render(request, 'students/contactMentor.html', d)
+
+
+def demo(request):
+
+    if request.method == 'POST':
+        if Teacher.objects.filter(id=request.user.username):
+        title = "Error"
+        error = ['Teachers have nothing to do with this page!']
+        return message(title, error, request)
+        
+        return "Submitted"
+
+    return render(request, 'students/upload_cert.html')

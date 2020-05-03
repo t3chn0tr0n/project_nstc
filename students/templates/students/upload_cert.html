@@ -1,0 +1,34 @@
+{% extends 'students/main.html/' %} {% block body %}
+<div class="container">
+    <center>
+        <h3 class="text-primary"> Upload New Certificate</h3>
+    </center>
+    <div class="bg-light p-3 rounded mb-3">
+        <form action="{% url 'demo' %}" method="POST">
+            <p class="row m-1">
+                <label class="col-md-2 col-form-label">Add Title</label>
+                <input class="col-md-8 form-control" type="text" placeholder="e.g. Blood donation at Lion's Club" required/>
+            </p>
+            <br />
+            <p class="row m-1">
+                <label class="col-md-2 col-form-label">Add Description</label>
+                <textarea class="col-md-8 form-control" rows="3" placeholder="e.g. Date, Place/venue of the camp, and any other details" required></textarea>
+            </p>
+            <br />
+            <p class="row m-1">
+                <label class="col-md-2 col-form-label">Upload File</label>
+                <input type="file" class="col-md-4 form-control form-control-sm" accept=".jpg, .jpeg, .png, .pdf" size="2" required />
+                <span class="col-md-4 text-secondary col-form-label"> <span class="small">Upload pdf, jpeg, jpg or png file</span></span>
+            </p>
+            <br />
+            <p class="clearfix">
+                <span class="float-right">
+                    <button type="submit" class="btn btn-sm btn-outline-success">Upload</button>
+                    <button type="reset" class="btn btn-sm btn-outline-danger">Reset</button>
+                </span>
+            </p>
+        </form>
+        <br />
+    </div>
+</div>
+{% endblock %}
