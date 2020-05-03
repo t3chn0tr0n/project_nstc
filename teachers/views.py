@@ -15,7 +15,6 @@ from students.models import Batch, Student
 from .addons import get_teach_details
 from .models import *
 
-
 # TODO: Handle errors gracefully!
 @login_required(login_url=reverse_lazy('login'))
 def upload_student(request):
@@ -107,7 +106,6 @@ def student_search(request):
             is_hod = False
         return render(request, 'teachers/search.html', {'dept': ment.dept, 'title': "Upload Student", "rank": rank, 'is_hod': is_hod})
 
-
 @login_required(login_url=reverse_lazy('login'))
 def princi_teacher_view(request):
     if Student.objects.filter(id=request.user.username):
@@ -142,7 +140,6 @@ def assign_hod(request):
     else:
         d = {'fof': True}
         return render(request, 'message.html', d)
-
 
 @login_required(login_url=reverse_lazy('login'))
 def mentees_list(request):
@@ -228,7 +225,6 @@ def profile(request):
         return render(request, 'message.html', d)
 
     d = get_teach_details(request)
-
     teach = Teacher.objects.get(id=request.user.username)
     d['mob_no1'] = teach.phone_no_1
     d['mob_no2'] = teach.phone_no_2
@@ -254,6 +250,7 @@ def upload_profile_pic(request):
     name = fs.save(upload_file.name, upload_file)
     url = fs.url(name)
     teach.image = url
+    print(teach.image)
     teach.save()
     return redirect(profile)
 
@@ -287,7 +284,6 @@ def change_profile(request):
             d3 = Teacher.objects.filter(id=teach_id).update(phone_no_2=mob2)
             return HttpResponse("Update Successful!!")
     return HttpResponse("Something went worng!!!Please contact to your mentor as soon as possible.")
-
 
 @login_required(login_url=reverse_lazy('login'))
 def search_filter(request):
@@ -362,6 +358,14 @@ def download_student(request):
         return response
     return render(request, 'teachers/download_student.html', d)
 
+@login_required(login_url=reverse_lazy('login'))
+def manage_mentor(request):
+    d = get_teach_details(request)
+    batch = Batch.objects.all()
+    mentor = Teacher.objects.filter(dept = d['dept'])
+    d['batch'] = batch
+    d['mentor'] = mentor
+    return render(request, 'teachers/manage_mentor.html',d)
 
 @login_required(login_url=reverse_lazy('login'))
 def manage_mentor(request):
@@ -388,7 +392,6 @@ def mentor_student_show(request):
         l = len(std_id_str)
         return HttpResponse(std_id_str[:l-1])
     return render(request, 'teachers/manage_mentor.html')
-
 
 @login_required(login_url=reverse_lazy('login'))
 def mentor_change(request):

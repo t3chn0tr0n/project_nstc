@@ -142,44 +142,47 @@
         {% endif %}
     </div>
 
-    <!-- Certificates Status -->
-    <div class="bg-light mt-4 mb-5 p-3">
-        
-        <div class="clearfix">
-            <h3 class="float-left">Your Certificates Status</h3> 
-            <button class="btn btn-sm btn-outline-info float-right"><i class="fas fa-plus"></i> Add new certificate</button>
-        </div>
-        <br />
-        <h5><i class="far fa-thumbs-up text-success"></i> Approved Certificates</h5>
-        <span class="p-5 small text-secondary">No Certificates approved yet, try uploading one first!</span>
-        <hr />
-        
-        <h5><i class="far fa-pause-circle text-secondary"></i> Certificates Pending Approval</h5>
-        <span class="p-5 small text-success">No Certificates pending for approval :)</span>
-        <hr />
-        
-        <h5><i class="far fa-thumbs-down text-danger"></i> Certificates Rejected</h5>
-        <span class="p-5 small text-success">None rejected. You are awesome ;D</span>
-        <hr />
-    </div>
+            <!-- Phone reset-->
+            {% if mob_no != " " %}
+                <div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">
+                            <b> Registered Mobile: </b>
+                        </label>
+                        <div class="col-sm-4 mb-2">
+                            <input class="form-control" id="mob_no" name="mob_no" maxlength="40" minlength="10" data-bv-stringlength-message="The full name must be more than 10 and less than 40 characters" value="{{ mob_no }}" disabled required />
+                        </div>
+                        <div id="mob_no_change" class="col-sm-1 col-form-label" style="display: inline;">
+                            <input type="button" class="btn btn-outline-info btn-sm" onclick="change('mob_no_change', 'mob_no_submit', 'mob_no');"
+                                value="Change it" />
+                        </div>
+                        <div id="mob_no_submit" class="col-sm p-0" style="display: none;"></div>
+                    </div>
+                </div>
+                <span class="small text-secondary"> <i class="fas fa-exclamation-circle text-info"></i> To change any other
+                    details, contact your Mentor or HOD.</span>
+            {% endif %}
+            </div>
 
-    <!-- Page lists-->
-    <table class="table table-bordered table-hover table-responsive-sm mb-5 bg-light">
-        <thead>
-            <tr>
-                <th style="width: 1%">Sl.No.</th>
-                <th style="width: 50%">Page Name</th>
-                <th style="width: 1%">Is Filled?</th>
-                <th style="width: 10%">Link</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for x in pages %}
-            <tr>
-                <td scope="row">{{ forloop.counter }}</td>
-                {% if not x.pass %}
-                <td> {{ x.name }}</td>
-                {% endif %}
+    
+
+        <!-- Page lists-->
+        <table class="table table-bordered table-hover table-responsive-sm mb-5">
+            <thead>
+                <tr>
+                    <th style="width: 1%">Sl.No.</th>
+                    <th style="width: 50%">Page Name</th>
+                    <th style="width: 1%">Is Filled?</th>
+                    <th style="width: 10%">Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in pages %}
+                <tr>
+                    <td scope="row">{{ forloop.counter }}</td>
+                    {% if not x.pass %}
+                    <td> {{ x.name }}</td>
+                    {% endif %}
 
                 {% if x.filled == 'yes' %}
                 <td><i class="text-success fas fa-check-circle">&nbsp;yes</i></td>

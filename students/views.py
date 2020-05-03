@@ -1,6 +1,7 @@
 import json
 from builtins import ValueError
 
+from django.core.files.storage import FileSystemStorage
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.api import success
@@ -302,11 +303,11 @@ def sem_marks(request, sem):
         student = Student.objects.get(id=request.user.username)
         if student.is_lateral and sem in (1, 2, '1', '2'):
             d = {
-                'title': 'ERROR',  
+                'title': 'ERROR',
                 'messages': ['You are a lateral student, remember?']
                 }
             return render(request, 'message.html', d)
-            
+
         details = get_sem_details(request.user.username, sem)
         if details == -1:
             return render(request, 'message.html', {'title': 'ERROR', 'error': True,  'messages': ['Subject list for the semester not found!']})
@@ -611,7 +612,7 @@ def change_email(request):
                 else:
                     return HttpResponse("Email is invalid!!!Make sure that your Email Id is correct otherwise you will not receive any Email from the collage.")
             else:
-                return HttpResponse("Invalid password!!!")             
+                return HttpResponse("Invalid password!!!")
         except ValueError:
             return HttpResponse("Failed to update email!!!Please contact to your mentor as soon as possible.")
     return HttpResponse("1")
@@ -624,7 +625,7 @@ def contact_mentor(request):
         title = "Error"
         error = ['Teachers have nothing to do with this page!']
         return message(title, error, request)
-    stud = Student.objects.get(id=request.user.username)    
+    stud = Student.objects.get(id=request.user.username)
     teach = Teacher.objects.get(id='NIT/01/JYP')
     d = {
         'mname': teach.name,
@@ -636,15 +637,16 @@ def contact_mentor(request):
     }
     return render(request, 'students/contactMentor.html', d)
 
-
-def demo(request):
-
-    if request.method == 'POST':
-        if Teacher.objects.filter(id=request.user.username):
+def upload_documents(request):
+    if Teacher.objects.filter(id=request.user.username):
         title = "Error"
         error = ['Teachers have nothing to do with this page!']
         return message(title, error, request)
-        
-        return "Submitted"
-
-    return render(request, 'students/upload_cert.html')
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage(location='/documents')
+        print(fs)
+        filename = fs.save(myfile.name, myfile)
+        print(filename)
+        # uploaded_file_url = fs.url(filename)  
+    return render(request, 'students/upload_documents.html')
