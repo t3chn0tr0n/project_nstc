@@ -12,10 +12,10 @@ from students.addons import (extra_curricular, get_general_details,
                              get_idcard_details, get_univ_details)
 from students.models import Batch, Student
 
-from .addons import get_teach_details
+from .addons import get_teach_details, get_sem_details_for
 from .models import *
 
-# TODO: Handle errors gracefully!
+
 @login_required(login_url=reverse_lazy('login'))
 def upload_student(request):
     if Student.objects.filter(id=request.user.username):
@@ -97,14 +97,10 @@ def student_search(request):
     if request.method == "POST":
         pass
     else:
-        ment = Teacher.objects.get(id=request.user.username)
-        if ment.is_hod:
-            rank = "HOD"
-            is_hod = True
-        else:
-            rank = "Mentor"
-            is_hod = False
-        return render(request, 'teachers/search.html', {'dept': ment.dept, 'title': "Upload Student", "rank": rank, 'is_hod': is_hod})
+        d = get_teach_details(request)
+        d[title] = "Upload Student"
+        return render(request, 'teachers/search.html', d)
+
 
 @login_required(login_url=reverse_lazy('login'))
 def princi_teacher_view(request):
@@ -121,14 +117,13 @@ def princi_teacher_view(request):
     return render(request, 'teachers/princi_teacher_view.html', d)
 
 
-# TODO: only can be done by principal
 @login_required(login_url=reverse_lazy('login'))
 def assign_hod(request):
     if Student.objects.filter(id=request.user.username):
         d = {'fof': True}
         return render(request, 'message.html', d)
 
-    if request.method == "POST" and request.is_ajax():
+    if Teacher.objects.get(id=request.user.username).is_principal and request.method == "POST" and request.is_ajax():
         mentor_id = request.POST.get('mentor_id')
         new_obj = Teacher.objects.get(id=mentor_id)
         old_hod = Teacher.objects.get(is_hod=True)
@@ -140,6 +135,7 @@ def assign_hod(request):
     else:
         d = {'fof': True}
         return render(request, 'message.html', d)
+
 
 @login_required(login_url=reverse_lazy('login'))
 def mentees_list(request):
@@ -191,9 +187,8 @@ def view_student(request, x, y, z):
     d['no_sem'] = False
     d['lat_sems'] = (1, 2)  # constant
     # call a function here that gives available sems
-    d['available'] = [1, 2, 3, 4]
-    d['not_available'] = [5, 6]
-    d['invalid_sems'] = [7, 8]
+    d['available'], d['not_available'], d['invalid_sems'] = get_sem_details_for(
+        student_id)
 
     return render(request, 'teachers/student_view.html', d)
 
@@ -250,7 +245,6 @@ def upload_profile_pic(request):
     name = fs.save(upload_file.name, upload_file)
     url = fs.url(name)
     teach.image = url
-    print(teach.image)
     teach.save()
     return redirect(profile)
 
@@ -285,6 +279,7 @@ def change_profile(request):
             return HttpResponse("Update Successful!!")
     return HttpResponse("Something went worng!!!Please contact to your mentor as soon as possible.")
 
+
 @login_required(login_url=reverse_lazy('login'))
 def search_filter(request):
     if Student.objects.filter(id=request.user.username):
@@ -294,7 +289,6 @@ def search_filter(request):
     if request.method == "POST":
         rslt = []
         srch = request.POST['srch'].upper()
-        print(srch)
         ment = Teacher.objects.get(id=request.user.username)
         if srch[0:4] == "NIT/":
             if ment.is_principal:
@@ -314,7 +308,6 @@ def search_filter(request):
             else:
                 student = Student.objects.filter(
                     mentor=request.user.username).filter(name__startswith=srch)
-        print(student)
         if student:
             for i in student:
                 if(i.middle_name != "NULL" or i.middle_name is None):
@@ -358,14 +351,16 @@ def download_student(request):
         return response
     return render(request, 'teachers/download_student.html', d)
 
+
 @login_required(login_url=reverse_lazy('login'))
 def manage_mentor(request):
     d = get_teach_details(request)
     batch = Batch.objects.all()
-    mentor = Teacher.objects.filter(dept = d['dept'])
+    mentor = Teacher.objects.filter(dept=d['dept'])
     d['batch'] = batch
     d['mentor'] = mentor
-    return render(request, 'teachers/manage_mentor.html',d)
+    return render(request, 'teachers/manage_mentor.html', d)
+
 
 @login_required(login_url=reverse_lazy('login'))
 def manage_mentor(request):
@@ -392,6 +387,7 @@ def mentor_student_show(request):
         l = len(std_id_str)
         return HttpResponse(std_id_str[:l-1])
     return render(request, 'teachers/manage_mentor.html')
+
 
 @login_required(login_url=reverse_lazy('login'))
 def mentor_change(request):

@@ -1,4 +1,4 @@
-from students.addons import current_sem, get_sem_details
+from students.addons import current_sem, get_sem_details, current_sem
 from students.models import Student
 
 from .models import Teacher
@@ -34,6 +34,8 @@ def get_teach_details(request):
     teach = Teacher.objects.get(id=request.user.username)
     rank = teach.desig
     if teach.is_principal:
+        rank = "Principal"
+    elif teach.is_principal:
         rank = "Principal"
     elif teach.is_hod:
         rank = "HOD"
@@ -71,3 +73,18 @@ def get_sem_results_for(id):
         if d.get('not_found'):
             pass
     pass
+
+
+def get_sem_details_for(id):
+    stud = Student.objects.get(id=id)
+    sem = current_sem(id, stud)
+    available = [str(x) for x in range(1, int(sem) + 1)]
+    if stud.stream == "B":
+        not_available = [str(x) for x in range(int(sem) + 1, 9)]
+        invalid_sems = []
+    elif stud.stream == "D":
+        not_available = [str(x) for x in range(int(sem) + 1, 7)]
+        invalid_sems = ['7', '8']
+    elif stud.stream == "M":
+        not_available = ['5', '6', '7', '8']
+    return available, not_available, invalid_sems

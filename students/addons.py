@@ -14,7 +14,7 @@ def get_idcard_details(id):
         if stud.middle_name == 'NULL':
             mid_name = ''
         else:
-            mid_name = stud.middle_name   
+            mid_name = stud.middle_name
         details = {
             'name': stud.name + " " + mid_name + " " + stud.surname,
             'id': stud.id,
@@ -92,8 +92,9 @@ def get_univ_details(id):
         return {}
 
 
-def current_sem(id):
-    stud = Student.objects.get(id=id)
+def current_sem(id, stud: None):
+    if not stud:
+        stud = Student.objects.get(id=id)
     batch = stud.batch
     year = int(batch[3:7])
     date = datetime.datetime.now()
@@ -192,7 +193,7 @@ def get_sem_details(id, sem):
             details['lat'] = False
         # Sem management
         details['curr_sem'] = sem
-        sem = current_sem(id)
+        sem = current_sem(id, stud=stud)
         details['available'] = [str(x) for x in range(1, int(sem)+1)]
         if stud.stream == "B":
             details['not_available'] = [str(x) for x in range(int(sem)+1, 9)]
