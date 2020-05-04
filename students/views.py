@@ -305,7 +305,7 @@ def sem_marks(request, sem):
             d = {
                 'title': 'ERROR',
                 'messages': ['You are a lateral student, remember?']
-                }
+            }
             return render(request, 'message.html', d)
 
         details = get_sem_details(request.user.username, sem)
@@ -563,13 +563,15 @@ def change_phone(request):
 
     if request.method == 'POST' and request.is_ajax():
         mob_no = request.POST['mob_no'].strip()
-        mob_len=len(mob_no)
+        mob_len = len(mob_no)
         password = request.POST['password']
-        user = auth.authenticate(username=request.user.username, password=password)
+        user = auth.authenticate(
+            username=request.user.username, password=password)
         try:
             mob_no = int(mob_no)
             if user and mob_len == 10:
-                d = Details.objects.filter(card_no=request.user.username).update(mobile_no=mob_no)
+                d = Details.objects.filter(
+                    card_no=request.user.username).update(mobile_no=mob_no)
             else:
                 if(mob_len != 10):
                     return HttpResponse("Mobile no is not valid!!")
@@ -587,7 +589,8 @@ def profile(request):
     details.update(get_univ_details(request.user.username))
     details['email'] = Student.objects.get(id=request.user.username).email
     try:
-        details['mob_no'] = Details.objects.get(card_no=request.user.username).mobile_no
+        details['mob_no'] = Details.objects.get(
+            card_no=request.user.username).mobile_no
     except:
         details['mob_no'] = " "
     return render(request, 'students/student_profile.html', details)
@@ -604,7 +607,8 @@ def change_email(request):
         email_len = len(email)
         password = request.POST['password']
         card_no = request.POST['card_no']
-        user = auth.authenticate(username=request.user.username, password=password)
+        user = auth.authenticate(
+            username=request.user.username, password=password)
         try:
             if user:
                 if '@' in email and ('.' in email.split('@')[1]):
@@ -617,8 +621,10 @@ def change_email(request):
             return HttpResponse("Failed to update email!!!Please contact to your mentor as soon as possible.")
     return HttpResponse("1")
 
+
 def certificate(request):
     pass
+
 
 def contact_mentor(request):
     if Teacher.objects.filter(id=request.user.username):
@@ -632,10 +638,11 @@ def contact_mentor(request):
         'memail': teach.email,
         'mno1': teach.phone_no_1,
         'mno2': teach.phone_no_2,
-        'fixed_footer':True,
+        'fixed_footer': True,
         'title': 'Contact Mentor'
     }
     return render(request, 'students/contactMentor.html', d)
+
 
 def upload_documents(request):
     if Teacher.objects.filter(id=request.user.username):
@@ -648,5 +655,5 @@ def upload_documents(request):
         print(fs)
         filename = fs.save(myfile.name, myfile)
         print(filename)
-        # uploaded_file_url = fs.url(filename)  
+        # uploaded_file_url = fs.url(filename)
     return render(request, 'students/upload_documents.html')

@@ -92,7 +92,7 @@ def get_univ_details(id):
         return {}
 
 
-def current_sem(id, stud: None):
+def current_sem(id, stud=None):
     if not stud:
         stud = Student.objects.get(id=id)
     batch = stud.batch

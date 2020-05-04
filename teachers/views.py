@@ -98,7 +98,7 @@ def student_search(request):
         pass
     else:
         d = get_teach_details(request)
-        d[title] = "Upload Student"
+        d["title"] = "Upload Student"
         return render(request, 'teachers/search.html', d)
 
 

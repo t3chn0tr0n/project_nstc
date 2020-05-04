@@ -28,7 +28,7 @@ def student_report(request):
         return message(title, error, request)
 
     if request.method == "POST":
-        student_id = request.POST.get('student_id',  '')
+        student_id = request.POST.get('student_id', '')
         mentor_id = request.user.username
 
         sems_all_object = semester_1.objects.filter(student_id=student_id)
@@ -534,7 +534,8 @@ def certificate(request, x, y, z):
     # return render(request, 'teachers/table.html')
     # return render(request, 'message.html', {'title': '404', 'error': True, 'fof': True})
     # data = Template('''{% load static %} <center>hello world<img src="{% static 'img/cert.png' %}" alt="Certificate Unavailable!" /></center>''')
-    # return HttpResponse(data.render(Context(request)))    
+    # return HttpResponse(data.render(Context(request)))
+
 
 @login_required(login_url=reverse_lazy('login'))
 def gen_certificate(request):
